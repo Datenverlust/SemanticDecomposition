@@ -1,0 +1,41 @@
+<!--
+  ~ Copyright (C) Johannes Fähndrich - All Rights Reserved.
+  ~ Unauthorized copying of this file, via any medium is strictly
+  ~ prohibited Proprietary and confidential.
+  ~ Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+        <artifactId>Dictionaries</artifactId>
+        <version>0.2-SNAPSHOT</version>
+    </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.dailab.NSM.WordNet</groupId>
+  <artifactId>WordNetCrawler</artifactId>
+  <packaging>jar</packaging>
+
+  <name>WordNet Dictionary Implementation</name>
+  <url>http://maven.apache.org</url>
+
+  <dependencies>
+      <dependency>
+          <groupId>edu.mit</groupId>
+          <artifactId>jwi</artifactId>
+          <version>2.2.3</version>
+      </dependency>
+      <dependency>
+          <groupId>edu.mit</groupId>
+          <artifactId>jwi</artifactId>
+          <version>2.2.6</version>
+      </dependency>
+      <dependency>
+          <groupId>de.dailab.nsm.decomposition.dictionaries.utils</groupId>
+          <artifactId>DictionaryUtils</artifactId>
+          <version>${project.version}</version>
+      </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) Johannes Fähndrich - All Rights Reserved.
+  ~ Unauthorized copying of this file, via any medium is strictly
+  ~ prohibited Proprietary and confidential.
+  ~ Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.dailab.NSM</groupId>
+    <artifactId>NaturalSemanticMetalanguage</artifactId>
+    <packaging>pom</packaging>
+    <version>0.2-SNAPSHOT</version>
+    <name>NaturalSemanticMetalanguage</name>
+    <url>http://nsm.dai-labor.de</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <log4jVersion>1.2.17</log4jVersion>
+        <nd4j.version>0.9.1</nd4j.version>
+        <dl4j.version>0.9.1</dl4j.version>
+        <canova.version>0.0.0.17</canova.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4jVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>edu.stanford.nlp</groupId>-->
+        <!--<artifactId>stanford-corenlp</artifactId>-->
+        <!--<version>3.5.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>edu.stanford.nlp</groupId>-->
+        <!--<artifactId>stanford-corenlp</artifactId>-->
+        <!--<version>3.5.0</version>-->
+        <!--<classifier>models</classifier>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>edu.mit</groupId>
+            <artifactId>jwi</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>de.tudarmstadt.ukp.jwktl</groupId>-->
+        <!--<artifactId>jwktl</artifactId>-->
+        <!--<version>1.0.1</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.dkpro.jwktl</groupId>
+            <artifactId>dkpro-jwktl</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>berkeleydb</groupId>
+            <artifactId>berkeleydb-native</artifactId>
+            <version>4.2</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>xerces</groupId>-->
+            <!--<artifactId>xercesImpl</artifactId>-->
+            <!--<version>2.11.0</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.nd4j</groupId>-->
+            <!--<artifactId>nd4j-native</artifactId>-->
+            <!--<version>0.4-rc3.9-SNAPSHOT</version>-->
+        <!--</dependency>-->
+    </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+                <version>3.3</version>
+            </plugin>
+
+
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>1.8.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+
+
+
+    </build>
+
+    <modules>
+        <module>SemanticDistanceMeasureAPI</module>
+        <module>SemanticDecomposition</module>
+        <module>SemanticNetwork</module>
+        <module>Dictionaries</module>
+        <module>ToOWLConverterApi</module>
+        <module>SemanticNetworkToOWLConverter</module>
+        <module>OWLConflictSolver</module>
+    </modules>
+
+
+    <repositories>
+        <repository>
+            <id>dai-releases</id>
+            <name>DAI Maven 2 Releases Repository</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>dai-snapshots</id>
+            <name>DAI Maven 2 Snapshot Repository</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>thirdparty</id>
+            <name>thirdparty</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/thirdparty/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>dai-releases</id>
+            <name>dai-releases</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>dai-snapshots</id>
+            <name>dai-snapshots</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <scm>
+        <url>https://gitlab.tubit.tu-berlin.de:johannes_faehndrich/semantic-decomposition</url>
+        <connection>scm:git:git://gitlab.tubit.tu-berlin.de:johannes_faehndrich/semantic-decomposition.git</connection>
+        <developerConnection>scm:git:git@gitlab.tubit.tu-berlin.de:johannes_faehndrich/semantic-decomposition.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+
+</project>

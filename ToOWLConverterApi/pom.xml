@@ -1,0 +1,143 @@
+<!--
+  ~ Copyright (C) Johannes Fähndrich - All Rights Reserved.
+  ~ Unauthorized copying of this file, via any medium is strictly
+  ~ prohibited Proprietary and confidential.
+  ~ Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+  <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.dailab.NSM</groupId>
+        <artifactId>NaturalSemanticMetalanguage</artifactId>
+        <version>0.2-SNAPSHOT</version>
+    </parent>
+
+  <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+  <artifactId>ToOWLConverterApi</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Semantic Network Graph Converter</name>
+  <url>http://maven.apache.org</url>
+
+  <dependencies>
+       	
+   		<dependency>
+  			<groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+  			<artifactId>SemanticNetwork</artifactId>
+  			<version>${project.version}</version>
+        </dependency>
+        
+        <!-- OWL API -->
+        
+         <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-distribution</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+       <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-distribution</artifactId>
+            <version>3.5.0</version>
+            <classifier>javadoc</classifier>
+        </dependency> 
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-distribution</artifactId>
+            <version>3.5.0</version>
+            <classifier>sources</classifier>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-modularity</artifactId>
+            <version>3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-api</artifactId>
+            <version>3.5.0</version> 
+        </dependency>
+      <dependency>
+          <groupId>xerces</groupId>
+          <artifactId>xercesImpl</artifactId>
+          <version>2.11.0</version>
+      </dependency>
+      <dependency>
+          <groupId>commons-lang</groupId>
+          <artifactId>commons-lang</artifactId>
+          <version>2.3</version>
+      </dependency>
+  </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>dai-releases</id>
+            <name>DAI Maven 2 Releases Repository</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>dai-snapshots</id>
+            <name>DAI Maven 2 Snapshot Repository</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>thirdparty</id>
+            <name>thirdparty</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/thirdparty/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>dai-releases</id>
+            <name>dai-releases</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>dai-snapshots</id>
+            <name>dai-snapshots</name>
+            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

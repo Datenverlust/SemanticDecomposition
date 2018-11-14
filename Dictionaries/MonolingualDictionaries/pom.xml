@@ -1,0 +1,43 @@
+<!--
+  ~ Copyright (C) Johannes Fähndrich - All Rights Reserved.
+  ~ Unauthorized copying of this file, via any medium is strictly
+  ~ prohibited Proprietary and confidential.
+  ~ Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <parent>
+        <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+        <artifactId>Dictionaries</artifactId>
+        <version>0.2-SNAPSHOT</version>
+    </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.dailab.NSM.mid</groupId>
+  <artifactId>MonolingualDictionaries</artifactId>
+  <packaging>jar</packaging>
+
+  <name>DictionaryForMID Dictionary Implementation</name>
+  <url>http://maven.apache.org</url>
+
+  <dependencies>
+      <dependency>
+          <groupId>net.sourceforge.javacsv</groupId>
+          <artifactId>javacsv</artifactId>
+          <version>2.0</version>
+      </dependency>
+  </dependencies>
+
+    <build>
+    <resources>
+        <resource>
+            <targetPath>.</targetPath>
+            <directory>${basedir}/src/main/resources</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </resource>
+    </resources>
+    </build>
+</project>

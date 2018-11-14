@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (C) Johannes Fähndrich - All Rights Reserved.
+  ~ Unauthorized copying of this file, via any medium is strictly
+  ~ prohibited Proprietary and confidential.
+  ~ Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>de.dailab.NSM</groupId>
+        <artifactId>NaturalSemanticMetalanguage</artifactId>
+        <version>0.2-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+    <artifactId>Dictionaries</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Dictionaries</name>
+    <url>http://maven.apache.org</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+        <module>DictionaryUtils</module>
+        <module>MonolingualDictionaries</module>
+        <module>WiktionaryCrawler</module>
+        <module>WordNetCrawler</module>
+        <module>WikidataCrawler</module>
+        <module>CorpusLinguisticStatistics</module>
+        <!--module>EmojiNetCrawler</module-->
+        <!--module>RDFXMLCrawler</module-->
+        <module>RDFXMLCrawlerOWLAPI-3</module>
+    </modules>
+
+
+</project>

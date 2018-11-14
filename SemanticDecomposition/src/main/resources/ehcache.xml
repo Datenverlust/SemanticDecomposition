@@ -1,0 +1,70 @@
+<!--
+  ~ Copyright (C) Johannes Fähndrich - All Rights Reserved.
+  ~ Unauthorized copying of this file, via any medium is strictly
+  ~ prohibited Proprietary and confidential.
+  ~ Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
+  -->
+
+<ehcache:config
+        xmlns:ehcache="http://www.ehcache.org/v3"
+        xmlns:jcache="http://www.ehcache.org/v3/jsr107">
+
+<!--<ehcache xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true" monitoring="autodetect" dynamicConfig="true">-->
+    <!--<diskStore path="$user.home/.decomposition/ConceptCache" />-->
+
+    <!--<cache name="alldatas" maxEntriesLocalHeap="10000" eternal="false"-->
+           <!--timeToIdleSeconds="21600" timeToLiveSeconds="21600" memoryStoreEvictionPolicy="LRU"-->
+           <!--overflowToDisk="true"-->
+           <!--diskPersistent="false"-->
+           <!--diskExpiryThreadIntervalSeconds="120">-->
+
+    <!--</cache>-->
+
+
+    <!--
+      OPTIONAL
+        A <cache> element defines a cache, identified by the mandatory 'alias' attribute, to be managed by the CacheManager
+    -->
+    <ehcache:cache alias="ConceptCache">
+
+        <!--
+          OPTIONAL, defaults to java.lang.Object
+            The FQCN of the type of keys K we'll use with the Cache<K, V>
+        -->
+        <ehcache:key-type copier="org.ehcache.impl.copy.SerializingCopier">java.lang.Long</ehcache:key-type>
+
+        <!--
+          OPTIONAL, defaults to java.lang.Object
+            The FQCN of the type of values V we'll use with the Cache<K, V>
+        -->
+        <ehcache:value-type copier="org.ehcache.impl.copy.SerializingCopier">de.dailab.nsm.decomposition.Concept</ehcache:value-type>
+
+        <!--
+          OPTIONAL, defaults to no expiry
+            Entries to the Cache can be made to expire after a given time
+        -->
+        <ehcache:expiry>
+            <!--
+              time to idle, the maximum time for an entry to remain untouched
+                Entries to the Cache can be made to expire after a given time
+                other options are:
+                   * <ttl>, time to live;
+                   * <class>, for a custom Expiry implementation; or
+                   * <none>, for no expiry
+            -->
+            <ehcache:tti unit="minutes">2</ehcache:tti>
+        </ehcache:expiry>
+
+
+        <!--
+            The maximal number of entries to be held in the Cache, prior to eviction starting
+        -->
+        <ehcache:heap unit="entries">2000</ehcache:heap>
+
+        <!--
+           OPTIONAL
+            Any further elements in another namespace
+        -->
+
+    </ehcache:cache>
+</ehcache:config>
