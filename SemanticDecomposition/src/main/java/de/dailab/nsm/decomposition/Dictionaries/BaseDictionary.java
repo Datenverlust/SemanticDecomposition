@@ -30,7 +30,7 @@ import java.util.*;
  * Created by faehndrich on 11.11.14.
  */
 public abstract class BaseDictionary implements Serializable, Dictionary {
-    protected static StanfordCoreNLP pipeline = null;
+    public static StanfordCoreNLP pipeline = null;
     protected static ILanguage language = null;
 
     public BaseDictionary() {

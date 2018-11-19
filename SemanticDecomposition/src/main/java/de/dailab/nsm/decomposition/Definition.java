@@ -7,6 +7,7 @@
 
 package de.dailab.nsm.decomposition;
 
+import de.dailab.nsm.decomposition.Dictionaries.BaseDictionary;
 import de.dailab.nsm.decomposition.nlp.GermanLemma;
 import de.dailab.nsm.decomposition.nlp.LemmaToken;
 import de.dailab.nsm.decomposition.settings.Config;
@@ -80,6 +81,10 @@ public class Definition implements Serializable {
             //
             initGerman();
         }
+        //TODO Hack: We should carry around exaclty one instance at some approriate place
+        //currenlntly trying to use the BaseDictionary instance (since this is most probably instantiated by now)
+
+        if(pipeline == null) pipeline = BaseDictionary.pipeline;
 
         String[] words = def.split("\\s+");
         StringBuilder stringBuilder = new StringBuilder();
@@ -98,25 +103,29 @@ public class Definition implements Serializable {
      * Initialize the Definition. For example prepare WodNet in memory.
      */
     private void init() {
-        if (pipeline == null) {
+        //TODO Hack: We should carry around exaclty one instance at some approriate place
+        //currenlntly trying to use the BaseDictionary instance (since this is most probably instantiated by now)
+        if (BaseDictionary.pipeline == null) {
             System.out.println("StanfordCoreNLP - [English]");
             // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution
             Properties props = new Properties();
 //            props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
             props.put("annotators", "tokenize, ssplit, pos, lemma, parse, depparse");
-            pipeline = new StanfordCoreNLP(props);
+            BaseDictionary.pipeline = new StanfordCoreNLP(props);
         }
     }
 
     private void initGerman(){
-        if (pipeline == null) {
+        //TODO Hack: We should carry around exaclty one instance at some approriate place
+        //currenlntly trying to use the BaseDictionary instance (since this is most probably instantiated by now)
+
+        if (BaseDictionary.pipeline == null) {
             System.out.println("StanfordCoreNLP - [German]");
             // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution
             Properties props =StringUtils.argsToProperties(
                     new String[]{"-props", "StanfordCoreNLP-german.properties"});
             //props.put("annotators", "tokenize, ssplit, pos, lemma, parse, depparse");
-            pipeline = new StanfordCoreNLP(props);
-
+            BaseDictionary.pipeline = new StanfordCoreNLP(props);
         }
     }
 
