@@ -22,7 +22,7 @@ public class GraphTest {
     public static void main(String[] args){
         System.out.println("Test output will be saved in " + GRAPH_FILE_NAME);
         Decomposition decomp = new Decomposition();
-        Concept noonConcpet = decomp.decompose("mittag", WordType.NN, 1);
+        Concept noonConcpet = decomp.decompose("Mittag", WordType.NN, 1);
 
         Graph noonGraph = GraphUtil.createJGraph(noonConcpet);
         try {
