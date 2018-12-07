@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package test.test.de.dailab.nsm.decomposition;
+package test.de.dailab.nsm.decomposition;
 
 import de.dailab.nsm.decomposition.Concept;
 import de.dailab.nsm.decomposition.Decomposition;
