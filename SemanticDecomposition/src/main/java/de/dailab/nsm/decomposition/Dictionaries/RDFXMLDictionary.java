@@ -226,6 +226,7 @@ public class RDFXMLDictionary extends BaseDictionary {
     public Concept getLemma(String word, WordType wordType) {
         //not possible for this dictionary
         return Decomposition.createConcept(word, wordType);
+
     }
 
     /**

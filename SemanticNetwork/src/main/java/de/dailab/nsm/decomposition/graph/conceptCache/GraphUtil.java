@@ -20,6 +20,7 @@ import de.dailab.nsm.decomposition.graph.spreadingActivation.MarkerPassing.Marke
 import org.apache.log4j.Logger;
 import org.jgraph.graph.AttributeMap;
 import org.jgrapht.Graph;
+import org.jgrapht.ext.ComponentAttributeProvider;
 import org.jgrapht.ext.EdgeNameProvider;
 import org.jgrapht.ext.GraphMLExporter;
 import org.jgrapht.ext.VertexNameProvider;
@@ -158,13 +159,12 @@ public class GraphUtil {
                     SynonymEdge synonymEdge = new SynonymEdge();
                     synonymEdge.setSource(concept);
                     synonymEdge.setTarget(syn);
-                    AttributeMap weight = new AttributeMap();
-                    Map<String, Double> attributes = new HashMap<>();
                     double w = MarkerPassingConfig.getSynonymLinkWeight();
+                    AttributeMap attributes = new AttributeMap();
                     attributes.put("weight", w);
+                    attributes.put("edgeType","synonym");
                     synonymEdge.setWeight(w);
-                    weight.applyMap(attributes);
-                    synonymEdge.setAttributes(weight); //add weight as semantic distance or as relational similarity. 0 meaning the same word and 1 meaning with a maximal distance
+                    synonymEdge.setAttributes(attributes); //add weight as semantic distance or as relational similarity. 0 meaning the same word and 1 meaning with a maximal distance
                     if (edges == null || edges.size()==0 || !edges.contains(synonymEdge)) {
                         graph.addEdge(concept, syn, synonymEdge);
                     }
@@ -177,6 +177,12 @@ public class GraphUtil {
                         DefinitionEdge definitionEdge = new DefinitionEdge();
                         definitionEdge.setSource(concept);
                         definitionEdge.setTarget(def);
+                        double w = MarkerPassingConfig.getDefinitionLinkWeight();
+                        AttributeMap attributes = new AttributeMap();
+                        attributes.put("weight", w);
+                        attributes.put("edgeType","definition");
+                        definitionEdge.setWeight(w);
+                        definitionEdge.setAttributes(attributes);
                         if (!edges.contains(definitionEdge)) {
                             graph.addEdge(concept, def, definitionEdge);
                         }
@@ -190,6 +196,10 @@ public class GraphUtil {
                     hyponymEdge.setSource(concept);
                     hyponymEdge.setTarget(hypo);
                     hyponymEdge.setWeight(w);
+                    AttributeMap attributes = new AttributeMap();
+                    attributes.put("weight", w);
+                    attributes.put("edgeType","hyponym");
+                    hyponymEdge.setAttributes(attributes);
                     if (!edges.contains(hyponymEdge)) {
                         graph.addEdge(concept, hypo, hyponymEdge);
                     }
@@ -202,6 +212,10 @@ public class GraphUtil {
                     hypernymEdge.setSource(concept);
                     hypernymEdge.setTarget(hyper);
                     hypernymEdge.setWeight(w);
+                    AttributeMap attributes = new AttributeMap();
+                    attributes.put("weight", w);
+                    attributes.put("edgeType","hypernym");
+                    hypernymEdge.setAttributes(attributes);
                     if (!edges.contains(hypernymEdge)) {
                         graph.addEdge(concept, hyper, hypernymEdge);
                     }
@@ -214,6 +228,10 @@ public class GraphUtil {
                     antonymEdge.setSource(concept);
                     antonymEdge.setTarget(antonym);
                     antonymEdge.setWeight(w);
+                    AttributeMap attributes = new AttributeMap();
+                    attributes.put("weight", w);
+                    attributes.put("edgeType","antonym");
+                    antonymEdge.setAttributes(attributes);
                     if (!edges.contains(antonymEdge)) {
                         graph.addEdge(concept, antonym, antonymEdge);
                     }
@@ -226,6 +244,10 @@ public class GraphUtil {
                     MeronymEdge meronymEdge = new MeronymEdge();
                     meronymEdge.setSource(concept);
                     meronymEdge.setTarget(meronym);
+                    AttributeMap attributes = new AttributeMap();
+                    attributes.put("weight", 0.0d);
+                    attributes.put("edgeType","meronym");
+                    meronymEdge.setAttributes(attributes);
                     if (!edges.contains(meronymEdge)) {
                         graph.addEdge(concept, meronym, meronymEdge);
                     }
@@ -239,6 +261,10 @@ public class GraphUtil {
                     arbitraryEdge.setSource(concept);
                     arbitraryEdge.setTarget(arbitraryRelation);
                     arbitraryEdge.setRelationName(arbitraryRelation.getOriginatedRelationName());
+                    AttributeMap attributes = new AttributeMap();
+                    attributes.put("weight", 0.0d);
+                    attributes.put("edgeType",arbitraryRelation.getOriginatedRelationName());
+                    arbitraryEdge.setAttributes(attributes);
                     if (!edges.contains(arbitraryEdge)) {
                         graph.addEdge(concept, arbitraryRelation, arbitraryEdge);
                     }
@@ -332,9 +358,10 @@ public class GraphUtil {
                 return "";
             }
         };
+
         //Create a edge name provider. Here we want to differ the edge types.
         EdgeNameProvider<WeightedEdge> edgeIDProvider = edge -> {
-            String edgeType;
+            String edgeType;// = (String)edge.getAttributes().get("edgeType");
             if (edge instanceof ArbitraryEdge) {
                 edgeType = graph.getEdgeSource(edge) + " " + ((ArbitraryEdge) edge).getRelationName() + " > " + graph.getEdgeTarget(edge);
             } else {
@@ -345,10 +372,25 @@ public class GraphUtil {
         };
         EdgeNameProvider<WeightedEdge> edgeLabelProvider = edge -> {
             if (edge != null) {
-                return String.valueOf(edge.getWeight());
+                double w = edge.getWeight();
+                return String.valueOf(w);
             } else {
-                return " > ";
+                return " > ";//TODO: whats that for?
             }
+        };
+        //additional edge attributes
+        ComponentAttributeProvider<WeightedEdge> edgeAttributeProvider = edge -> {
+            if(edge != null){
+                if(edge.getEdgeType().equals(EdgeType.Unknown)){
+                    //unknown edges did not get attribut map set
+                    AttributeMap map = new AttributeMap();
+                    map.put("edgeType","Unknown");
+                    map.put("weight", edge.getWeight());
+                    edge.setAttributes(map);
+                }
+                return edge.getAttributes();
+            }
+            return null;
         };
 
         GraphMLExporter<Concept, WeightedEdge> exporter =

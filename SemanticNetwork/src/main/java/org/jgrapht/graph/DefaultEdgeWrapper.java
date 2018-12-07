@@ -7,10 +7,15 @@
 
 package org.jgrapht.graph;
 
+import org.jgraph.graph.AttributeMap;
+
+import java.util.Map;
+
 /**
  * Created by faehndrich on 21.05.15.
  */
 public class DefaultEdgeWrapper extends DefaultWeightedEdge{
+
 
     @Override
     public double getWeight() {

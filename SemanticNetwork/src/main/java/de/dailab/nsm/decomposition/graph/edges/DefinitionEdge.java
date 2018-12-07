@@ -18,20 +18,4 @@ public class DefinitionEdge extends WeightedEdge{
     public DefinitionEdge(){
         this.setEdgeType(EdgeType.Definition);
     }
-
-    @Override
-    public AttributeMap getAttributes() {
-        return null;
-    }
-
-    @Override
-    public Map changeAttributes(Map map) {
-        return null;
-    }
-
-    @Override
-    public void setAttributes(AttributeMap attributeMap) {
-
-    }
-
 }

@@ -19,6 +19,8 @@ import java.util.Map;
 public class WeightedEdge extends DefaultEdgeWrapper implements Edge {
 
     EdgeType edgeType; //define which kind of edge this is.
+    AttributeMap attributeMap;
+
 
     public EdgeType getEdgeType() {
         return edgeType;
@@ -34,18 +36,18 @@ public class WeightedEdge extends DefaultEdgeWrapper implements Edge {
 
     @Override
     public AttributeMap getAttributes() {
-        return null;
+        return this.attributeMap;
     }
 
+    @Override
+    public void setAttributes(AttributeMap attributeMap) {
+        this.attributeMap = attributeMap;
+    }
     @Override
     public Map changeAttributes(Map map) {
         return null;
     }
 
-    @Override
-    public void setAttributes(AttributeMap attributeMap) {
-
-    }
     @Override
     public boolean equals(Object other) {
         if (other == null) {
