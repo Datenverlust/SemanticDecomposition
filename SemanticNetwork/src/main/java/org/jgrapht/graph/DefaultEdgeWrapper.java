@@ -7,14 +7,10 @@
 
 package org.jgrapht.graph;
 
-import org.jgraph.graph.AttributeMap;
-
-import java.util.Map;
-
 /**
  * Created by faehndrich on 21.05.15.
  */
-public class DefaultEdgeWrapper extends DefaultWeightedEdge{
+public class DefaultEdgeWrapper extends DefaultWeightedEdge {
 
 
     @Override
@@ -27,16 +23,18 @@ public class DefaultEdgeWrapper extends DefaultWeightedEdge{
     }
 
 
-    public void setTarget(Object target){
+    public void setTarget(Object target) {
         this.target = target;
     }
-    public void setSource(Object source){
+
+    public void setSource(Object source) {
         this.source = source;
     }
 
     public Object getSource() {
         return this.source;
     }
+
     public Object getTarget() {
         return this.target;
     }

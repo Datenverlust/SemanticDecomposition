@@ -7,8 +7,7 @@
 
 package de.dailab.nsm.decomposition.graph.edges;
 
-import org.jgraph.graph.AttributeMap;
-import org.jgraph.graph.Edge;
+
 import org.jgrapht.graph.DefaultEdgeWrapper;
 
 import java.util.Map;
@@ -16,10 +15,12 @@ import java.util.Map;
 /**
  * Created by Johannes Fähndrich on 21.05.15 as part of his dissertation as part of his dissertation.
  */
-public class WeightedEdge extends DefaultEdgeWrapper implements Edge {
+public class WeightedEdge extends DefaultEdgeWrapper {
 
+    
+    
     EdgeType edgeType; //define which kind of edge this is.
-    AttributeMap attributeMap;
+    Map Map;
 
 
     public EdgeType getEdgeType() {
@@ -34,16 +35,20 @@ public class WeightedEdge extends DefaultEdgeWrapper implements Edge {
         this.setEdgeType(EdgeType.Unknown);
     }
 
-    @Override
-    public AttributeMap getAttributes() {
-        return this.attributeMap;
+    public double getEdgeWeight()
+    {
+        return this.getWeight();
     }
 
-    @Override
-    public void setAttributes(AttributeMap attributeMap) {
-        this.attributeMap = attributeMap;
+
+    public Map getAttributes() {
+        return this.Map;
     }
-    @Override
+
+    public void setAttributes(Map Map) {
+        this.Map = Map;
+    }
+
     public Map changeAttributes(Map map) {
         return null;
     }

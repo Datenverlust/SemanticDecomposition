@@ -7,15 +7,11 @@
 
 package de.dailab.nsm.decomposition.graph.edges;
 
-import org.jgraph.graph.AttributeMap;
-
-import java.util.Map;
-
 /**
  * Created by faehndrich on 05.05.15.
  */
-public class DefinitionEdge extends WeightedEdge{
-    public DefinitionEdge(){
+public class DefinitionEdge extends WeightedEdge {
+    public DefinitionEdge() {
         this.setEdgeType(EdgeType.Definition);
     }
 }

@@ -9,18 +9,19 @@ package de.dailab.nsm.decomposition.graph;
 
 import de.dailab.nsm.decomposition.graph.entities.relations.Relation;
 import de.dailab.nsm.decomposition.graph.entities.Entity;
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.ListenableDirectedGraph;
+
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultListenableGraph;
 
 /**
  * Created by faehndrich on 01.05.15.
  */
-public abstract class SemanticNet extends ListenableDirectedGraph<Entity, Relation> {
+public abstract class SemanticNet extends DefaultListenableGraph<Entity, Relation> {
     public SemanticNet(Class<? extends Relation> edgeClass) {
-        super(edgeClass);
+        super(new DefaultDirectedGraph<>(edgeClass));
     }
 
-    public SemanticNet(DirectedGraph<Entity, Relation> base) {
+    public SemanticNet(DefaultDirectedGraph<Entity, Relation> base) {
         super(base);
     }
 }
