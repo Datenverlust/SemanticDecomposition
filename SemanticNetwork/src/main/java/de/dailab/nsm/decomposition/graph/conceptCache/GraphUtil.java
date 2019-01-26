@@ -8,9 +8,12 @@
 package de.dailab.nsm.decomposition.graph.conceptCache;
 
 
-import de.dailab.nsm.decomposition.*;
+import de.dailab.nsm.decomposition.Concept;
+import de.dailab.nsm.decomposition.Decomposition;
+import de.dailab.nsm.decomposition.Definition;
 import de.dailab.nsm.decomposition.Dictionaries.BaseDictionary;
 import de.dailab.nsm.decomposition.Dictionaries.WordNetDictionary;
+import de.dailab.nsm.decomposition.WordType;
 import de.dailab.nsm.decomposition.graph.SemanticNet;
 import de.dailab.nsm.decomposition.graph.edges.*;
 import de.dailab.nsm.decomposition.graph.entities.Entity;
@@ -18,17 +21,14 @@ import de.dailab.nsm.decomposition.graph.entities.relations.Relation;
 import de.dailab.nsm.decomposition.graph.entities.relations.Synonym;
 import de.dailab.nsm.decomposition.graph.spreadingActivation.MarkerPassing.MarkerPassingConfig;
 import org.apache.log4j.Logger;
-import org.jgraph.graph.AttributeMap;
 import org.jgrapht.Graph;
-import org.jgrapht.ext.EdgeNameProvider;
-import org.jgrapht.ext.GraphMLExporter;
-import org.jgrapht.ext.VertexNameProvider;
-import org.jgrapht.graph.ListenableDirectedGraph;
-import org.xml.sax.SAXException;
+import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.graph.DefaultListenableGraph;
+import org.jgrapht.io.*;
 
-import javax.xml.transform.TransformerConfigurationException;
 import java.io.*;
 import java.util.*;
+
 /**
  * This is a utility class providing all needed functionality to create semantic networks.
  * This class has an own decomposition and can be used to multiThreadedDecompose concepts and transform them inte graphs.
@@ -41,29 +41,30 @@ public class GraphUtil {
     static int lockcount = 0;
     static Decomposition decomposition = new Decomposition();
     private static Logger logger = Logger.getLogger(GraphUtil.class);
-    private static HashMap<Integer, ListenableDirectedGraph<Object, Object>> mergedGraphCache = new HashMap<>(65);
+    private static HashMap<Integer, DefaultListenableGraph<Object, Object>> mergedGraphCache = new HashMap<>(65);
     static MarkerPassingConfig markerPassingConfig = new MarkerPassingConfig();
+
     /**
      * Create a ListenableGraph from a concept regarding its decomposition
      *
      * @param concept the concept from which to start the graph.
-     * @return ListenableDirectedGraph which models the decomposition of the given concept.
+     * @return DefaultListenableGraph which models the decomposition of the given concept.
      */
     public static Graph<Concept, WeightedEdge> createJGraph(Concept concept) {
 
-        ListenableDirectedGraph<Concept, WeightedEdge> graph = new ListenableDirectedGraph<>(WeightedEdge.class);
+        DefaultListenableGraph<Concept, WeightedEdge> graph = new DefaultListenableGraph(new DefaultDirectedWeightedGraph(WeightedEdge.class));
         assert (Decomposition.getConcepts2Ignore().size() > 0);
         if (Decomposition.getConcepts2Ignore().contains(concept)) {
             //System.out.println("The concept " + concept.getLitheral() + " is an stop word and is not decomposed.");
         } else {
-                addConceptRecursivly(graph, concept);
+            addConceptRecursivly(graph, concept);
         }
 
         return graph;
     }
 
-    public static Graph<Concept, WeightedEdge> initializeJGraph(Concept concept){
-        ListenableDirectedGraph<Concept, WeightedEdge> graph = new ListenableDirectedGraph<>(WeightedEdge.class);
+    public static Graph<Concept, WeightedEdge> initializeJGraph(Concept concept) {
+        DefaultListenableGraph<Concept, WeightedEdge> graph = new DefaultListenableGraph<>(new DefaultDirectedWeightedGraph<>(WeightedEdge.class));
         graph.addVertex(concept);
         return graph;
     }
@@ -72,12 +73,12 @@ public class GraphUtil {
      * Create a ListenableGraph from a concept regarding BDOS
      *
      * @param concept the concept from which to start the graph.
-     * @return ListenableDirectedGraph which models the decomposition of the given concept.
+     * @return DefaultListenableGraph which models the decomposition of the given concept.
      */
 
     public static Graph<Concept, WeightedEdge> createJGraphforBDOS(Concept concept) {
 
-        ListenableDirectedGraph<Concept, WeightedEdge> graph = new ListenableDirectedGraph<>(WeightedEdge.class);
+        DefaultListenableGraph<Concept, WeightedEdge> graph = new DefaultListenableGraph<>(new DefaultDirectedWeightedGraph<>(WeightedEdge.class));
 
         if (Decomposition.getConcepts2Ignore().contains(concept)) {
             //System.out.println("The concept " + concept.getLitheral() + " is an stop word and is not decomposed.");
@@ -93,11 +94,11 @@ public class GraphUtil {
      * Create a ListenableGraph from a entity regarding its decomposition
      *
      * @param entity the entity from which to start the graph.
-     * @return ListenableDirectedGraph which models the decomposition of the given entity.
+     * @return DefaultListenableGraph which models the decomposition of the given entity.
      */
     public static Graph<Entity, Relation> createJGraph(Entity entity) {
 
-        SemanticNet graph = (SemanticNet) new ListenableDirectedGraph(Relation.class);
+        SemanticNet graph = (SemanticNet) new DefaultListenableGraph(new DefaultDirectedWeightedGraph<>(Relation.class));
 
         graph.addVertex(entity);
         addEntityRecursivly(graph, entity);
@@ -147,7 +148,7 @@ public class GraphUtil {
      * @param graph   the jGraph to add the nodes to
      * @param concept the concept to be added to the graph.
      */
-    private static void addConceptRecursivly(Graph<Concept,WeightedEdge> graph, Concept concept) {
+    private static void addConceptRecursivly(Graph<Concept, WeightedEdge> graph, Concept concept) {
         if (!Decomposition.getConcepts2Ignore().contains(concept)) {
             if (!graph.containsVertex(concept)) {
                 graph.addVertex(concept);
@@ -158,15 +159,16 @@ public class GraphUtil {
                     SynonymEdge synonymEdge = new SynonymEdge();
                     synonymEdge.setSource(concept);
                     synonymEdge.setTarget(syn);
-                    AttributeMap weight = new AttributeMap();
-                    Map<String, Double> attributes = new HashMap<>();
                     double w = MarkerPassingConfig.getSynonymLinkWeight();
-                    attributes.put("weight", w);
+                    Map attributes = new HashMap();
+                    attributes.put("edgeType", "synonym");
+//                    attributes.put("weight",w);
                     synonymEdge.setWeight(w);
-                    weight.applyMap(attributes);
-                    synonymEdge.setAttributes(weight); //add weight as semantic distance or as relational similarity. 0 meaning the same word and 1 meaning with a maximal distance
-                    if (edges == null || edges.size()==0 || !edges.contains(synonymEdge)) {
+
+                    synonymEdge.setAttributes(attributes); //add weight as semantic distance or as relational similarity. 0 meaning the same word and 1 meaning with a maximal distance
+                    if (edges == null || edges.size() == 0 || !edges.contains(synonymEdge)) {
                         graph.addEdge(concept, syn, synonymEdge);
+                        graph.setEdgeWeight(synonymEdge, w);
                     }
                 });
                 for (Definition definition : concept.getDefinitions()) {
@@ -177,8 +179,15 @@ public class GraphUtil {
                         DefinitionEdge definitionEdge = new DefinitionEdge();
                         definitionEdge.setSource(concept);
                         definitionEdge.setTarget(def);
+                        double w = MarkerPassingConfig.getDefinitionLinkWeight();
+                        Map attributes = new HashMap();
+                        attributes.put("edgeType", "definition");
+                        definitionEdge.setWeight(w);
+//                        attributes.put("weight",w);
+                        definitionEdge.setAttributes(attributes);
                         if (!edges.contains(definitionEdge)) {
                             graph.addEdge(concept, def, definitionEdge);
+                            graph.setEdgeWeight(definitionEdge, definitionEdge.getWeight());
                         }
                     });
                 }
@@ -190,8 +199,13 @@ public class GraphUtil {
                     hyponymEdge.setSource(concept);
                     hyponymEdge.setTarget(hypo);
                     hyponymEdge.setWeight(w);
+                    Map attributes = new HashMap();
+                    attributes.put("edgeType", "hyponym");
+//                    attributes.put("weight",w);
+                    hyponymEdge.setAttributes(attributes);
                     if (!edges.contains(hyponymEdge)) {
                         graph.addEdge(concept, hypo, hyponymEdge);
+                        graph.setEdgeWeight(hyponymEdge, w);
                     }
                 });
                 concept.getHypernyms().stream().filter(hyper -> hyper != null && !Decomposition.getConcepts2Ignore().contains(hyper) && !hyper.equals(concept)).forEach(hyper -> {
@@ -202,8 +216,13 @@ public class GraphUtil {
                     hypernymEdge.setSource(concept);
                     hypernymEdge.setTarget(hyper);
                     hypernymEdge.setWeight(w);
+                    Map attributes = new HashMap();
+                    attributes.put("edgeType", "hypernym");
+//                    attributes.put("weight",w);
+                    hypernymEdge.setAttributes(attributes);
                     if (!edges.contains(hypernymEdge)) {
                         graph.addEdge(concept, hyper, hypernymEdge);
+                        graph.setEdgeWeight(hypernymEdge, w);
                     }
                 });
                 concept.getAntonyms().stream().filter(antonym -> antonym != null && !Decomposition.getConcepts2Ignore().contains(antonym) && !antonym.equals(concept)).forEach(antonym -> {
@@ -214,8 +233,13 @@ public class GraphUtil {
                     antonymEdge.setSource(concept);
                     antonymEdge.setTarget(antonym);
                     antonymEdge.setWeight(w);
+                    Map attributes = new HashMap();
+                    attributes.put("edgeType", "antonym");
+//                    attributes.put("weight",w);
+                    antonymEdge.setAttributes(attributes);
                     if (!edges.contains(antonymEdge)) {
                         graph.addEdge(concept, antonym, antonymEdge);
+                        graph.setEdgeWeight(antonymEdge, w);
                     }
                 });
                 concept.getMeronyms().stream().filter(meronym -> meronym != null && !Decomposition.getConcepts2Ignore().contains(meronym) && !meronym.equals(concept)).forEach(meronym -> {
@@ -226,8 +250,13 @@ public class GraphUtil {
                     MeronymEdge meronymEdge = new MeronymEdge();
                     meronymEdge.setSource(concept);
                     meronymEdge.setTarget(meronym);
+                    Map attributes = new HashMap();
+                    attributes.put("edgeType", "meronym");
+//                    attributes.put("weight",0.0d);
+                    meronymEdge.setAttributes(attributes);
                     if (!edges.contains(meronymEdge)) {
                         graph.addEdge(concept, meronym, meronymEdge);
+                        graph.setEdgeWeight(meronymEdge, 0.0d);
                     }
                 });
                 concept.getArbitraryRelations().stream().filter(arbitraryRelation -> arbitraryRelation != null && !Decomposition.getConcepts2Ignore().contains(arbitraryRelation) && !arbitraryRelation.equals(concept)).forEach(arbitraryRelation -> {
@@ -239,8 +268,13 @@ public class GraphUtil {
                     arbitraryEdge.setSource(concept);
                     arbitraryEdge.setTarget(arbitraryRelation);
                     arbitraryEdge.setRelationName(arbitraryRelation.getOriginatedRelationName());
+                    Map attributes = new HashMap();
+                    attributes.put("edgeType", arbitraryRelation.getOriginatedRelationName());
+//                    attributes.put("weight",0.0d);
+                    arbitraryEdge.setAttributes(attributes);
                     if (!edges.contains(arbitraryEdge)) {
                         graph.addEdge(concept, arbitraryRelation, arbitraryEdge);
+                        graph.setEdgeWeight(arbitraryEdge, 0.0d);
                     }
                 });
             }
@@ -315,7 +349,7 @@ public class GraphUtil {
         //GraphMLExporter<String, MyWeightedEdge> exporter = new GraphMLExporter<concept, DefaultEdge>();
 
         // In order to be able to export edge and node labels and IDs, we must implement providers for them
-        VertexNameProvider<Concept> vertexIDProvider = vertex -> {
+        ComponentNameProvider<Concept> vertexIDProvider = vertex -> {
             if (vertex != null && vertex.getLitheral() != null) {
                 return vertex.getLitheral();
             } else {
@@ -325,16 +359,17 @@ public class GraphUtil {
 
         };
         //Create vertex name provider. Here we can controll what is writen on the nodes of the graph
-        VertexNameProvider<Concept> vertexNameProvider = vertex -> {
+        ComponentNameProvider<Concept> vertexNameProvider = vertex -> {
             if (vertex != null) {
                 return vertex.getLitheral();
             } else {
                 return "";
             }
         };
+
         //Create a edge name provider. Here we want to differ the edge types.
-        EdgeNameProvider<WeightedEdge> edgeIDProvider = edge -> {
-            String edgeType;
+        ComponentNameProvider<WeightedEdge> edgeIDProvider = edge -> {
+            String edgeType;// = (String)edge.getAttributes().get("edgeType");
             if (edge instanceof ArbitraryEdge) {
                 edgeType = graph.getEdgeSource(edge) + " " + ((ArbitraryEdge) edge).getRelationName() + " > " + graph.getEdgeTarget(edge);
             } else {
@@ -343,17 +378,32 @@ public class GraphUtil {
             return edgeType;
 
         };
-        EdgeNameProvider<WeightedEdge> edgeLabelProvider = edge -> {
+        ComponentNameProvider<WeightedEdge> edgeLabelProvider = edge -> {
             if (edge != null) {
-                return String.valueOf(edge.getWeight());
+                double w = edge.getWeight();
+                return String.valueOf(w);
             } else {
-                return " > ";
+                return " > ";//TODO: whats that for?
             }
+        };
+        //additional edge attributes
+        ComponentAttributeProvider<WeightedEdge> vertexAttributeProvider = null;
+        ComponentAttributeProvider<WeightedEdge> edgeAttributeProvider = edge -> {
+            Map<String, Attribute> m = new HashMap<>();
+            if (edge != null) {
+                m.put("edgeType", DefaultAttribute.createAttribute(edge.getEdgeType().toString()));
+                m.put("weight", DefaultAttribute.createAttribute(edge.getWeight() + ""));
+            }
+            return m;
         };
 
         GraphMLExporter<Concept, WeightedEdge> exporter =
-                new GraphMLExporter<>(vertexIDProvider, vertexNameProvider, edgeIDProvider,
-                        edgeLabelProvider);
+                new GraphMLExporter(vertexIDProvider, vertexNameProvider, vertexAttributeProvider, edgeIDProvider,
+                        edgeLabelProvider, edgeAttributeProvider);
+
+        exporter.setExportEdgeWeights(true);
+        exporter.registerAttribute("edgeType", GraphMLExporter.AttributeCategory.EDGE, AttributeType.STRING);
+//        exporter.registerAttribute("weight", GraphMLExporter.AttributeCategory.EDGE, AttributeType.STRING);
 
 
         File graphFile = new File(filename);
@@ -364,10 +414,10 @@ public class GraphUtil {
         }
         FileWriter fw = new FileWriter(graphFile);
         try {
-            exporter.export(fw, graph);
+            exporter.exportGraph(graph, fw);
             fw.flush();
             fw.close();
-        } catch (TransformerConfigurationException | SAXException e) {
+        } catch (ExportException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -480,7 +530,7 @@ public class GraphUtil {
      * @param graph1 the graph to take the vertexes to add from
      * @param result the resulting graph, containing all the vertexes of the given graph.
      */
-    private static void addVertexes(Graph graph1, ListenableDirectedGraph result) {
+    private static void addVertexes(Graph graph1, DefaultListenableGraph result) {
         Iterator iterator;
         iterator = graph1.vertexSet().iterator();
         while (iterator.hasNext()) {
@@ -500,7 +550,7 @@ public class GraphUtil {
      * @param graph1 the graph to take the edges to add from
      * @param result the resulting graph, containing all the edges of the given graph.
      */
-    private static void addEdges(Graph graph1, ListenableDirectedGraph result) {
+    private static void addEdges(Graph graph1, DefaultListenableGraph result) {
         Iterator iterator;
         iterator = graph1.edgeSet().iterator();
         while (iterator.hasNext()) {
@@ -546,7 +596,7 @@ public class GraphUtil {
      */
     public static Graph getGraph(String decompositionWord, WordType wordType, int decompositionDepth) {
         Graph graph = null;
-        if ( MarkerPassingConfig.isUseGraphCache()) {
+        if (MarkerPassingConfig.isUseGraphCache()) {
             String key = decompositionWord + wordType.type() + decompositionDepth;
             graph = graphCache.get(key);
             if (graph == null) {
@@ -560,7 +610,7 @@ public class GraphUtil {
                         graphCache.put(key, graph);
                     } catch (Exception e) {
                         Concept c = decomposition.decompose(decompositionWord, wordType, decompositionDepth);
-                        if (c != null){
+                        if (c != null) {
                             cleanUp(c, decomposition);
                             //Entity e = GraphUtil.createEntity(c);
                             graph = createJGraph(c);
@@ -587,7 +637,7 @@ public class GraphUtil {
                     graph = graphCache.get(key);
                 }
 
-            }else{
+            } else {
 //                Object lock = lockMap.get(key);
 //                if(lock != null){
 //                    try {
@@ -600,7 +650,7 @@ public class GraphUtil {
 //                }
             }
         } else {
-           // Concept c = decomposition.multiThreadedDecompose(decompositionWord, wordType, decompositionDepth);
+            // Concept c = decomposition.multiThreadedDecompose(decompositionWord, wordType, decompositionDepth);
             Concept c = decomposition.decompose(decompositionWord, wordType, decompositionDepth);
             //Concept decWord = new Concept(decompositionWord);
             //Concept c = decomposition.decompose(decWord, decompositionDepth);
@@ -619,10 +669,10 @@ public class GraphUtil {
      * @param decomposition decomposition to reset all known concepts and so on...
      */
     private static void cleanUp(Concept c, Decomposition decomposition) {
-       decomposition.cleanUp();
+        decomposition.cleanUp();
     }
 
-    public  boolean compareGraphs(Graph g0, List<Concept> concepts) {
+    public boolean compareGraphs(Graph g0, List<Concept> concepts) {
         boolean result = true;
         for (Concept findC : concepts) {
             boolean forConcept = false;
@@ -637,7 +687,7 @@ public class GraphUtil {
         return result;
     }
 
-    public  boolean compareGraphs(Graph g1, Graph g2) {
+    public boolean compareGraphs(Graph g1, Graph g2) {
         if (g1.equals(g2)) {
             return true;
         }
@@ -669,20 +719,18 @@ public class GraphUtil {
      * Merging two graphs into one. Taking all node and edges from the first one
      * and adding those of the second graph if they do not already exist.
      *
-     * @param graph1
-     *            the first graph to merge
-     * @param graph2
-     *            the second graph to merge into the first one
+     * @param graph1 the first graph to merge
+     * @param graph2 the second graph to merge into the first one
      * @return a new graph containing all edges and nodes of the first two
-     *         graphs.
+     * graphs.
      */
     public static synchronized Graph<Object, Object> mergeGraph(Graph graph1, Graph graph2) {
-        ListenableDirectedGraph<Object, Object> result = null;
-        if(MarkerPassingConfig.isUseMergedGraphCache()) {
+        DefaultListenableGraph<Object, Object> result = null;
+        if (MarkerPassingConfig.isUseMergedGraphCache()) {
             result = mergedGraphCache.get(graph1.hashCode() + graph2.hashCode());
         }
-        if(result == null) {
-             result = new ListenableDirectedGraph<>(WeightedEdge.class);
+        if (result == null) {
+            result = new DefaultListenableGraph<>(new DefaultDirectedWeightedGraph<>(WeightedEdge.class));
             // Get all vertex from the graph1
             Iterator iterator = graph1.vertexSet().iterator();
             AddVertexesOfGraph(result, iterator);
@@ -703,7 +751,7 @@ public class GraphUtil {
             AddEdgesOfGraph(result, iterator);
 //            result.edgeSet().addAll(graph1.edgeSet());
 
-            if(MarkerPassingConfig.isUseMergedGraphCache()) {
+            if (MarkerPassingConfig.isUseMergedGraphCache()) {
                 mergedGraphCache.put(graph1.hashCode() + graph2.hashCode(), result);
             }
         }
@@ -715,8 +763,8 @@ public class GraphUtil {
 
     public static synchronized Concept getConceptFromGraph(Graph graph, String word) {
 
-        for(Object c : graph.vertexSet()){
-            if(((Concept)c).getLitheral().equals(word)){
+        for (Object c : graph.vertexSet()) {
+            if (((Concept) c).getLitheral().equals(word)) {
                 return (Concept) c;
             }
         }
@@ -725,7 +773,7 @@ public class GraphUtil {
     }
 
 
-    private static void AddVertexesOfGraph(ListenableDirectedGraph result, Iterator iterator) {
+    private static void AddVertexesOfGraph(DefaultListenableGraph result, Iterator iterator) {
         while (iterator.hasNext()) {
             Object sourceVertex = iterator.next();
             if (sourceVertex instanceof Concept) {
@@ -742,16 +790,18 @@ public class GraphUtil {
 
     /**
      * Here a shallow copy of the concepts are added to the given graph.
-     * @param result the graph to clone the concepts into
+     *
+     * @param result   the graph to clone the concepts into
      * @param iterator the iterator from which the concepts should be cloned into the graph.
      */
-    private static void AddEdgesOfGraph(ListenableDirectedGraph result, Iterator iterator) {
-        while (iterator.hasNext())
-        {
+    private static void AddEdgesOfGraph(DefaultListenableGraph result, Iterator iterator) {
+        while (iterator.hasNext()) {
             Object sourceEdge = iterator.next();
             if (sourceEdge instanceof WeightedEdge) {
                 WeightedEdge temEdge = (WeightedEdge) sourceEdge;
-                result.addEdge(temEdge.getSource(),temEdge.getTarget());
+                result.addEdge(temEdge.getSource(), temEdge.getTarget(), temEdge);
+                result.setEdgeWeight(temEdge, temEdge.getEdgeWeight());
+
                 /* WeightedEdge newEdge = new WeightedEdge();
 
                if (!result.containsEdge(sourceEdge)) {
@@ -798,10 +848,6 @@ public class GraphUtil {
 //        }
 //        return false;
     }
-
-
-
-
 
 
 }

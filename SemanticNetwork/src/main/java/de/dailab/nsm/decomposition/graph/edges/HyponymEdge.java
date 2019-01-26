@@ -7,6 +7,7 @@
 
 package de.dailab.nsm.decomposition.graph.edges;
 
+
 /**
  * Created by faehndrich on 30.07.15.
  */

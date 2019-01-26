@@ -164,7 +164,7 @@ public class RDFXMLCrawler {
             }
         }
 
-        //TODO; index assertion axioms as well
+        //TODO; index assertion axioms, disjoint axioms  as well
 
         _ontIndexer.flush();
         _ontIndexer.closeWriter();
