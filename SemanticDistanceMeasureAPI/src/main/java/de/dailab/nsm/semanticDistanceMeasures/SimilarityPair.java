@@ -9,7 +9,7 @@ package de.dailab.nsm.semanticDistanceMeasures;
 /**
  * Created by faehndrich on 07.05.15.
  */
-public class SimilarityPair implements Cloneable{
+public class SimilarityPair extends DataExample{
     String string1 = null;
     String string2 = null;
     double distance = Double.NaN;
@@ -55,11 +55,6 @@ public class SimilarityPair implements Cloneable{
 
     @Override
     public Object clone(){
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return super.clone();
     }
 }

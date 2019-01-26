@@ -6,7 +6,7 @@
  */
 
 package de.dailab.nsm.semanticDistanceMeasures.data;
-import de.dailab.nsm.semanticDistanceMeasures.SynonymPair;
+import de.dailab.nsm.semanticDistanceMeasures.SimilarityPair;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface WordSimilarityDataSet extends DataSet{
 
-    Collection<SynonymPair> Normalize(List<SynonymPair> list2Normlize);
+    Collection<SimilarityPair> Normalize(List<SimilarityPair> list2Normlize);
 
 }

@@ -57,6 +57,12 @@
             <artifactId>RDFXMLCrawlerOWLAPI-3</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>lucene-core</artifactId>
+                    <groupId>org.apache.lucene</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>de.dailab.NSM.WordNet</groupId>
@@ -140,20 +146,12 @@
             <version>3.9.1</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>org.apache.lucene</artifactId>
-                    <groupId>lucene-queryparser</groupId>
+                    <artifactId>lucene-core</artifactId>
+                    <groupId>org.apache.lucene</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>org.apache.lucene</artifactId>
-                    <groupId>lucene-analyzers-common</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>org.apache.lucene</artifactId>
-                    <groupId>lucene-queries</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>org.apache.lucene</artifactId>
-                    <groupId>lucene-core</groupId>
+                    <artifactId>lucene-queries</artifactId>
+                    <groupId>org.apache.lucene</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -162,19 +160,32 @@
             <artifactId>stanford-corenlp</artifactId>
             <version>3.9.1</version>
             <classifier>models-german</classifier>
+            <exclusions>
+                <exclusion>
+                    <artifactId>lucene-core</artifactId>
+                    <groupId>org.apache.lucene</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>lucene-queries</artifactId>
+                    <groupId>org.apache.lucene</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
             <version>3.9.1</version>
             <classifier>models</classifier>
-        </dependency>
-
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>3.9.1</version>
-            <classifier>models-german</classifier>
+            <exclusions>
+                <exclusion>
+                    <artifactId>lucene-core</artifactId>
+                    <groupId>org.apache.lucene</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>lucene-queries</artifactId>
+                    <groupId>org.apache.lucene</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.languagetool/languagetool-core -->
         <dependency>

@@ -8,13 +8,12 @@
 package de.dailab.nsm.decomposition.graph;
 
 import de.dailab.nsm.semanticDistanceMeasures.DataExample;
-import de.dailab.nsm.semanticDistanceMeasures.SynonymPair;
+import de.dailab.nsm.semanticDistanceMeasures.SimilarityPair;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by faehndrich on 11.03.16.
@@ -34,7 +33,7 @@ public class Evaluation {
         double[] result = new double[experimantResult.size()];
         Iterator iterator = experimantResult.iterator();
         for (int i = 0; i < experimantResult.size(); i++) {
-            SynonymPair pair = (SynonymPair) iterator.next();
+            SimilarityPair pair = (SimilarityPair) iterator.next();
             human[i] = pair.getTrueResult();
             result[i] = pair.getResult();
 //            System.out.println(pair.getString1() + "," + pair.getString2() + "," + pair.getDistance() + "," + pair.getResult());
@@ -58,7 +57,7 @@ public class Evaluation {
         double[] result = new double[experimantResult.size()];
         Iterator iterator = experimantResult.iterator();
         for (int i = 0; i < experimantResult.size(); i++) {
-            SynonymPair pair = (SynonymPair) iterator.next();
+            SimilarityPair pair = (SimilarityPair) iterator.next();
             human[i] = pair.getTrueResult();
             result[i] = pair.getResult();
         }

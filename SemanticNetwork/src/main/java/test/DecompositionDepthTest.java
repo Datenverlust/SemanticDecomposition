@@ -62,7 +62,7 @@ public class DecompositionDepthTest {
     @Test
     public void testDecompositionDepth() throws Exception {
 
-        Concept concept = decomposition.multiThreadedDecompose("use", WordType.NN,decompositionDepth);
+        Concept concept = decomposition.decompose("use", WordType.NN,decompositionDepth);
         Assert.assertNotNull(concept);
         Assert.assertEquals(concept.getDecompositionlevel(),decompositionDepth);
         Assert.assertTrue(concept.getId()== concept.hashCode());
