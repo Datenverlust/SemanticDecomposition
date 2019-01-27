@@ -20,7 +20,11 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>3.3</version>
+        </dependency>
     </dependencies>
 
     <build>
