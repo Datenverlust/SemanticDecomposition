@@ -17,8 +17,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <log4jVersion>1.2.17</log4jVersion>
-        <nd4j.version>0.9.1</nd4j.version>
-        <dl4j.version>0.9.1</dl4j.version>
+        <nd4j.version>1.0.0-beta3</nd4j.version>
+        <dl4j.version>1.0.0-beta3</dl4j.version>
         <canova.version>0.0.0.17</canova.version>
     </properties>
     <dependencies>

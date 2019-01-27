@@ -12,16 +12,6 @@ package de.dailab.nsm.semanticDistanceMeasures;
 public class SimilarityPair extends DataExample{
     String string1 = null;
     String string2 = null;
-    double distance = Double.NaN;
-    double result = Double.NaN;
-    public double getResult() {
-        return result;
-    }
-
-    public void setResult(double result) {
-        this.result = result;
-    }
-
 
     public String getString1() {
         return string1;
@@ -39,18 +29,10 @@ public class SimilarityPair extends DataExample{
         this.string2 = string2;
     }
 
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
     public SimilarityPair(String string1, String string2, double distance){
         this.string1 = string1;
         this.string2 = string2;
-        this.distance =distance;
+        this.setTrueResult(distance);
     }
 
     @Override

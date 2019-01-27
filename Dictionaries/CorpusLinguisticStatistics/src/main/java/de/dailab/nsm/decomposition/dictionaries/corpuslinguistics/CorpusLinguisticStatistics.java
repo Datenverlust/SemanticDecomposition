@@ -82,13 +82,13 @@ public class CorpusLinguisticStatistics {
             }
             gModel = new File(prtaindVectorLocation);
             try {
-                vec = WordVectorSerializer.loadGoogleModel(gModel, true);
+                vec = WordVectorSerializer.readWord2VecModel(gModel, true);
                 //vec = WordVectorSerializer.loadTxtVectors(new File("glove.6B.50d.txt"));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 try {
                    DictUtil.downloadFile(source + corpusdownloadFileName,prtaindVectorLocation);
-                    vec = WordVectorSerializer.loadGoogleModel(gModel, true);
+                    vec = WordVectorSerializer.readWord2VecModel(gModel, true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
