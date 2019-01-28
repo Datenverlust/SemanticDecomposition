@@ -24,6 +24,8 @@ import org.apache.log4j.Logger;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultListenableGraph;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.jgrapht.io.*;
 
 import java.io.*;
@@ -50,7 +52,7 @@ public class GraphUtil {
      * @param concept the concept from which to start the graph.
      * @return DefaultListenableGraph which models the decomposition of the given concept.
      */
-    public static Graph<Concept, WeightedEdge> createJGraph(Concept concept) {
+    public static DefaultListenableGraph<Concept, WeightedEdge> createJGraph(Concept concept) {
 
         DefaultListenableGraph<Concept, WeightedEdge> graph = new DefaultListenableGraph(new DefaultDirectedWeightedGraph(WeightedEdge.class));
         assert (Decomposition.getConcepts2Ignore().size() > 0);
@@ -76,7 +78,7 @@ public class GraphUtil {
      * @return DefaultListenableGraph which models the decomposition of the given concept.
      */
 
-    public static Graph<Concept, WeightedEdge> createJGraphforBDOS(Concept concept) {
+    public static DefaultListenableGraph<Concept, WeightedEdge> createJGraphforBDOS(Concept concept) {
 
         DefaultListenableGraph<Concept, WeightedEdge> graph = new DefaultListenableGraph<>(new DefaultDirectedWeightedGraph<>(WeightedEdge.class));
 
@@ -148,7 +150,7 @@ public class GraphUtil {
      * @param graph   the jGraph to add the nodes to
      * @param concept the concept to be added to the graph.
      */
-    private static void addConceptRecursivly(Graph<Concept, WeightedEdge> graph, Concept concept) {
+    private static void addConceptRecursivly(DefaultListenableGraph<Concept, WeightedEdge> graph, Concept concept) {
         if (!Decomposition.getConcepts2Ignore().contains(concept)) {
             if (!graph.containsVertex(concept)) {
                 graph.addVertex(concept);
@@ -291,7 +293,7 @@ public class GraphUtil {
      * @param concept the concept to be added to the graph.
      */
 
-    private static void addConceptRecursivlyforBDOS(Graph<Concept, WeightedEdge> graph, Concept concept) {
+    private static void addConceptRecursivlyforBDOS(DefaultListenableGraph<Concept, WeightedEdge> graph, Concept concept) {
 
         BaseDictionary wordnet = WordNetDictionary.getInstance();
         ArrayList<Concept> meronyms = new ArrayList<>();
