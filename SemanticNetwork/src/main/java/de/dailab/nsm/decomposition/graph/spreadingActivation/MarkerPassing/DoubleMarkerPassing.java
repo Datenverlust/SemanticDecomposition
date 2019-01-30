@@ -44,9 +44,9 @@ public class DoubleMarkerPassing extends SpreadingAlgorithm {
         HashSet<Node> firingnodes = new HashSet<>();
         this.setFiringNodes(firingnodes);
         //fill node network with nodes;
-        for (Map.Entry<Concept,Double> entry : threshold.entrySet()){
-            System.out.println("DEBUG lökojö: "+entry.getKey().getLitheral()+" "+entry.getValue());
-        }
+//        for (Map.Entry<Concept,Double> entry : threshold.entrySet()){
+//            System.out.println("DEBUG lökojö: "+entry.getKey().getLitheral()+" "+entry.getValue());
+//        }
         fillNodes(graph, threshold, nodeType);
 
         //Create termination condition
