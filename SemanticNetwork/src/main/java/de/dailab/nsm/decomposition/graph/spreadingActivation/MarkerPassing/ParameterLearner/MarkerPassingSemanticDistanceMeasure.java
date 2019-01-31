@@ -125,7 +125,6 @@ public class MarkerPassingSemanticDistanceMeasure implements SemanticDistanceMea
         threshold.put(activeNode2, thresholdNode2);
         //create algorithm
         DoubleMarkerPassing doubleMarkerPassing = getDoubleMarkerPassing(commonGraph, startActivation, threshold);
-        doubleMarkerPassing.fillNodes(commonGraph, threshold, nodeType);
         Collection<Node> activeNodes = doubleMarkerPassing.getActiveNodes();
 
         double totalActivation = getTotalActivation(activeNodes);
