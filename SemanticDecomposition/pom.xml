@@ -46,13 +46,13 @@
             <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
             <artifactId>RDFXMLCrawlerOWLAPI-3</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>lucene-core</artifactId>
-                    <groupId>org.apache.lucene</groupId>
-                </exclusion>
-            </exclusions>
+            <!--<scope>compile</scope>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>lucene-core</artifactId>-->
+                    <!--<groupId>org.apache.lucene</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
         <dependency>
             <groupId>de.dailab.NSM.WordNet</groupId>
