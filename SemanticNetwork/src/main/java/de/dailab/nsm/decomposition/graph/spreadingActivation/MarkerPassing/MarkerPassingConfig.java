@@ -93,6 +93,11 @@ public class MarkerPassingConfig implements Cloneable {
         MarkerPassingConfig.useGraphCache = useGraphCache;
     }
 
+    public static void setUseMergedGraphCache(boolean enableCache){
+        MarkerPassingConfig.useMergedGraphCache = enableCache;
+
+    }
+
     public static WordType getWordType() {
         return wordType;
     }
