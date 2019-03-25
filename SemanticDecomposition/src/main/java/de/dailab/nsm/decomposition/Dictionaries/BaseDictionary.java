@@ -231,6 +231,10 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
                     //best first for the moment. See above comment.
                     lemma = lemmas.get(0).getLemma();
                 }
+                //TODO: what if lemma == Null?
+                if(lemma == null){
+                    System.err.println("[LEMMATIZATION] " + word.getLitheral() + " has no known LEMMA!");
+                }
                 word.setLemma(lemma);
             }
         }
