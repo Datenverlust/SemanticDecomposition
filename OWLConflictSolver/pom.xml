@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
-            <artifactId>ToOWLConverterAPI</artifactId>
+            <artifactId>ToOWLConverterApi</artifactId>
             <version>${project.version}</version>
         </dependency>
 
