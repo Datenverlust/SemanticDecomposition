@@ -334,9 +334,8 @@ public class RDFXMLCrawler {
 
     /**
      * Retrieves all children for the given entity.
-     * TODO: also instances of classes and properties?
      * TODO: currently imports closure is not used
-     * @param entityIRI - either class, individual or a property
+     * @param entityIRI - either class or a property
      * @return
      */
     public Set<String> children(String entityIRI){
@@ -350,7 +349,7 @@ public class RDFXMLCrawler {
                         .filter(subClAx -> subClAx.getSuperClass().isClassExpressionLiteral())
                         .map(subClAx -> subClAx.getSubClass().asOWLClass().getIRI().toString())
                         .forEach(result::add);
-                //TODO: also instances?
+                //also instances of given class entity
                 result.addAll(instances(entityIRI));
             } else if(e instanceof OWLObjectProperty ){
                 _ontology.getObjectSubPropertyAxiomsForSuperProperty((OWLObjectProperty)e).stream()

@@ -196,7 +196,7 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
      * Here we want a basic form of the concept, which is reduced to the minimum. Is this the stem
      * of the word? How about different word types? Are they considered?
      * <p>
-     * //TODO: this will not work for german words because Stanford german models do not contain lemmas for german words
+     * NOTE: For german word lemmas org.languagetool is used,  because Stanford german models do not contain lemmas for german words
      *
      * @param word concept to get the Lemma vor
      * @return a concept with the lemma filled.

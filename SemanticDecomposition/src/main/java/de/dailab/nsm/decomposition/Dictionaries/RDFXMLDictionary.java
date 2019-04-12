@@ -22,6 +22,13 @@ import java.util.Set;
 
 /**
  * Created by Johannes Fähndrich on 18.07.18 as part of his dissertation.
+ *
+ * This class acts as an interface to OWL based ontology knowledge bases.
+ *
+ * Contributors:
+ *
+ * Lars Borchert
+ *
  */
 public class RDFXMLDictionary extends BaseDictionary {
     private static Object _lock  = new Object();
@@ -37,51 +44,16 @@ public class RDFXMLDictionary extends BaseDictionary {
      */
     private String _language;
 
-    /**
-     * Default ontology
-     */
-    //private String _source = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/RDF/om-2.0.rdf";
-
-//    public static RDFXMLDictionary getInstance(){
-//        //default: Measurement Ontology
-//        return getInstance("http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/RDF/om-2.0.rdf");
-//    }
-//
-//    public static RDFXMLDictionary getInstance(String customSource){
-//        if(_instance == null){
-//            //grap lock only if needed, meaning only when we actually need to instantiate
-//            synchronized (_lock){
-//                //While we are waiting for the lock, another thread might have
-//                //caused the instantiation already
-//                if(_instance == null){
-//                    _instance = new RDFXMLDictionary(customSource);
-//                }
-//            }
-//        }
-//        return _instance;
-//    }
-
-//    private RDFXMLDictionary(String source){
-//        if (_crawler == null) {
-//            _language = Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY);
-//            _crawler = new RDFXMLCrawler(source, _language);
-//            //config returns the stopwords from the configuration.
-//            Set<String> stopWords = Config.getInstance().stopWords();
-//            _crawler.init();
-//            _crawler.index(stopWords);
-//        }
-//
-//        System.out.println(String.format("RDFXMLDictionary [%s] [%s]", source, _language));
-//
-//    }
-
     public RDFXMLDictionary(String source){
         init(source);
-
     }
-    public RDFXMLDictionary(){
-       init("http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/RDF/om-2.0.rdf");
 
+    /**
+     * Constructs an english measurmement ontology as knowledge base (or dictionary)
+     */
+    public RDFXMLDictionary(){
+        //TODO: remove DAI-Lab URL and re-host ontology or load locally
+       init("http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/RDF/om-2.0.rdf");
     }
 
     private void init(String source){
@@ -117,7 +89,8 @@ public class RDFXMLDictionary extends BaseDictionary {
         //get equivalent classes (and try not to use a reasoner, because a reasoner would never classif the default ontology)
         HashSet<Concept> syns = new HashSet<>();
         if(word == null || word.getLitheral() == null){
-            System.out.println("word is null");
+            System.err.println("word or literal is null");
+            return syns;
         }
         List<String> iris = findIRIsForTerm(word.getLitheral());
         //assuming best match is iri for searched entity
@@ -135,6 +108,7 @@ public class RDFXMLDictionary extends BaseDictionary {
     @Override
     public HashSet<Concept> getAntonyms(Concept word) {
         //difficult for this dictionary. what would antonyms be in owl terms?
+        // for some entities maybe DisjointClasses / DisjointProperty ?
         return new HashSet<>();
     }
 
@@ -196,28 +170,28 @@ public class RDFXMLDictionary extends BaseDictionary {
 
     @Override
     public Concept fillConcept(Concept word, WordType wordType) throws DictionaryDoesNotContainConceptException {
-        if (word.getLemma() != null) {
+        if (word.getLemma() == null) {
+            // if a lemma was not set yet by another dictionary we try to set it here
             setLemma(word);
         }
 
         if (word.getWordType() == null) {
-            if (wordType != null) {
-                word.setWordType(wordType);
-            } else {
-                setPOS(word);
-            }
+            word.setWordType(wordType);
         }
+
         word.getSynonyms().addAll(this.getSynonyms(word));
         word.getAntonyms().addAll(this.getAntonyms(word));
         word.getHypernyms().addAll(this.getHypernyms(word));
         word.getHyponyms().addAll(this.getHyponyms(word));
         word.getMeronyms().addAll(this.getMeronyms(word));
-        List<String> entities = _crawler.findIRIs(word.getLitheral());
-        if (entities == null) {
-            throw new DictionaryDoesNotContainConceptException(word.getLitheral());
-        } else {
-            fillDefinition(word);
-        }
+
+        //i don't get the following part. what shall be accomplished here?
+//        List<String> entities = _crawler.findIRIs(word.getLitheral());
+//        if (entities == null) {
+//            throw new DictionaryDoesNotContainConceptException(word.getLitheral());
+//        } else {
+//            fillDefinition(word);
+//        }
         //logger.debug("filling concept: " + word.getLitheral() + " with POS: " + word.getWordType());
         return word;
     }
