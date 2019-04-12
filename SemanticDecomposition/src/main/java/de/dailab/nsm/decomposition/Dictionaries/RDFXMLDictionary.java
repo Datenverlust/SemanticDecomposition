@@ -69,7 +69,7 @@ public class RDFXMLDictionary extends BaseDictionary {
      * @param word
      * @return
      */
-    private List<String> findIRIsForTerm(String word){
+    protected List<String> findIRIsForTerm(String word){
         String[] fields = new String[]{Fields.ENTITY_NAME};
         List<String> result =  _crawler.findIRIs(fields, word);
         return result;
