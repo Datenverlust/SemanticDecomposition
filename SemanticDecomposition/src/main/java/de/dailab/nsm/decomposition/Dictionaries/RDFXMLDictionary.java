@@ -37,12 +37,12 @@ public class RDFXMLDictionary extends BaseDictionary {
     /**
      * Data crawler
      */
-    private RDFXMLCrawler _crawler;
+    protected RDFXMLCrawler _crawler;
 
     /**
      * Language tag
      */
-    private String _language;
+    protected String _language;
 
     public RDFXMLDictionary(String source){
         init(source);
@@ -80,7 +80,7 @@ public class RDFXMLDictionary extends BaseDictionary {
      * @param entityIRI
      * @return - entity name or NULL
      */
-    private String entityFromIRI(String entityIRI){
+    protected String entityFromIRI(String entityIRI){
         return _crawler.getEntityNameForIRI(entityIRI);
     }
 
@@ -89,7 +89,7 @@ public class RDFXMLDictionary extends BaseDictionary {
         //get equivalent classes (and try not to use a reasoner, because a reasoner would never classif the default ontology)
         HashSet<Concept> syns = new HashSet<>();
         if(word == null || word.getLitheral() == null){
-            System.err.println("word or literal is null");
+            System.err.println("concept or concept's literal is null");
             return syns;
         }
         List<String> iris = findIRIsForTerm(word.getLitheral());
