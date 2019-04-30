@@ -212,7 +212,7 @@ public class Definition implements Serializable {
                             word.setLemma(t.getLemma());
                             def.add(word);
                         } else {
-                            System.out.println("No lemmatization for " + "[Token] " + token.toString());
+                            //System.out.println("No lemmatization for " + "[Token] " + token.toString());
                         }
 
                     }
