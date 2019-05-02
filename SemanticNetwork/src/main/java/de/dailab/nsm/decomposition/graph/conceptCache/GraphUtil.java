@@ -248,7 +248,7 @@ public class GraphUtil {
                     addConceptRecursivly(graph, meronym);
                     Set<WeightedEdge> edges = graph.getAllEdges(concept, meronym);
                     //TODO: Does not exist. Are these values actually used?
-                    //double w = MarkerPassingConfig.getMeronymLinkWeight();
+                    double w = MarkerPassingConfig.getMeronymLinkWeight();
                     MeronymEdge meronymEdge = new MeronymEdge();
                     meronymEdge.setSource(concept);
                     meronymEdge.setTarget(meronym);
@@ -258,7 +258,7 @@ public class GraphUtil {
                     meronymEdge.setAttributes(attributes);
                     if (!edges.contains(meronymEdge)) {
                         graph.addEdge(concept, meronym, meronymEdge);
-                        graph.setEdgeWeight(meronymEdge, 0.0d);
+                        graph.setEdgeWeight(meronymEdge, w);
                     }
                 });
                 concept.getArbitraryRelations().stream().filter(arbitraryRelation -> arbitraryRelation != null && !Decomposition.getConcepts2Ignore().contains(arbitraryRelation) && !arbitraryRelation.equals(concept)).forEach(arbitraryRelation -> {
