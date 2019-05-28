@@ -44,6 +44,14 @@ public class RDFXMLDictionary extends BaseDictionary {
      */
     protected String _language;
 
+    public RDFXMLDictionary(RDFXMLCrawler datasource){
+        init(datasource);
+    }
+
+    /**
+     * Instantiates the dictionary by downlaoding the given ontology from the given document iri.
+     * @param source
+     */
     public RDFXMLDictionary(String source){
         init(source);
     }
@@ -58,7 +66,12 @@ public class RDFXMLDictionary extends BaseDictionary {
 
     private void init(String source){
         _language = Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY);
-        _crawler = new RDFXMLCrawler(source, _language);
+        init (new RDFXMLCrawler(source, _language));
+    }
+
+    private void init(RDFXMLCrawler crawler){
+        _language = crawler.getLanguage();
+        _crawler = crawler;
         //config returns the stopwords from the configuration.
         Set<String> stopWords = Config.getInstance().stopWords();
         _crawler.index(stopWords);

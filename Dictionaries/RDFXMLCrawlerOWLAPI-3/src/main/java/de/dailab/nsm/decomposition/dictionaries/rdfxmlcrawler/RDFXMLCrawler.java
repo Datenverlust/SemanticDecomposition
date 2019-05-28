@@ -61,6 +61,20 @@ public class RDFXMLCrawler {
         init();
     }
 
+    /**
+     * Use an Ontology as dicitonary. Use this constructor if you have your ontology
+     * is located in-memory.
+     * @param ont
+     * @param language
+     */
+    public RDFXMLCrawler(OWLOntology ont, String language){
+        _ontology = ont;
+        _manager = ont.getOWLOntologyManager();
+        _language = language;
+        _source = null;
+        _path2DBLocation = System.getProperty("user.home").toString() + File.separator + ".decomposition" + File.separator + "RDF";
+    }
+
     public String getPath2DBLocation() {
         return _path2DBLocation;
     }
@@ -73,22 +87,27 @@ public class RDFXMLCrawler {
         return _dictFileName;
     }
 
+    public String getLanguage(){
+        return _language;
+    }
 
     public void init() {
-        File dict = new File(_path2DBLocation + File.separator + _dictFileName);
-        if (!dict.exists()) {
-            //save a local copy
-            DictUtil.downloadFileParalell(_source, _path2DBLocation + File.separator + _dictFileName);
-        }
-        //load
-        try {
-            System.out.println("RDFCrawler attempts to load  " +dict.toString());
-            _ontology = _manager.loadOntologyFromOntologyDocument(dict);
-            System.out.println("RDFCrawler successfully loaded  " +dict.toString());
-            //index();
-        } catch (OWLOntologyCreationException e) {
-            //e.printStackTrace();
-            System.err.println(e.getMessage());
+        if(_source != null){
+            File dict = new File(_path2DBLocation + File.separator + _dictFileName);
+            if (!dict.exists()) {
+                //save a local copy
+                DictUtil.downloadFileParalell(_source, _path2DBLocation + File.separator + _dictFileName);
+            }
+            //load
+            try {
+                System.out.println("RDFCrawler attempts to load  " +dict.toString());
+                _ontology = _manager.loadOntologyFromOntologyDocument(dict);
+                System.out.println("RDFCrawler successfully loaded  " +dict.toString());
+                //index();
+            } catch (OWLOntologyCreationException e) {
+                //e.printStackTrace();
+                System.err.println(e.getMessage());
+            }
         }
     }
 
