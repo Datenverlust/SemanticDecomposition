@@ -106,8 +106,8 @@ public class Decomposition {
         if (dictionaries.size() > 0) {
             return;
         }
-//        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
-//        dictionaries.add(wordNetDict);
+        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
+        dictionaries.add(wordNetDict);
 
         BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
         dictionaries.add(measureMentOntology);
