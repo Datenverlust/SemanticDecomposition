@@ -87,13 +87,50 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.11</source>
+                    <target>1.11</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     <repositories>
+
+        <!-- copiedfrom https://stackoverflow.com/a/28242919/2754830 -->
+        <repository>
+            <id>org.springframework.maven.release</id>
+            <name>Spring Maven Release Repository</name>
+            <url>http://repo.springsource.org/libs-release-local</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+        <!-- For testing against latest Spring snapshots -->
+        <repository>
+            <id>org.springframework.maven.snapshot</id>
+            <name>Spring Maven Snapshot Repository</name>
+            <url>http://repo.springsource.org/libs-snapshot-local</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        <!-- For developing against latest Spring milestones -->
+        <repository>
+            <id>org.springframework.maven.milestone</id>
+            <name>Spring Maven Milestone Repository</name>
+            <url>http://repo.springsource.org/libs-milestone-local</url>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+        <!-- end of added repos from stackoverflow -->
+
+        <!-- For developing against latest Spring milestones -->
+        <repository>
+            <id>org.neo4j</id>
+            <name>neo4j Repository</name>
+            <url>https://m2.neo4j.org/content/repositories/releases</url>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+        <!-- IMPORTANT: THIS BLOCK SOLVED THE FIRST neo4j ERROR -->
+
+        <!-- removing the dai-labor repos, as I currently dont have access to them -->
+        <!--
         <repository>
             <id>dai-releases</id>
             <name>DAI Maven 2 Releases Repository</name>
@@ -127,6 +164,7 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+        -->
     </repositories>
     <distributionManagement>
         <repository>
