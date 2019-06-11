@@ -42,11 +42,16 @@
           <artifactId>opencsv</artifactId>
           <version>3.3</version>
       </dependency>
+
       <dependency>
           <groupId>de.tuberlin</groupId>
           <artifactId>spreadalgo</artifactId>
           <version>0.0.1</version>
+          <scope>system</scope>
+          <systemPath>/home/patrick/.m2/repository/de/tuberlin/spreadalgo/0.0.1-SNAPSHOT/spreadalgo-0.0.1-SNAPSHOT.jar</systemPath>
       </dependency>
+
+
       <dependency>
           <groupId>de.dailab.NSM.Decomposition</groupId>
           <artifactId>SemanticDecomposition</artifactId>
@@ -85,8 +90,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.11</source>
-                    <target>1.11</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
         </plugins>
