@@ -24,7 +24,7 @@ Installing the semantic Decomposition and the needed references
 4. Install JWKTL: mvn clean install
 5. Adapt all versions of the above libraries in the appropriate pom.xml.
 
-Please keep in mind that the first setup and running the test and example projects might take a wile, since WordNet, Wikipedia and Wikidata have to be downloaded and converted into databases.
+Please keep in mind that the first setup and running the test and example projects might take a while, since WordNet, Wikipedia and Wikidata have to be downloaded and converted into databases.
 
 //////////////////////////
 Trouble shooting:
