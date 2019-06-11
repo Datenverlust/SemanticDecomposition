@@ -11,7 +11,13 @@ import de.dailab.nsm.decompostion.Dictionaries.DictUtil;
 import de.tudarmstadt.ukp.jwktl.JWKTL;
 import de.tudarmstadt.ukp.jwktl.api.*;
 import de.tudarmstadt.ukp.jwktl.api.util.Language;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -304,7 +310,29 @@ public class WiktionaryCrawler {
             file.mkdirs();
         }
         file = new File(path2DBLocation+ File.separator + "DB");
-        JWKTL.parseWiktionaryDump(dictFile, file, overwriteExisting, true);
+        /*try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = null;
+            try {
+                docBuilder = docFactory.newDocumentBuilder();
+                Document doc = null;
+                doc = docBuilder.parse(dictFile.getAbsoluteFile());
+                NodeList list = doc.getElementsByTagName("page");
+                System.out.println("Total Number of Pages to scan: " + list.getLength());
+
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+
+            JWKTL.parseWiktionaryDump(dictFile, file, overwriteExisting, true);
+       /* }catch (IllegalStateException e){
+            e.printStackTrace();
+        }*/
+
     }
 
 

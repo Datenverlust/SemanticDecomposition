@@ -61,8 +61,8 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
         System.out.println("StanfordCoreNLP - [English]");
         // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution
         Properties props = new Properties();
-        props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
-        //props.put("annotators", "tokenize, ssplit, pos, lemma");
+        //props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
+        props.put("annotators", "tokenize, ssplit, pos, lemma");
         pipeline = new StanfordCoreNLP(props);
         language = Language.ENGLISH;
     }

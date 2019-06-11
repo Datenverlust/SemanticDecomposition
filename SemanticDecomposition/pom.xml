@@ -19,6 +19,7 @@
     <url>http://nsm.dai-labor.de</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <corenlp.version>3.9.2</corenlp.version>
     </properties>
     <dependencies>
         <dependency>
@@ -133,7 +134,7 @@
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>3.9.1</version>
+            <version>${corenlp.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>lucene-core</artifactId>
@@ -148,7 +149,7 @@
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>3.9.1</version>
+            <version>${corenlp.version}</version>
             <classifier>models-german</classifier>
             <exclusions>
                 <exclusion>
@@ -164,7 +165,7 @@
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>3.9.1</version>
+            <version>${corenlp.version}</version>
             <classifier>models</classifier>
             <exclusions>
                 <exclusion>
