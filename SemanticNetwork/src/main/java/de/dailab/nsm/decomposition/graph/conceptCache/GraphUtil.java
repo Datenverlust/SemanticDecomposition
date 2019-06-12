@@ -24,8 +24,6 @@ import org.apache.log4j.Logger;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultListenableGraph;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.jgrapht.io.*;
 
 import java.io.*;
@@ -774,7 +772,12 @@ public class GraphUtil {
 
     }
 
-
+    /**
+     * Add the the vertexes of the graph in the iterator to the graph given in the first argument.
+     *
+     * @param result   the graph to add the vertiexes to.
+     * @param iterator the iterator which provides the concepts which should be added as nodes to the graph.
+     */
     private static void AddVertexesOfGraph(DefaultListenableGraph result, Iterator iterator) {
         while (iterator.hasNext()) {
             Object sourceVertex = iterator.next();

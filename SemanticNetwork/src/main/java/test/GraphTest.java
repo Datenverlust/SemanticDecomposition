@@ -39,7 +39,7 @@ public class GraphTest {
         Graph morningGraph = GraphUtil.createJGraph(morningConcpet);
 
         //create a single graph out of the two decomposition graphs
-        //FIXME: HERE the problem is that all edge type names are replaced with "Unknown"
+
         Graph merged = GraphUtil.mergeGraph(noonGraph, morningGraph);
         try {
 
