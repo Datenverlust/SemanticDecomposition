@@ -15,8 +15,6 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.queryparser.simple.SimpleQueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -180,7 +178,7 @@ public class Finder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        //TODO: clarify what this is doing? Or better what it should do.
         if(result != null && result.length > 0){
             try {
                 Document d = searcher.doc(result[0].doc);
