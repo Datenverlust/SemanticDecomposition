@@ -10,17 +10,8 @@ package de.dailab.nsm.decomposition.dictionaries.wiktionary;
 import de.dailab.nsm.decompostion.Dictionaries.DictUtil;
 import de.tudarmstadt.ukp.jwktl.JWKTL;
 import de.tudarmstadt.ukp.jwktl.api.*;
-import de.tudarmstadt.ukp.jwktl.api.util.Language;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -226,7 +217,6 @@ public class WiktionaryCrawler {
             for (IWiktionaryEntry wiktionaryEntry : entries) {
                 if (wiktionaryEntry != null) {
                     if (wiktionaryEntry.getWordLanguage() != null) {
-                        //TODO: DISCUSS : is a language check HERE really necessary?
                         //if (wiktionaryEntry.getWordLanguage().equals(Language.ENGLISH)) {
                             for (IWiktionaryRelation relation : wiktionaryEntry.getRelations(rel)) {
                                 result.add(relation);

@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * Class for creating word lemmas.
  * Uses LanguageTools German lemmatisation.
- * //TODO: refactor to own package? Creating interfaces for easy exchange word lamguage specific
  * lemmatisations? If so, how to integrate with coreNLP or others?
  */
 public interface Lemmatisation {
