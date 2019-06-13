@@ -11,11 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by borchert on 19.01.2015.
@@ -30,6 +26,8 @@ public class Config {
         GER
     }
 
+    private Set<String> primes = new HashSet<>();
+    private Set<String> stopwords = new HashSet<>();
     private Properties userProps;
     private File propFile;
     private static Config _instance = null;
@@ -255,17 +253,22 @@ public class Config {
      * @return
      */
     public Set<String> stopWords(){
-        String res = "/"+STOPWORDS_FILE();
-        return filterPrimes( getWordsFromResource(res) );
+        if (stopwords.isEmpty()) {
+            String res = "/" + STOPWORDS_FILE();
+            stopwords.addAll(getWordsFromResource(res));
+        }
+        return filterPrimes(stopwords);
     }
 
     /**
      * Utility method for filtering out primes from the given set of words
-     * //TODO: eventually cache primes and stopwords to prevent excessive reading from hdd
-     * @return
+     * @return a set of words without the semantic primes from NSM.
      */
     public Set<String> filterPrimes(Set<String> words){
-        words.removeAll(primesWords());
+        if (primes.isEmpty()) {
+            primes.addAll(primesWords());
+        }
+        words.removeAll(primes);
         return words;
     }
 
