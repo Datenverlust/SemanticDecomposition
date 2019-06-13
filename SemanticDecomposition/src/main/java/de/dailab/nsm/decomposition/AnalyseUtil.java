@@ -45,7 +45,7 @@ public class AnalyseUtil {
     /**
      * This is the full pipeline. It can be used on hight performance computers.
      *
-     * @return the full stack pipline for coreNMP o use.
+     * @return the full stack pipeline for coreNMP o use.
      */
     public static StanfordCoreNLP getFullPipeline() {
         Properties props = new Properties();

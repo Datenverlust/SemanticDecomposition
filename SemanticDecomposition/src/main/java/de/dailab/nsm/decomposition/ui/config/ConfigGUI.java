@@ -32,7 +32,6 @@ public class ConfigGUI {
     public static boolean start(Config cfg){
         _Config = cfg;
         try {
-            //TODO: application does not terminate when the main frame is closed
             EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
