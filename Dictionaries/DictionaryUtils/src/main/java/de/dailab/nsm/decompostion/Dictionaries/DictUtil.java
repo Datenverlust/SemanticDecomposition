@@ -8,15 +8,9 @@
 package de.dailab.nsm.decompostion.Dictionaries;
 
 
-
-
-
-
 import org.apache.commons.io.FileUtils;
 
-import javax.swing.*;
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
@@ -146,10 +140,6 @@ public class DictUtil {
         ReadableByteChannel rbc = Channels.newChannel(sourceUrl.openStream());
         FileOutputStream fos = new FileOutputStream(destination);
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        //unpack file TODO: define how the extracted content is named
-        //unzip(path2Vec + File.separator +corpusFileName,path2Vec + File.separator +corpusFileName+".txt");
-
-
     }
 
     /**

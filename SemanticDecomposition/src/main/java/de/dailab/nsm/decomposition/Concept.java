@@ -22,38 +22,38 @@ public class Concept implements  Serializable, IConcept {
 
     transient Hashtable<BaseDictionary, Object> ids;
     //@Relationship(type = "AlternativeSynonyms")
-    List<Concept> alternativeSyn = new ArrayList<>();
+    protected List<Concept> alternativeSyn = new ArrayList<>();
     //@Relationship(type = "AlternativeAntonyms")
-    List<Concept> alternativeAnt = new ArrayList<>();
+    protected List<Concept> alternativeAnt = new ArrayList<>();
 
-    private String litheral = null;
+    protected String litheral = null;
     //@Relationship(type = "Part-of-Speech")
-    private WordType wordType = null;
+    protected WordType wordType = null;
     //@GraphId
     //@PrimaryKey
-    private long id = -1;
+    protected long id = -1;
 
-    private int decompositionElementCount = 0;
-    private int decompositionlevel = 0;
+    protected int decompositionElementCount = 0;
+    protected int decompositionlevel = 0;
     // @Relationship(type = "Synonyms")
     //@SecondaryKey(relate = Relationship.ONE_TO_MANY, relatedEntity = Concept.class)
-    private HashSet<Concept> synonyms;
+    protected HashSet<Concept> synonyms;
     //@Relationship(type = "Antonyms")
-    private HashSet<Concept> antonyms;
+    protected HashSet<Concept> antonyms;
     //@Relationship(type = "Hypernyms")
-    private HashSet<Concept> hypernyms;
+    protected HashSet<Concept> hypernyms;
     //@Relationship(type = "Hyponyms")
-    private HashSet<Concept> hyponyms;
+    protected HashSet<Concept> hyponyms;
     //@Relationship(type = "Meronyms")
-    private HashSet<Concept> meronyms;
+    protected HashSet<Concept> meronyms;
     //@Relationship(type = "Definitions")
-    private HashSet<Definition> definitions;
+    protected HashSet<Definition> definitions;
     //@Relationship(type = "Derivations")
-    private HashSet<Concept> derivations;
-    private HashSet<Concept> arbitraryRelations;
-    private String ner = null;
-    private String lemma = null;
-    private String originatedRelationName;
+    protected HashSet<Concept> derivations;
+    protected HashSet<Concept> arbitraryRelations;
+    protected String ner = null;
+    protected String lemma = null;
+    protected String originatedRelationName;
 
 
 
@@ -262,7 +262,7 @@ public class Concept implements  Serializable, IConcept {
         return litheral;
     }
 
-    private void setLitheral(String litheral) {
+    protected void setLitheral(String litheral) {
         this.litheral = litheral;
     }
 

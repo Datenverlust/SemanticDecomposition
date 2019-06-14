@@ -125,7 +125,6 @@ public class MarkerPassingSemanticDistanceMeasure implements SemanticDistanceMea
         threshold.put(activeNode2, thresholdNode2);
         //create algorithm
         DoubleMarkerPassing doubleMarkerPassing = getDoubleMarkerPassing(commonGraph, startActivation, threshold);
-        doubleMarkerPassing.fillNodes(commonGraph, threshold, nodeType);
         Collection<Node> activeNodes = doubleMarkerPassing.getActiveNodes();
 
         double totalActivation = getTotalActivation(activeNodes);
@@ -137,6 +136,60 @@ public class MarkerPassingSemanticDistanceMeasure implements SemanticDistanceMea
         //double sumDoubleActivation  = getCurentDoubleActivation(doubleActiveNodes);
         double sumDoubleActivation = getSumOfDoubleActivationHistory(doubleActiveNodes);
         return sumDoubleActivation / (2 * startActivationLevel);
+        //System.out.println(sumDoubleActivation + ";" + totalActivation);
+        //return Math.cos((Math.PI/2)*(1-(sumDoubleActivation/2*startActivationLevel)));
+        //return ((sumDoubleActivation/pulscount));
+    }
+
+    /**
+     * For use when the decomposition graph was created at an earlier time.
+     * Also you can give an abitrary amount of activation nodes.
+     *
+     * NOTE
+     *
+     * You must give a threshold for every given activation node. Thus the resulting array is of the same
+     * size as the list of activation nodes.
+     *
+     * @param commonGraph           -   the common decomposition graph. must contain the given start activation nodes
+     * @param activationNodes       -   nodes to start spreading from.
+     * @param startActivationLevel  -   the "activeness" of the given start nodes
+     * @param nodeThresholds        -   activation node's thresholds
+     * @param <T>
+     * @return
+     */
+    public  <T extends DoubleNodeWithMultipleThresholds> Double  markerPassing(Graph commonGraph, List<Concept> activationNodes, double startActivationLevel, double... nodeThresholds) {
+
+        List<Map<Concept, List<? extends Marker>>> startActivation = new ArrayList<>();
+        Map<Concept, List<? extends Marker>> conceptMarkerMap = new HashMap<>();
+        Map<Concept, Double> threshold = new HashMap<>(2);
+        startActivation.add(conceptMarkerMap);
+
+        //set start markers
+        for(int i=0; i<activationNodes.size(); i++){
+            Concept c = activationNodes.get(i);
+            DoubleMarkerWithOrigin startMarker = new DoubleMarkerWithOrigin();
+            startMarker.setActivation(startActivationLevel);
+            startMarker.setOrigin(c);
+            List<Marker> startMarkers = new ArrayList<>();
+            startMarkers.add(startMarker);
+            conceptMarkerMap.put(c, startMarkers);
+            //set thresholds
+            threshold.put(c, nodeThresholds[i]);
+        }
+
+        //create algorithm
+        DoubleMarkerPassing doubleMarkerPassing = getDoubleMarkerPassing(commonGraph, startActivation, threshold);
+        Collection<Node> activeNodes = doubleMarkerPassing.getActiveNodes();
+
+        double totalActivation = getTotalActivation(activeNodes);
+        List<DoubleNodeWithMultipleThresholds> doubleActiveNodes = getDoubleActivation(activeNodes);
+
+        int pulscount = doubleMarkerPassing.getPulsecount();
+
+        //double diffDoubleActivation  = getDifferernceOfDoubleActivation(doubleActiveNodes);
+        //double sumDoubleActivation  = getCurentDoubleActivation(doubleActiveNodes);
+        double sumDoubleActivation = getSumOfDoubleActivationHistory(doubleActiveNodes);
+        return sumDoubleActivation / (2 * startActivationLevel); //TODO: maybe n * startActivationLevel, where n is activationNodes.size
         //System.out.println(sumDoubleActivation + ";" + totalActivation);
         //return Math.cos((Math.PI/2)*(1-(sumDoubleActivation/2*startActivationLevel)));
         //return ((sumDoubleActivation/pulscount));

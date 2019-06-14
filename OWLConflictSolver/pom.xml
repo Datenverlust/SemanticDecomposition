@@ -25,6 +25,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <owlapi.version>3.5.0</owlapi.version>
+        <pellet.version>2.4.0-SNAPSHOT</pellet.version>
     </properties>
     <dependencies>
 
@@ -37,7 +38,7 @@
         </dependency>
         <dependency>
             <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
-            <artifactId>ToOWLConverterAPI</artifactId>
+            <artifactId>ToOWLConverterApi</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -76,34 +77,40 @@
         <dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-core</artifactId>
-            <version>2.3.0</version>
+            <version>${pellet.version}</version>
         </dependency>
         <dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-modularity</artifactId>
-            <version>2.3.0</version>
+            <version>${pellet.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.mindswap.pellet</groupId>
             <artifactId>aterm-java</artifactId>
             <version>1.6</version>
-        </dependency>
+        </dependency>-->
         <dependency>
+            <groupId>com.github.ansell.pellet</groupId>
+            <artifactId>pellet-owlapiv3</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+
+        <!--<dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-owlapiv3</artifactId>
-            <version>2.3.0</version>
-        </dependency>
-        <dependency>
+            <version>${pellet.version}</version>
+        </dependency>-->
+        <!--<dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-rules</artifactId>
-            <version>2.3.0</version>
-        </dependency>
-        <dependency>
+            <version>${pellet.version}</version>
+        </dependency>-->
+        <!--<dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-datatypes</artifactId>
             <version>2.3.0</version>
-        </dependency>
-        <dependency>
+        </dependency>-->
+       <!-- <dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-explanation</artifactId>
             <version>2.3.0</version>
@@ -117,7 +124,7 @@
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-query</artifactId>
             <version>2.3.0</version>
-        </dependency>
+        </dependency>-->
 
         <!-- Utils  -->
 

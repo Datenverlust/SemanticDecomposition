@@ -30,7 +30,7 @@ import java.util.*;
  * Created by faehndrich on 11.11.14.
  */
 public abstract class BaseDictionary implements Serializable, Dictionary {
-    protected static StanfordCoreNLP pipeline = null;
+    public static StanfordCoreNLP pipeline = null;
     protected static ILanguage language = null;
 
     public BaseDictionary() {
@@ -61,8 +61,8 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
         System.out.println("StanfordCoreNLP - [English]");
         // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution
         Properties props = new Properties();
-        props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
-        //props.put("annotators", "tokenize, ssplit, pos, lemma");
+        //props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
+        props.put("annotators", "tokenize, ssplit, pos, lemma");
         pipeline = new StanfordCoreNLP(props);
         language = Language.ENGLISH;
     }
@@ -196,7 +196,7 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
      * Here we want a basic form of the concept, which is reduced to the minimum. Is this the stem
      * of the word? How about different word types? Are they considered?
      * <p>
-     * //TODO: this will not work for german words because Stanford german models do not contain lemmas for german words
+     * NOTE: For german word lemmas org.languagetool is used,  because Stanford german models do not contain lemmas for german words
      *
      * @param word concept to get the Lemma vor
      * @return a concept with the lemma filled.
@@ -230,6 +230,10 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
                 if (lemmas != null && lemmas.size() > 0) {
                     //best first for the moment. See above comment.
                     lemma = lemmas.get(0).getLemma();
+                }
+                //TODO: what if lemma == Null?
+                if(lemma == null){
+                    System.err.println("[LEMMATIZATION] " + word.getLitheral() + " has no known LEMMA!");
                 }
                 word.setLemma(lemma);
             }

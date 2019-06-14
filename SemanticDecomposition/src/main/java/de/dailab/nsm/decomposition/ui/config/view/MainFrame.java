@@ -69,13 +69,14 @@ public class MainFrame extends JFrame implements WindowListener{
         _menuBarControler = null;
         _tableView = null;
         _tableView = null;
+        System.exit(0);
         ConfigGUI.dispose();
-
     }
 
     @Override
     public void windowClosed(WindowEvent e) {
         e.getWindow().dispose();
+        System.exit(0);
     }
 
     @Override

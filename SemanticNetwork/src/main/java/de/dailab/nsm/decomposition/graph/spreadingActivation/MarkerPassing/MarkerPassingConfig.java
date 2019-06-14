@@ -37,6 +37,8 @@ public class MarkerPassingConfig implements Cloneable {
     static double antonymLinkWeight = -0.9;
     static double hypernymLinkWeight = -0.02;
     static double hyponymLinkWeight = 0.79;
+    static double meronymLinkWeight = 0.6;
+
     static double defaultArbitraryRelationLinkWeight = 1;
     static HashMap<String, Double> arbitraryRelationWeights;
     static double syntaxLinkWeight = 0.5;
@@ -93,6 +95,11 @@ public class MarkerPassingConfig implements Cloneable {
         MarkerPassingConfig.useGraphCache = useGraphCache;
     }
 
+    public static void setUseMergedGraphCache(boolean enableCache){
+        MarkerPassingConfig.useMergedGraphCache = enableCache;
+
+    }
+
     public static WordType getWordType() {
         return wordType;
     }
@@ -137,7 +144,7 @@ public class MarkerPassingConfig implements Cloneable {
         return threshold;
     }
 
-    public void setThreshold(double threshold) {
+    public static void setThreshold(double threshold) {
         MarkerPassingConfig.threshold = threshold;
     }
 
@@ -274,6 +281,14 @@ public class MarkerPassingConfig implements Cloneable {
         MarkerPassingConfig.contrastLinkWeight = contrastLinkWeight;
     }
 
+    public static double  getMeronymLinkWeight(){
+        return meronymLinkWeight;
+    }
+
+    public static void  setMeronymLinkWeight(double w){
+        MarkerPassingConfig.meronymLinkWeight = w;
+    }
+
     public static double getNerLinkWeight() {
         return nerLinkWeight;
     }
@@ -322,6 +337,7 @@ public class MarkerPassingConfig implements Cloneable {
         stringBuilder.append(+getHypernymLinkWeight()).append(";");
         //stringBuilder.append(System.getProperty("line.separator"));
         stringBuilder.append(+getHyponymLinkWeight()).append(";");
+        stringBuilder.append(+getMeronymLinkWeight()).append(";");
         //stringBuilder.append(System.getProperty("line.separator"));
         stringBuilder.append(+getTerminationPulsCount()).append(";");
         //stringBuilder.append(System.getProperty("line.separator"));

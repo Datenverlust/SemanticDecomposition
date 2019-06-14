@@ -8,13 +8,12 @@
 package de.dailab.nsm.decomposition.graph;
 
 import de.dailab.nsm.semanticDistanceMeasures.DataExample;
-import de.dailab.nsm.semanticDistanceMeasures.SynonymPair;
+import de.dailab.nsm.semanticDistanceMeasures.SimilarityPair;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by faehndrich on 11.03.16.
@@ -32,15 +31,12 @@ public class Evaluation {
         double correlation = 0.0d;
         double[] human = new double[experimantResult.size()];
         double[] result = new double[experimantResult.size()];
-        Iterator iterator = experimantResult.iterator();
-        for (int i = 0; i < experimantResult.size(); i++) {
-            SynonymPair pair = (SynonymPair) iterator.next();
-            human[i] = pair.getTrueResult();
-            result[i] = pair.getResult();
-//            System.out.println(pair.getString1() + "," + pair.getString2() + "," + pair.getDistance() + "," + pair.getResult());
-        }
+        extractResult(experimantResult, human, result);
         PearsonsCorrelation pearsonsCorrelation = new PearsonsCorrelation();
         correlation = pearsonsCorrelation.correlation(human, result);
+        if (Double.isNaN(correlation)) {
+            correlation = 0.0D;
+        }
         return correlation;
     }
 
@@ -53,21 +49,24 @@ public class Evaluation {
      */
     static public double SpearmanCorrelation(Collection<? extends DataExample> experimantResult) {
         double correlation = 0.0d;
-
         double[] human = new double[experimantResult.size()];
         double[] result = new double[experimantResult.size()];
-        Iterator iterator = experimantResult.iterator();
-        for (int i = 0; i < experimantResult.size(); i++) {
-            SynonymPair pair = (SynonymPair) iterator.next();
-            human[i] = pair.getTrueResult();
-            result[i] = pair.getResult();
-        }
+        extractResult(experimantResult, human, result);
         SpearmansCorrelation spearmansCorrelation = new SpearmansCorrelation();
         correlation = spearmansCorrelation.correlation(human, result);
         if (Double.isNaN(correlation)) {
             correlation = 0.0d;
         }
         return correlation;
+    }
+
+    private static void extractResult(Collection<? extends DataExample> experimantResult, double[] human, double[] result) {
+        Iterator iterator = experimantResult.iterator();
+        for (int i = 0; i < experimantResult.size(); i++) {
+            SimilarityPair pair = (SimilarityPair) iterator.next();
+            human[i] = pair.getTrueResult();
+            result[i] = pair.getResult();
+        }
     }
 
     /**

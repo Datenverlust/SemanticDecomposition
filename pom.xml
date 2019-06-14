@@ -17,8 +17,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <log4jVersion>1.2.17</log4jVersion>
-        <nd4j.version>0.9.1</nd4j.version>
-        <dl4j.version>0.9.1</dl4j.version>
+        <nd4j.version>1.0.0-beta3</nd4j.version>
+        <dl4j.version>1.0.0-beta3</dl4j.version>
         <canova.version>0.0.0.17</canova.version>
     </properties>
     <dependencies>
@@ -158,97 +158,10 @@
         <module>OWLConflictSolver</module>
     </modules>
 
-
-    <repositories>
-        <!-- copiedfrom https://stackoverflow.com/a/28242919/2754830 -->
-        <repository>
-            <id>org.springframework.maven.release</id>
-            <name>Spring Maven Release Repository</name>
-            <url>http://repo.springsource.org/libs-release-local</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>false</enabled></snapshots>
-        </repository>
-        <!-- For testing against latest Spring snapshots -->
-        <repository>
-            <id>org.springframework.maven.snapshot</id>
-            <name>Spring Maven Snapshot Repository</name>
-            <url>http://repo.springsource.org/libs-snapshot-local</url>
-            <releases><enabled>false</enabled></releases>
-            <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-        <!-- For developing against latest Spring milestones -->
-        <repository>
-            <id>org.springframework.maven.milestone</id>
-            <name>Spring Maven Milestone Repository</name>
-            <url>http://repo.springsource.org/libs-milestone-local</url>
-            <snapshots><enabled>false</enabled></snapshots>
-        </repository>
-        <!-- end of added repos from stackoverflow -->
-
-        <!-- For developing against latest Spring milestones -->
-        <repository>
-            <id>org.neo4j</id>
-            <name>neo4j Repository</name>
-            <url>https://m2.neo4j.org/content/repositories/releases</url>
-            <snapshots><enabled>false</enabled></snapshots>
-        </repository>
-        <!-- IMPORTANT: THIS BLOCK SOLVED THE FIRST neo4j ERROR -->
-
-        <!-- removing the dai-labor repos, as I currently dont have access to them -->
-        <!--
-        <repository>
-            <id>dai-releases</id>
-            <name>DAI Maven 2 Releases Repository</name>
-            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-releases/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>dai-snapshots</id>
-            <name>DAI Maven 2 Snapshot Repository</name>
-            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>thirdparty</id>
-            <name>thirdparty</name>
-            <url>http://repositories.dai-labor.de/nexus/content/repositories/thirdparty/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        -->
-    </repositories>
-    <distributionManagement>
-        <repository>
-            <id>dai-releases</id>
-            <name>dai-releases</name>
-            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>dai-snapshots</id>
-            <name>dai-snapshots</name>
-            <url>http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <scm>
-        <url>https://gitlab.tubit.tu-berlin.de:johannes_faehndrich/semantic-decomposition</url>
-        <connection>scm:git:git://gitlab.tubit.tu-berlin.de:johannes_faehndrich/semantic-decomposition.git</connection>
-        <developerConnection>scm:git:git@gitlab.tubit.tu-berlin.de:johannes_faehndrich/semantic-decomposition.git</developerConnection>
-        <tag>HEAD</tag>
+        <url>https://github.com/Datenverlust/SemanticDecomposition</url>
+        <connection>scm:git:git://github.com/Datenverlust/SemanticDecomposition.git</connection>
+        <developerConnection>scm:git:git@github.com:Datenverlust/SemanticDecomposition.git</developerConnection>
     </scm>
 
 

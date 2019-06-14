@@ -38,6 +38,7 @@ public class TypedNode implements Node {
     //private Map<Integer, Double> activation = null;
     private double c_t = 100000.d; // used in Berger et al. 2004, should be the # of nodes in the graph.
     private int pulseCount = 0;
+    Collection<Marker> markers = null;
     private HashMap<Concept, Marker> activation = null;
 
     //###########################

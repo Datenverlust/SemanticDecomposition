@@ -24,10 +24,7 @@ import java.util.Properties;
  * Created by Hannes on 02.04.2017.
  */
 public class AnalyseUtil {
-    /*
-    There is only one one pipeline. Haveing multiple pipelines is to much for my laptop.
-    TODO: Explain why we would need different pipelines.
-     */
+
     static StanfordCoreNLP pipeline = null;
     public static StanfordCoreNLP tokenizePipeline() {
 
@@ -45,16 +42,12 @@ public class AnalyseUtil {
         return document;
     }
 
-    public static StanfordCoreNLP easyPipeline(){
-        Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, ssplit, pos, lemma, parse");
-        if(pipeline== null) {
-             pipeline = new StanfordCoreNLP(props);
-        }
-        return pipeline;
-    }
-
-    public static StanfordCoreNLP getPipeline(){
+    /**
+     * This is the full pipeline. It can be used on hight performance computers.
+     *
+     * @return the full stack pipeline for coreNMP o use.
+     */
+    public static StanfordCoreNLP getFullPipeline() {
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, pos, lemma, parse, ner");
         props.setProperty("ner.useSUTime", "false");

@@ -1,12 +1,11 @@
 /*
- * * Copyright (C) Johannes Fähndrich - All Rights Reserved
- *  * Unauthorized copying of this file, via any medium is strictly prohibited
- *  * Proprietary and confidential
- *  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- *  *
+ * Copyright (C) Johannes Fähndrich - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly
+ * prohibited Proprietary and confidential.
+ * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package test.test.de.dailab.nsm.decomposition;
+package test.de.dailab.nsm.decomposition;
 
 import de.dailab.nsm.decomposition.nlp.GermanLemma;
 import org.languagetool.AnalyzedToken;
