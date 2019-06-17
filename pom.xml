@@ -155,7 +155,7 @@
         <module>Dictionaries</module>
         <module>ToOWLConverterApi</module>
         <module>SemanticNetworkToOWLConverter</module>
-        <module>OWLConflictSolver</module>
+        <!--<module>OWLConflictSolver</module>-->
     </modules>
 
     <scm>
