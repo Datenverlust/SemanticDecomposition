@@ -178,15 +178,7 @@ public class Finder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TODO: clarify what this is doing? Or better what it should do.
-        if(result != null && result.length > 0){
-            try {
-                Document d = searcher.doc(result[0].doc);
-                //System.out.println( "First Hit: " + (d.getField(Fields.ENTITY_NAME)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
         return result;
 
     }
