@@ -34,3 +34,22 @@ Wikipedia DB not set up right? (aka some Parser exceptions during the parsing of
     Run the initializer from de.dailab.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawler's main method.
 
 If you encounter any problems please contact datenverlust@gmail.com
+
+
+It seems you also need to install neo4j, to run the wikidata tests.
+Source for ubuntu: https://linuxhint.com/install-neo4j-ubuntu/
+Installing Neo4J
+Now, installing Neo4J is just a matter of few commands. To start, add the Neo4J to the apt package manager:
+
+sudo wget -O - http://debian.neo4j.org/neotechnology.gpg.key
+| sudo apt-key add -
+
+sudo echo 'deb http://debian.neo4j.org/repo stable/' >
+/etc/apt/sources.list.d/neo4j.list
+Next, install Neo4J:
+
+sudo apt-get update
+sudo apt-get install neo4j
+service neo4j status
+
+http://localhost:7474/browser/

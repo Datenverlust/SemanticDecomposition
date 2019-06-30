@@ -110,7 +110,7 @@ public class DecompositionTest {
             defindex++;
         }
         getManualDefinition(c);
-
+        
     }
     private static Concept getManualDefinition(Concept concept) {
         System.out.println("Please give a definitions for the concept: " + concept.getLitheral() + " which is not one of the given definitions.");
