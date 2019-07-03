@@ -31,6 +31,6 @@ Trouble shooting:
 /////////////////////////
 
 Wikipedia DB not set up right? (aka some Parser exceptions during the parsing of Wikipedia)
-    Run the initializer from de.dailab.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawler's main method.
+    Run the initializer from WiktionaryCrawler's main method.
 
 If you encounter any problems please contact datenverlust@gmail.com

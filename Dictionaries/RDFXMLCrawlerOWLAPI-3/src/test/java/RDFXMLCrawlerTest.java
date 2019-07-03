@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-import de.dailab.nsm.decomposition.dictionaries.rdfxmlcrawler.RDFXMLCrawler;
+import de.kimanufaktur.nsm.decomposition.dictionaries.rdfxmlcrawler.RDFXMLCrawler;
 import ontology.index.indexer.core.Fields;
 import org.apache.lucene.document.Document;
 import org.junit.Assert;
@@ -50,7 +50,7 @@ public class RDFXMLCrawlerTest {
         System.out.println(results.size() + " hits for " +query+ " on EntityName.");
         Assert.assertNotEquals(results.isEmpty(), true);
 
-        String fields[] = new String[]{Fields.ENTITY_NAME, Fields.ENTITY_TYPE};
+        String[] fields = new String[]{Fields.ENTITY_NAME, Fields.ENTITY_TYPE};
         query = "OWLClass, Kunde~"; //search for OWLClass OR like(Kunde) in the two fields
         results = rdfxmlCrawler.find(fields, query);
         System.out.println(results.size() + " hits for " +query+ " on " +fields[0]+", " + fields[1] );

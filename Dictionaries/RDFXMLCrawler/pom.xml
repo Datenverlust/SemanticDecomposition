@@ -11,7 +11,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>Dictionaries</artifactId>
-        <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+        <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
         <version>0.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -21,7 +21,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>de.dailab.nsm.decomposition.dictionaries.utils</groupId>
+            <groupId>de.kimanufaktur.nsm.decomposition.dictionaries.utils</groupId>
             <artifactId>DictionaryUtils</artifactId>
             <version>0.2-SNAPSHOT</version>
         </dependency>

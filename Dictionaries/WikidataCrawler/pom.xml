@@ -9,24 +9,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+        <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
         <artifactId>Dictionaries</artifactId>
         <version>0.2-SNAPSHOT</version>
     </parent>
   <artifactId>WikidataCrawler</artifactId>
-  <groupId>de.dailab.NSM.Wikidata</groupId>
+    <groupId>de.kimanufaktur.nsm.Wikidata</groupId>
   <modelVersion>4.0.0</modelVersion>
   <name>Wikidata Dictionary Implementation</name>
   <packaging>jar</packaging>
   <url>http://maven.apache.org</url>
   <dependencies>
       <dependency>
-          <groupId>de.dailab.nsm.decomposition.dictionaries.utils</groupId>
+          <groupId>de.kimanufaktur.nsm.decomposition.dictionaries.utils</groupId>
           <artifactId>DictionaryUtils</artifactId>
           <version>${project.version}</version>
       </dependency>
       <dependency>
-          <groupId>de.dailab.nsm.decomposition.dictionaries.utils</groupId>
+          <groupId>de.kimanufaktur.nsm.decomposition.dictionaries.utils</groupId>
           <artifactId>DictionaryUtils</artifactId>
           <version>${project.version}</version>
       </dependency>

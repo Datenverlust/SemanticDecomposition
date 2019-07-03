@@ -8,12 +8,12 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <groupId>de.dailab.NSM</groupId>
+        <groupId>de.kimanufaktur.nsm</groupId>
         <artifactId>NaturalSemanticMetalanguage</artifactId>
         <version>0.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.dailab.NSM.Decomposition</groupId>
+    <groupId>de.kimanufaktur.nsm.Decomposition</groupId>
     <artifactId>SemanticDecomposition</artifactId>
     <name>Semantic Decomposition into NSM</name>
     <url>http://nsm.dai-labor.de</url>
@@ -23,12 +23,12 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>de.dailab.NSM.wiktionary</groupId>
+            <groupId>de.kimanufaktur.nsm.wiktionary</groupId>
             <artifactId>WiktionaryCrawler</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.dailab.NSM.Wikidata</groupId>
+            <groupId>de.kimanufaktur.nsm.Wikidata</groupId>
             <artifactId>WikidataCrawler</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -39,12 +39,12 @@
             <version>19.0-rc3</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>de.dailab.NSM.mid</groupId>-->
+        <!--<groupId>de.kimanufaktur.nsm.mid</groupId>-->
             <!--<artifactId>MonolingualDictionaries</artifactId>-->
             <!--<version>${project.version}</version>-->
         <!--</dependency>-->
         <dependency>
-            <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+            <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
             <artifactId>RDFXMLCrawlerOWLAPI-3</artifactId>
             <version>${project.version}</version>
             <!--<scope>compile</scope>-->
@@ -56,7 +56,7 @@
             <!--</exclusions>-->
         </dependency>
         <dependency>
-            <groupId>de.dailab.NSM.WordNet</groupId>
+            <groupId>de.kimanufaktur.nsm.WordNet</groupId>
             <artifactId>WordNetCrawler</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -212,7 +212,7 @@
             <version>3.7</version>
         </dependency>
         <dependency>
-            <groupId>de.dailab.NSM.NaturalSemanticMetalanguage.SemanticDistanceMeasures</groupId>
+            <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage.SemanticDistanceMeasures</groupId>
             <artifactId>SemanticDistanceMeasureAPI</artifactId>
             <version>${project.version}</version>
         </dependency>
