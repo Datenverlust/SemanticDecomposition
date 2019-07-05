@@ -51,7 +51,7 @@ public class WiktionaryCrawler {
 
     public WiktionaryCrawler(){
         path2DBLocation = System.getProperty("user.home").toString() + File.separator + ".decomposition" + File.separator + "wiktionary";
-        dictFileName = "enwiktionary-latest-pages-meta-current.xml.bz2";
+        dictFileName = "enwiktionary-latest-pages-meta-current.xml";
         source = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/Wiktionary/";
     }
 

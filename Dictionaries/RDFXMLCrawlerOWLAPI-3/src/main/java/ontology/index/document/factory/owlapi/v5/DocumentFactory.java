@@ -102,6 +102,11 @@ public class DocumentFactory {
      */
     private Document createBaseDoc(String iri, String entityName){
         Document doc = new Document();
+        if(iri == null || entityName == null ||
+        iri.length() == 0 || entityName == null){
+            System.err.println("RDFXMLCrawler Doc Factory: IRI or EntityName null! ->  "  + iri + "#" + entityName);
+            return doc;
+        }
         //string fields are "atomic" ; their content is not analyzed by the registered analyzer, but stored anyway.
         doc.add(new StringField(Fields.IRI, iri, Field.Store.YES));
         doc.add(new TextField(Fields.ENTITY_NAME, entityName, Field.Store.YES));
