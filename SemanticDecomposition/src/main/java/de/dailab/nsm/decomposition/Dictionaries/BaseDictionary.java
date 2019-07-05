@@ -32,6 +32,7 @@ import java.util.*;
 public abstract class BaseDictionary implements Serializable, Dictionary {
     public static StanfordCoreNLP pipeline = null;
     protected static ILanguage language = null;
+    private String _dictName;
 
     public BaseDictionary() {
         init();
@@ -269,5 +270,13 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
 //            }
 //
 //        }
+    }
+
+    public String getDictName() {
+        return _dictName;
+    }
+
+    public void setDictName(String dictName) {
+        this._dictName = dictName;
     }
 }

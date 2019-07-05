@@ -110,9 +110,11 @@ public class Decomposition {
 //        dictionaries.add(wordNetDict);
 
         BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
+        measureMentOntology.setDictName("Measurement");
         dictionaries.add(measureMentOntology);
 
         BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
+        wiktionaryDict.setDictName("Wiktionary");
         dictionaries.add(wiktionaryDict);
 
 //        IDictionary wikidataDict = WikidataDictionary.getInstance();
