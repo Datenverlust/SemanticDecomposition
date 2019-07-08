@@ -11,8 +11,10 @@ public class CustomEntry implements Serializable {
     public String word = null;
     public WordType type = WordType.UNKNOWN;
 
-    transient boolean loaded = false;
-    transient Concept concept = null;
+    protected transient boolean loaded = false;
+    public transient Concept concept = null;
+
+    static final long serialVersionUID = 3925206405957663075L;
 
     CustomEntry(int index) {
         this.index = index;

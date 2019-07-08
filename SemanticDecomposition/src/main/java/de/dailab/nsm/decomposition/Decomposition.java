@@ -10,6 +10,7 @@ package de.dailab.nsm.decomposition;
 
 import de.dailab.nsm.decomposition.Dictionaries.*;
 //import de.dailab.nsm.decomposition.Dictionaries.customDictionary.CustomDictionary;
+import de.dailab.nsm.decomposition.Dictionaries.customDictionary.CustomEntry;
 import de.dailab.nsm.decomposition.Dictionaries.customDictionary.CustomGraph;
 //import de.dailab.nsm.decomposition.Dictionaries.customDictionary.StoreGraph;
 import de.dailab.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawler;
@@ -52,7 +53,7 @@ public class Decomposition {
     ConcurrentHashMap.KeySetView<Future<Concept>,Boolean> futures = ConcurrentHashMap.newKeySet();
     private int lockcount = 0;
 
-    private static final boolean generateCustomDict = true;
+    private static final boolean generateCustomDict = false;
 
     public void cleanUp(){
         ConceptCache.cleanUp();
@@ -142,9 +143,13 @@ public class Decomposition {
         CustomGraph customGraph = new CustomGraph();
 
         try {
-            customGraph.getConceptForWordAndType("day", WordType.values()[2]);
+            CustomEntry monday = customGraph.getEntryForWordAndType("Monday", WordType.NNP);
+            System.out.println("Monday entry: " + monday);
+            if(monday != null) {
+                System.out.println("Monday concept: " + monday.concept);
+            }
         }
-        catch (DictionaryDoesNotContainConceptException ex) {
+        catch (DictionaryDoesNotContainConceptException | NullPointerException ex) {
             System.out.println("Dict does not contain word: " + ex.getLocalizedMessage());
         }
     }
@@ -158,10 +163,16 @@ public class Decomposition {
         if (dictionaries.size() > 0) {
             return;
         }
-        //if(!generateCustomDict) {
+        if(!generateCustomDict) {
         //    BaseDictionary customDict = CustomDictionary.getInstance();
         //    dictionaries.add(customDict);
-        //}
+
+            BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
+            dictionaries.add(wordNetDict);
+
+            BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
+            dictionaries.add(measureMentOntology);
+        }
         else {
 
             BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory

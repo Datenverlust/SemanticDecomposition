@@ -1,11 +1,4 @@
-package de.dailab.nsm.decomposition.Dictionaries.customDictionary;
-
-/*
- * Copyright (C) Johannes Fähndrich - All Rights Reserved.
- * Unauthorized copying of this connectionsFile, via any medium is strictly
- * prohibited Proprietary and confidential.
- * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- */
+/*package de.dailab.nsm.decomposition.Dictionaries.customDictionary;
 
 
 import de.dailab.nsm.decomposition.Concept;
@@ -20,7 +13,7 @@ import java.util.*;
 
 /**
  * Created by Patrick on 05.07.2019.
- */
+
 public class StoreGraph {
     private RandomAccessFile connectionsPlaceholderFile;
     private RandomAccessFile connectionsFile;
@@ -218,3 +211,4 @@ public class StoreGraph {
     }
 }
 
+*/
