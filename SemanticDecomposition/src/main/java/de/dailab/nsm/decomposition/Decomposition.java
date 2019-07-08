@@ -8,19 +8,24 @@
 package de.dailab.nsm.decomposition;
 
 
-import de.dailab.nsm.decomposition.Dictionaries.BaseDictionary;
-import de.dailab.nsm.decomposition.Dictionaries.RDFXMLDictionary;
-import de.dailab.nsm.decomposition.Dictionaries.WiktionaryDictionary;
-import de.dailab.nsm.decomposition.Dictionaries.WordNetDictionary;
+import de.dailab.nsm.decomposition.Dictionaries.*;
+//import de.dailab.nsm.decomposition.Dictionaries.customDictionary.CustomDictionary;
+import de.dailab.nsm.decomposition.Dictionaries.customDictionary.CustomGraph;
+//import de.dailab.nsm.decomposition.Dictionaries.customDictionary.StoreGraph;
+import de.dailab.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawler;
 import de.dailab.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
 import de.dailab.nsm.decomposition.manualDefinition.ManualDecompositionGUI;
 import de.dailab.nsm.decomposition.manualDefinition.model.Delegate;
 import de.dailab.nsm.decomposition.persistence.ConceptCache;
 import de.dailab.nsm.decomposition.settings.Config;
+import de.tudarmstadt.ukp.jwktl.api.IWiktionaryEdition;
+import de.tudarmstadt.ukp.jwktl.api.IWiktionaryEntry;
+import de.tudarmstadt.ukp.jwktl.api.filter.WiktionaryEntryFilter;
+import de.tudarmstadt.ukp.jwktl.api.util.IWiktionaryIterator;
+import de.tudarmstadt.ukp.jwktl.api.util.Language;
 import org.apache.log4j.Logger;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -47,13 +52,15 @@ public class Decomposition {
     ConcurrentHashMap.KeySetView<Future<Concept>,Boolean> futures = ConcurrentHashMap.newKeySet();
     private int lockcount = 0;
 
+    private static final boolean generateCustomDict = true;
+
     public void cleanUp(){
         ConceptCache.cleanUp();
     }
 
     public Decomposition() {
         init();
-        concepts2Ignore = createConcepts2Ignor(); //Create A list of concepts which should be ignored during decomposition
+        concepts2Ignore = createConcepts2Ignor(); //Create A list of entries which should be ignored during decomposition
         nSMPrimes = createPrimes(); //Create list of semantic primes form NSM a leaf nodes for the decomposition
         // knownConcepts.putAll(concepts2Ignore);
         addAllKnownConcepts(concepts2Ignore);
@@ -84,39 +91,92 @@ public class Decomposition {
         if (args.length > 0) {
             word2Decompose = args[0];
         } else {
-            word2Decompose = "girl";
+            //word2Decompose = "girl";
+            word2Decompose = "Monday";
         }
         logger.info("Semantic decomposition of " + word2Decompose + ".");
         Decomposition decomposition = new Decomposition();
         init();
-        concept = decomposition.multiThreadedDecompose(word2Decompose, WordType.VB, 2);
+        //concept = decomposition.multiThreadedDecompose(word2Decompose, WordType.VB, 2);
+        concept = decomposition.multiThreadedDecompose(word2Decompose, WordType.values()[2], 2);
         System.out.println(concept.getSynonyms());
         System.out.println(concept.getDecomposition());
         System.out.println(concept.getAntonyms());
         logger.info("We are done: " + concept.toString());
+
+        if(generateCustomDict){
+            storeEverything();
+        }
+        else {
+            loadEverything();
+        }
     }
 
+    private static void storeEverything() {
+        CustomGraph customGraph = new CustomGraph();
+        IWiktionaryEdition wkt = WiktionaryCrawler.wkt;
+        WiktionaryEntryFilter filter = new WiktionaryEntryFilter();
+        filter.setAllowedWordLanguages(Language.GERMAN, Language.ENGLISH);
+
+
+        IWiktionaryIterator it = wkt.getAllEntries(filter);
+
+        Decomposition decomposition = new Decomposition();
+
+        int i = 0;
+
+        //it.forEach(o -> {
+        while (it.hasNext() && i++ < 100) {
+            System.out.println("Got next entry");
+            IWiktionaryEntry entry = (IWiktionaryEntry) it.next();
+            System.out.println("Decomposing entry");
+            Concept concept = decomposition.multiThreadedDecompose(entry.getWord(), WordType.UNKNOWN, 1);
+            System.out.println("Storing entry");
+            customGraph.addConcept(concept);
+        }
+
+        customGraph.save();
+    }
+
+    private static void loadEverything() {
+        CustomGraph customGraph = new CustomGraph();
+
+        try {
+            customGraph.getConceptForWordAndType("day", WordType.values()[2]);
+        }
+        catch (DictionaryDoesNotContainConceptException ex) {
+            System.out.println("Dict does not contain word: " + ex.getLocalizedMessage());
+        }
+    }
 
     /**
      * Initialize the dictionaries and create list of primes. This includes loading WordNet into memmory, creating the
-     * NSM semantic primes and concepts to ignore like "the","an" and "a".
+     * NSM semantic primes and entries to ignore like "the","an" and "a".
      */
     public static void init() {
         conceptCache = ConceptCache.getInstance();
         if (dictionaries.size() > 0) {
             return;
         }
-        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
-        dictionaries.add(wordNetDict);
+        //if(!generateCustomDict) {
+        //    BaseDictionary customDict = CustomDictionary.getInstance();
+        //    dictionaries.add(customDict);
+        //}
+        else {
 
-        BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
-        dictionaries.add(measureMentOntology);
+            BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
+            dictionaries.add(wordNetDict);
 
-        BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
-        dictionaries.add(wiktionaryDict);
+            BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
+            dictionaries.add(measureMentOntology);
+
+            BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
+            dictionaries.add(wiktionaryDict);
 
 //        IDictionary wikidataDict = WikidataDictionary.getInstance();
 //        dictionaries.add(wikidataDict);
+        }
+
     }
 
     public void addDictionary(BaseDictionary aDict){
@@ -125,10 +185,10 @@ public class Decomposition {
 
 
     /**
-     * Create a list of concepts to ignore. Generally this is called stop words.
+     * Create a list of entries to ignore. Generally this is called stop words.
      * TODO: find a list of stopwords, and load it. Have a reference for it...
      *
-     * @return the set of concepts to ignore.
+     * @return the set of entries to ignore.
      */
     private static HashSet<Concept> createConcepts2Ignor() {
         //String stopwordFile = System.getProperty("user.home") + File.separator + ".decomposition" + File.separator + "stopwords.txt";
@@ -176,10 +236,10 @@ public class Decomposition {
     }
 
     /**
-     * Fill the NSM Primes with all concepts of the 65 semantic primes and add all synonyms of those
+     * Fill the NSM Primes with all entries of the 65 semantic primes and add all synonyms of those
      * primes to the set of nSMPrimes
      *
-     * @return A set containing als NSM Primes and their synonyms as concepts.
+     * @return A set containing als NSM Primes and their synonyms as entries.
      */
     private static HashSet<Concept> createPrimes() {
 
@@ -346,7 +406,7 @@ public class Decomposition {
     /**
      * Add a concept to the known concept colleciton. This adds the concept to the conceptCache.
      *
-     * @param decompsotedConcept the concept added to the known concepts.
+     * @param decompsotedConcept the concept added to the known entries.
      */
     public static void addKnownConcept(Concept decompsotedConcept) {
         assert decompsotedConcept != null;
@@ -355,9 +415,9 @@ public class Decomposition {
     }
 
     /**
-     * Adds all given concepts to the list of known concepts.
+     * Adds all given entries to the list of known entries.
      *
-     * @param concepts2add the list of concepts to add.
+     * @param concepts2add the list of entries to add.
      */
     public static void addAllKnownConcepts(HashSet<Concept> concepts2add) {
         for (Concept c : concepts2add) {
@@ -376,6 +436,7 @@ public class Decomposition {
         return concepts2Ignore;
     }
 
+
     /**
      * Decompose the given word of the wordtype.
      *
@@ -385,7 +446,7 @@ public class Decomposition {
      */
     public Concept multiThreadedDecompose(String word, WordType wordType, int decompositionDepth) {
         //resetDecomposition();
-        logger.info("Decomposing: " + word + " of type: " + wordType.type());
+        logger.info("Decomposing: " + word + " of type: " + wordType);
         Concept concept = null;
         if (word != null && !word.equals("")) {
             concept = new Concept(word);
@@ -393,7 +454,17 @@ public class Decomposition {
             return null;
         }
         assert concept != null;
-        concept.setWordType(wordType);
+        if(wordType != null) {
+            concept.setWordType(wordType);
+        }
+        else {
+            for (BaseDictionary dic : dictionaries) {
+                if (concept.getWordType() != null) {
+                    dic.setPOS(concept);
+                }
+            }
+        }
+
         if (concepts2Ignore.contains(concept)) {
             return concept;
         }
@@ -483,16 +554,16 @@ public class Decomposition {
     private void DecomposeChildren(Concept concept, int decompositionDepth) {
         //multiThreadedDecompose the definitions of the concept
         decomposeDefinitions(concept, decompositionDepth);
-        //now lets multiThreadedDecompose all synonyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all synonyms so that the graph gets broader and we can faster find common entries.
         //TODO maybe we have to ignore the given concept from the synonyms list?
         decomposeChildren(concept.getSynonyms(), decompositionDepth);
-        //now lets multiThreadedDecompose all hyponyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all hyponyms so that the graph gets broader and we can faster find common entries.
         decomposeChildren(concept.getHyponyms(), decompositionDepth);
-        //now lets multiThreadedDecompose all hypernyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all hypernyms so that the graph gets broader and we can faster find common entries.
         decomposeChildren(concept.getHypernyms(), decompositionDepth);
-        //now lets multiThreadedDecompose all antonyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all antonyms so that the graph gets broader and we can faster find common entries.
         decomposeChildren(concept.getAntonyms(), decompositionDepth);
-        //now lets multiThreadedDecompose all meronyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all meronyms so that the graph gets broader and we can faster find common entries.
         decomposeChildren(concept.getMeronyms(), decompositionDepth);
         //now lets multiThreadedDecompose all arbitrary relations
         decomposeChildren(concept.getArbitraryRelations(), decompositionDepth);
@@ -647,16 +718,16 @@ public class Decomposition {
     private void decomposeChildrenSingleThreaded(Concept concept, int decompositionDepth) {
         //SingleThreadedDecompose the definitions of the concept
         DecomposeDefinitionSingleThreaded(concept, decompositionDepth);
-        //now lets multiThreadedDecompose all synonyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all synonyms so that the graph gets broader and we can faster find common entries.
         //TODO maybe we have to ignore the given concept from the synonyms list?
         decomposeChildrenSingleThreaded(concept.getSynonyms(), decompositionDepth);
-        //now lets multiThreadedDecompose all hyponyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all hyponyms so that the graph gets broader and we can faster find common entries.
         decomposeChildrenSingleThreaded(concept.getHyponyms(), decompositionDepth);
-        //now lets multiThreadedDecompose all hypernyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all hypernyms so that the graph gets broader and we can faster find common entries.
         decomposeChildrenSingleThreaded(concept.getHypernyms(), decompositionDepth);
-        //now lets multiThreadedDecompose all antonyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all antonyms so that the graph gets broader and we can faster find common entries.
         decomposeChildrenSingleThreaded(concept.getAntonyms(), decompositionDepth);
-        //now lets multiThreadedDecompose all meronyms so that the graph gets broader and we can faster find common concepts.
+        //now lets multiThreadedDecompose all meronyms so that the graph gets broader and we can faster find common entries.
         decomposeChildrenSingleThreaded(concept.getMeronyms(), decompositionDepth);
         //now lets multiThreadedDecompose all arbitrary relations
         decomposeChildrenSingleThreaded(concept.getArbitraryRelations(), decompositionDepth);
@@ -699,7 +770,7 @@ public class Decomposition {
     }
 
     /**
-     * In an concurrent implementation of the decomposition it is necessarry to wait on decompositions which finish concepts we
+     * In an concurrent implementation of the decomposition it is necessarry to wait on decompositions which finish entries we
      * want to use.
      *
      * @param concept the concept we want to wait on.
