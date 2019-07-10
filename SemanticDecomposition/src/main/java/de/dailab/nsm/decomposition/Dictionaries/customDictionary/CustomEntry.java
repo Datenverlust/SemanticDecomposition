@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class CustomEntry implements Serializable {
     public int index;
-    public int fileIndex = -1;
+    public long fileIndex = -1;
     public String word = null;
     public WordType type = WordType.UNKNOWN;
 

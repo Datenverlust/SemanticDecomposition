@@ -44,6 +44,7 @@ public class WiktionaryDictionary extends BaseDictionary {
     Pattern p = Pattern.compile("\\w+(-\\d+)?");
 
     private WiktionaryDictionary(){
+        init();
     }
 
     public static  WiktionaryDictionary getInstance(){
@@ -84,11 +85,14 @@ public class WiktionaryDictionary extends BaseDictionary {
 
     @Override
     public void init() {
+        System.out.println("Wiktionary init called");
         super.init();
+        System.out.println("super init called");
         if (wiktionaryCrawler == null) {
             if( Config.LANGUAGE.GER ==
                     Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
 
+                System.out.println("Wiktionary init DE");
                 String path2DB = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_PATH_GER_KEY);
                 String archiveName = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_PATH_GER_KEY);
                 String sourceURI = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_ARCHIVE_SOURCE_URI_KEY);
@@ -98,7 +102,8 @@ public class WiktionaryDictionary extends BaseDictionary {
             } else if( Config.LANGUAGE.EN ==
                     Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
 
-                //this.language = Language.ENGLISH;
+                System.out.println("Wiktionary init EN");
+                this.language = Language.ENGLISH;
                 //default constructor initilaizes english based crawler
                 this.wiktionaryCrawler = new WiktionaryCrawler();
             }

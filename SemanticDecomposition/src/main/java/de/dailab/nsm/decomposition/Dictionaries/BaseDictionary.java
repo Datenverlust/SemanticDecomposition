@@ -53,6 +53,9 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
                     Config.LANGUAGE.valueOf(Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY))) {
                 initEnglish();
             }
+            else {
+                System.out.println("Could not load language!: " + Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY));
+            }
 
         }
     }

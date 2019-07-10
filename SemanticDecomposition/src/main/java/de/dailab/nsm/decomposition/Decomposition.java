@@ -53,7 +53,7 @@ public class Decomposition {
     ConcurrentHashMap.KeySetView<Future<Concept>,Boolean> futures = ConcurrentHashMap.newKeySet();
     private int lockcount = 0;
 
-    private static final boolean generateCustomDict = false;
+    private static CustomGraph customGraph = new CustomGraph();
 
     public void cleanUp(){
         ConceptCache.cleanUp();
@@ -104,17 +104,28 @@ public class Decomposition {
         System.out.println(concept.getDecomposition());
         System.out.println(concept.getAntonyms());
         logger.info("We are done: " + concept.toString());
-
+/*
         if(generateCustomDict){
             storeEverything();
         }
         else {
             loadEverything();
+
+ */
+        try {
+            System.out.println("sleeping");
+            Thread.sleep(10000);
+            customGraph.save();
+            customGraph.dumpConnections();
+
+        }
+        catch (InterruptedException ex) {
+            System.out.println("Woke up: ");
+            ex.printStackTrace();
         }
     }
 
     private static void storeEverything() {
-        CustomGraph customGraph = new CustomGraph();
         IWiktionaryEdition wkt = WiktionaryCrawler.wkt;
         WiktionaryEntryFilter filter = new WiktionaryEntryFilter();
         filter.setAllowedWordLanguages(Language.GERMAN, Language.ENGLISH);
@@ -136,12 +147,19 @@ public class Decomposition {
             customGraph.addConcept(concept);
         }
 
-        customGraph.save();
+        try {
+            System.out.println("sleeping");
+            Thread.sleep(10000);
+            customGraph.save();
+
+        }
+        catch (InterruptedException ex) {
+            System.out.println("Woke up: ");
+            ex.printStackTrace();
+        }
     }
 
     private static void loadEverything() {
-        CustomGraph customGraph = new CustomGraph();
-
         try {
             CustomEntry monday = customGraph.getEntryForWordAndType("Monday", WordType.NNP);
             System.out.println("Monday entry: " + monday);
@@ -163,30 +181,18 @@ public class Decomposition {
         if (dictionaries.size() > 0) {
             return;
         }
-        if(!generateCustomDict) {
-        //    BaseDictionary customDict = CustomDictionary.getInstance();
-        //    dictionaries.add(customDict);
 
-            BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
-            dictionaries.add(wordNetDict);
+        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
+        dictionaries.add(wordNetDict);
 
-            BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
-            dictionaries.add(measureMentOntology);
-        }
-        else {
+        BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
+        dictionaries.add(measureMentOntology);
 
-            BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
-            dictionaries.add(wordNetDict);
-
-            BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
-            dictionaries.add(measureMentOntology);
-
-            BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
-            dictionaries.add(wiktionaryDict);
+        BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
+        dictionaries.add(wiktionaryDict);
 
 //        IDictionary wikidataDict = WikidataDictionary.getInstance();
 //        dictionaries.add(wikidataDict);
-        }
 
     }
 
@@ -411,7 +417,15 @@ public class Decomposition {
      */
     public static Concept getKnownConcept(Concept concept) {
         assert concept != null;
-        return conceptCache.get(concept.getId());
+        try {
+            concept = customGraph.getConceptForWordAndType(concept.getLitheral(), concept.getWordType());
+        }
+        catch (DictionaryDoesNotContainConceptException ex) {
+            //Nothing?
+        }
+
+        return concept;
+        //return conceptCache.get(concept.getId());
     }
 
     /**
@@ -422,7 +436,8 @@ public class Decomposition {
     public static void addKnownConcept(Concept decompsotedConcept) {
         assert decompsotedConcept != null;
         assert decompsotedConcept.getDecompositionlevel() >= 0;
-        conceptCache.put(decompsotedConcept);
+        customGraph.addConcept(decompsotedConcept);
+        //conceptCache.put(decompsotedConcept);
     }
 
     /**
@@ -503,7 +518,8 @@ public class Decomposition {
                 concept = getPrimeofConcept(concept);
                 return concept;
             }
-            Concept knownConcept = conceptCache.get(Long.valueOf(concept.hashCode()));
+            //Concept knownConcept = conceptCache.get(Long.valueOf(concept.hashCode()));
+            Concept knownConcept = getKnownConcept(concept);
             if (knownConcept.getDecompositionlevel() < 0 || knownConcept.getDecompositionlevel() < decompositionDepth) {
                 Concept lock = lockMap.get(concept.hashCode());
                 if (lock == null) {
@@ -654,7 +670,8 @@ public class Decomposition {
                 concept = getPrimeofConcept(concept);
                 return concept;
             }
-            Concept knownConcept = conceptCache.get(Long.valueOf(concept.hashCode()));
+            Concept knownConcept = getKnownConcept(concept);
+            //Concept knownConcept = conceptCache.get(Long.valueOf(concept.hashCode()));
             if (knownConcept.getDecompositionlevel() < 0 || knownConcept.getDecompositionlevel() < decompositionDepth) {
                 Concept lock = lockMap.get(concept.hashCode());
                 if (lock == null) {
