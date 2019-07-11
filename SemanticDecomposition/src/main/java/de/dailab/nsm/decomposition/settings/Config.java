@@ -56,6 +56,12 @@ public class Config {
     public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/Wiktionary/";
 
 
+    public static final String CUSTOM_ARCHIVE_BASE_PATH= DEFAULT_PROPERTY_DIRECTORY + File.separator + "Custom";
+    public static final String CUSTOM_ARCHIVE_EN_PATH= CUSTOM_ARCHIVE_BASE_PATH + File.separator + "EN";
+    public static final String CUSTOM_ARCHIVE_GER_PATH= CUSTOM_ARCHIVE_BASE_PATH + File.separator + "GER";
+    public static final String CUSTOM_ARCHIVE_INDEX_NAME= "index";
+    public static final String CUSTOM_ARCHIVE_CONNECTIONS_NAME= "connections";
+
     /**
      *              Property keys
      */

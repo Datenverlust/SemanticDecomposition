@@ -5,22 +5,26 @@ import de.dailab.nsm.decomposition.Concept;
 import de.dailab.nsm.decomposition.Definition;
 import de.dailab.nsm.decomposition.WordType;
 import de.dailab.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
+import de.dailab.nsm.decomposition.settings.Config;
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class CustomGraph {
 
     private static final Logger logger = Logger.getLogger(CustomGraph.class);
 
-    private String connectionsFilePath = "/home/patrick/.decomposition/Custom/EN/connections";
-    private String connectedIndexFilePath = "/home/patrick/.decomposition/Custom/EN/index";
+    private final String connectionsFilePath;
+    private final String connectedIndexFilePath;
 
     private RandomAccessFile connectionsFile;
 
     ArrayList<CustomEntry> entries = new ArrayList<>();
-    HashMap<Integer, CustomEntry> entriesById = new HashMap<>();
+    Hashtable<Integer, CustomEntry> entriesById = new Hashtable<>();
 
     private int nextInternalIndex = 1;
 
@@ -28,7 +32,27 @@ public class CustomGraph {
     // <word, <type, entry>>
     protected Hashtable<String, Hashtable<WordType, CustomEntry>> entryLookup = new Hashtable<>();
 
+    private Object indexLock = new Object();
+
     public CustomGraph() {
+        if( Config.LANGUAGE.GER ==
+                Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
+
+            connectionsFilePath = Config.CUSTOM_ARCHIVE_GER_PATH + File.separator +
+                    Config.CUSTOM_ARCHIVE_CONNECTIONS_NAME;
+            connectedIndexFilePath = Config.CUSTOM_ARCHIVE_GER_PATH + File.separator +
+                    Config.CUSTOM_ARCHIVE_INDEX_NAME;
+        }
+        //else if( Config.LANGUAGE.EN ==
+        //       Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
+        else {
+            connectionsFilePath = Config.CUSTOM_ARCHIVE_EN_PATH + File.separator +
+                    Config.CUSTOM_ARCHIVE_CONNECTIONS_NAME;
+            connectedIndexFilePath = Config.CUSTOM_ARCHIVE_EN_PATH + File.separator +
+                    Config.CUSTOM_ARCHIVE_INDEX_NAME;
+        }
+
+
         try {
             connectionsFile = new RandomAccessFile(connectionsFilePath, "r");
             loadLookupMap();
@@ -50,16 +74,16 @@ public class CustomGraph {
         entriesById.put(getIdForEntry(entry), entry);
     }
 
-
-    int generateEntryIndex() {
-        return nextInternalIndex++;
+    private int generateEntryIndex() {
+        synchronized (this.indexLock) {
+            return nextInternalIndex++;
+        }
     }
 
     private int getIdForEntry(CustomEntry entry) {
         if (entry.index <= 0) entry.index = generateEntryIndex();
         return entry.index;
     }
-
 
 
     private CustomEntry getEntryForId(int id) throws DictionaryDoesNotContainConceptException{
@@ -74,12 +98,14 @@ public class CustomGraph {
     }
 
     private void loadEntry(CustomEntry entry) {
-        if(entry.loaded) {
-            System.out.println("Dont need to load: " + entry);
-            return;
-        }
+        synchronized (entry) {
+            if(entry.loaded) {
+                System.out.println("Don't need to load: " + entry);
+                return;
+            }
 
-        loadConceptFromFile(entry);
+            loadConceptFromFile(entry);
+        }
     }
 
     protected CustomEntry getEntryFromConcept(Concept concept) {
@@ -106,9 +132,11 @@ public class CustomGraph {
     }
 
     public CustomEntry getEntryForWord(String word) throws DictionaryDoesNotContainConceptException {
+        //Will this be used outside of tests?
         if(!entryLookup.containsKey(word)) {
             throw new DictionaryDoesNotContainConceptException();
         }
+        //If it contains the word, it contains at least 1 entry. (position 0)
         //FIXME: What to do with typless words? Iterate over the known ones?
         CustomEntry entry = Iterables.get(entryLookup.get(word).values(), 0);
         loadEntry(entry);
@@ -148,7 +176,7 @@ public class CustomGraph {
         }
 
         if(entryLookup.containsKey(word)
-        && entryLookup.get(word).contains(type)) {
+            && entryLookup.get(word).contains(type)) {
             // word and type already exists, might be a mistake, or loop
             return null;
         }
@@ -219,7 +247,7 @@ public class CustomGraph {
         catch (Exception ex) {
             entryLookup = new Hashtable<>();
             entries = new ArrayList<>();
-            entriesById = new HashMap<>();
+            entriesById = new Hashtable<>();
             System.out.println("Could not store entryLookup: " + ex.getLocalizedMessage());
         }
     }
@@ -516,8 +544,12 @@ public class CustomGraph {
                 System.out.println("Target: " + connectionTarget);
             }
         }
+        catch (EOFException ex) {
+            //TODO: This is just a test, but still, this should be checked differently...
+            System.out.println("End of file!");
+        }
         catch (IOException ex) {
-            System.out.println("IOError, hopefully end of file");
+            System.out.println("IOError,Unexpected IOException while dumping connections");
             ex.printStackTrace();
         }
 
