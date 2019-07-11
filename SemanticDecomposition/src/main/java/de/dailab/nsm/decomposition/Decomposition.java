@@ -323,13 +323,7 @@ public class Decomposition {
             if (knownConcept.getDecompositionlevel() >= 0) {
                 return knownConcept;
             }
-            for (BaseDictionary dic : dictionaries) {
-                try {
-                    dic.fillConcept(result, wordType);
-                } catch (DictionaryDoesNotContainConceptException e) {
-                    //e.printStackTrace();
-                }
-            }
+            fillConcept(result, wordType);
             if (result.getDefinitions() == null || result.getDefinitions().size() < 1) {
                 //    getManualDefinition(result,);
             }
@@ -527,15 +521,9 @@ public class Decomposition {
                     lock = concept;
                     lockMap.put(concept.hashCode(), concept);
                     //Fill concept: this fills e.g. the synonyms and the definitions
-                    for (BaseDictionary dic : dictionaries) {
-                        try {
-                            concept.setDecompositionlevel(decompositionDepth);
-                            dic.fillConcept(concept, concept.getWordType());
-                        } catch (DictionaryDoesNotContainConceptException ignored) {
-                            //Adding a manual definition because the dictionaries did not contain one.
-//                            getManualDefinition(concept);
-                        }
-                    }
+                    //
+                    fillConcept(concept, concept.getWordType());
+
                     DecomposeChildren(concept, decompositionDepth);
                     //Wait for children to be done.
                     for (int i = 0; i < futures.size(); i++) {
@@ -679,15 +667,7 @@ public class Decomposition {
                     lock = concept;
                     lockMap.put(concept.hashCode(), concept);
                     //Fill concept: this fills e.g. the synonyms and the definitions
-                    for (BaseDictionary dic : dictionaries) {
-                        try {
-                            concept.setDecompositionlevel(decompositionDepth);
-                            dic.fillConcept(concept, concept.getWordType());
-                        } catch (DictionaryDoesNotContainConceptException ignored) {
-                            //Adding a manual definition because the dictionaries did not contain one.
-                            //concept = getManualDefinition(concept);
-                        }
-                    }
+                    fillConcept(concept, concept.getWordType());
                     decomposeChildrenSingleThreaded(concept, decompositionDepth);
                     concept.setDecompositionlevel(decompositionDepth);
                     addKnownConcept(concept);
@@ -871,6 +851,16 @@ public class Decomposition {
             stringBuilder.append("|").append(spacer).append(" ").append("Decomposition: No Decomposition ").append(System.getProperty("line.separator"));
         }
         return stringBuilder.toString();
+    }
+
+    static private void fillConcept(Concept concept, WordType type) {
+        for (BaseDictionary dic : dictionaries) {
+            try {
+                dic.fillConcept(concept, type);
+            } catch (DictionaryDoesNotContainConceptException e) {
+                //e.printStackTrace();
+            }
+        }
     }
 
 }
