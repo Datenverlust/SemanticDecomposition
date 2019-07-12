@@ -104,25 +104,14 @@ public class Decomposition {
         System.out.println(concept.getDecomposition());
         System.out.println(concept.getAntonyms());
         logger.info("We are done: " + concept.toString());
-/*
-        if(generateCustomDict){
-            storeEverything();
-        }
-        else {
-            loadEverything();
 
- */
-        try {
-            System.out.println("sleeping");
-            Thread.sleep(10000);
-            customGraph.save();
-            customGraph.dumpConnections();
-
-        }
-        catch (InterruptedException ex) {
-            System.out.println("Woke up: ");
-            ex.printStackTrace();
-        }
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                System.out.println("Shutdown Hook is running! Saving...");
+                customGraph.save();
+                customGraph.dumpConnections();
+            }
+        });
     }
 
     private static void storeEverything() {
