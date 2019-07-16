@@ -164,7 +164,7 @@ public class Concept implements  Serializable, IConcept {
         tmpdecompositionElementCount += getHyponyms().size();
         tmpdecompositionElementCount += getMeronyms().size();
         tmpdecompositionElementCount += getArbitraryRelations().size();
-        return decompositionElementCount;
+        return tmpdecompositionElementCount;
     }
 
     public void setDecompositionElementCount(int decompositionElementCount) {

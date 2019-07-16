@@ -53,7 +53,7 @@ public class Decomposition {
     ConcurrentHashMap.KeySetView<Future<Concept>,Boolean> futures = ConcurrentHashMap.newKeySet();
     private int lockcount = 0;
 
-    private static CustomGraph customGraph = new CustomGraph();
+    public static CustomGraph customGraph = new CustomGraph();
     public static void setCustomGraph(CustomGraph customGraph) {
         Decomposition.customGraph = customGraph;
     }
