@@ -137,7 +137,6 @@ public class DecompositionTest extends Decomposition {
         int i = 0;
         Set<String> words100 = new HashSet<>();
 
-        //it.forEach(o -> {
         while (it.hasNext() && i++ < 100) {
             IWiktionaryEntry entry = (IWiktionaryEntry) it.next();
             words100.add(entry.getWord());
@@ -217,7 +216,6 @@ public class DecompositionTest extends Decomposition {
         int i = 0;
         Set<String> words100 = new HashSet<>();
 
-        //it.forEach(o -> {
         while (it.hasNext() && i++ < 100) {
             IWiktionaryEntry entry = (IWiktionaryEntry) it.next();
             words100.add(entry.getWord());
@@ -279,7 +277,6 @@ public class DecompositionTest extends Decomposition {
         int i = 0;
         Set<String> words100 = new HashSet<>();
 
-        //it.forEach(o -> {
         while (it.hasNext() && i++ < 100) {
             IWiktionaryEntry entry = (IWiktionaryEntry) it.next();
             words100.add(entry.getWord());
@@ -298,6 +295,8 @@ public class DecompositionTest extends Decomposition {
             total += concept.getDecompositionElementCount();
         }
 
+        System.out.println("Total: " + total);
+
         logTime("end generateConnectionCount");
         //total contains the total, counting duplicates, total / 100 is the average
 
@@ -315,7 +314,5 @@ public class DecompositionTest extends Decomposition {
             System.out.println("Diff to last: " + instant.compareTo(lastInstant));
         }
         lastInstant = instant;
-
     }
-
 }
