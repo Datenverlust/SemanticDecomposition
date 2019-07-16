@@ -3,6 +3,7 @@ package de.dailab.nsm.decomposition.Dictionaries.customDictionary;
 import com.google.common.collect.Iterables;
 import de.dailab.nsm.decomposition.Concept;
 import de.dailab.nsm.decomposition.Definition;
+import de.dailab.nsm.decomposition.Dictionaries.Dictionary;
 import de.dailab.nsm.decomposition.WordType;
 import de.dailab.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
 import de.dailab.nsm.decomposition.settings.Config;
@@ -12,6 +13,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class CustomGraph {
@@ -33,6 +35,8 @@ public class CustomGraph {
     protected Hashtable<String, Hashtable<WordType, CustomEntry>> entryLookup = new Hashtable<>();
 
     private Object indexLock = new Object();
+
+    private final static boolean MERGE_CONCEPTS = false;
 
     public CustomGraph() {
         if( Config.LANGUAGE.GER ==
@@ -58,7 +62,7 @@ public class CustomGraph {
             loadLookupMap();
         }
         catch (IOException ex) {
-            System.out.println("Could not open graph file: " + ex.getLocalizedMessage());
+            logger.error("Could not open graph file: " + ex.getLocalizedMessage());
             ex.printStackTrace();
         }
 
@@ -81,7 +85,9 @@ public class CustomGraph {
     }
 
     private int getIdForEntry(CustomEntry entry) {
-        if (entry.index <= 0) entry.index = generateEntryIndex();
+        if (entry.index <= 0) {
+            entry.index = generateEntryIndex();
+        }
         return entry.index;
     }
 
@@ -100,7 +106,7 @@ public class CustomGraph {
     private void loadEntry(CustomEntry entry) {
         synchronized (entry) {
             if(entry.loaded) {
-                System.out.println("Don't need to load: " + entry);
+                logger.info("Don't need to load: " + entry);
                 return;
             }
 
@@ -162,7 +168,7 @@ public class CustomGraph {
     }
 
     public CustomEntry addConcept(Concept concept) {
-        System.out.println("Adding concept: " + concept);
+        logger.info("Adding concept: " + concept);
         String word = concept.getLitheral();
         WordType type = concept.getWordType();
 
@@ -171,6 +177,7 @@ public class CustomGraph {
             return null;
         }
         if (type == null) {
+            //Failsafe, the type should never be null
             type = WordType.UNKNOWN;
             concept.setWordType(WordType.UNKNOWN);
         }
@@ -178,19 +185,45 @@ public class CustomGraph {
         if(entryLookup.containsKey(word)
             && entryLookup.get(word).contains(type)) {
             // word and type already exists, might be a mistake, or loop
-            return null;
+            CustomEntry entry = entryLookup.get(word).get(type);
+            return mergeConcept(entry, concept);
         }
-        int index = generateEntryIndex();
-        CustomEntry entry = new CustomEntry(index, concept);
-        addEntry(entry);
-        addEntryToLookup(entry);
+        else {
+            logger.info("Actually adding concept");
+            int index = generateEntryIndex();
+            CustomEntry entry = new CustomEntry(index, concept);
+            addEntry(entry);
+            addEntryToLookup(entry);
 
-        concept.getDecomposition().forEach(connectedConcept -> addConcept(connectedConcept));
-        concept.getDefinitions().forEach(
-                definition -> definition.getDefinition().forEach(
-                        connectedConcept -> addConcept(connectedConcept)
-                )
-        );
+            concept.getDecomposition().forEach(connectedConcept -> addConcept(connectedConcept));
+            concept.getDefinitions().forEach(
+                    definition -> definition.getDefinition().forEach(
+                            connectedConcept -> addConcept(connectedConcept)
+                    )
+            );
+            return entry;
+        }
+    }
+
+    private CustomEntry mergeConcept(CustomEntry entry, Concept concept) {
+        assert entry != null;
+        assert concept != null;
+
+        Concept target = entry.concept;
+
+        //If merging is forced, or the target is empty (was not already set correctly)
+        // everything should have at least 1 definition if it was loaded
+        if(MERGE_CONCEPTS || (target.getDefinitions().size() == 0 && concept.getDefinitions().size() > 0) ) {
+            //TODO: make sure that this does not lead to duplications?
+            target.getDefinitions().addAll(concept.getDefinitions());
+            target.getMeronyms().addAll(concept.getMeronyms());
+            target.getHypernyms().addAll(concept.getHypernyms());
+            target.getHyponyms().addAll(concept.getHyponyms());
+            target.getAntonyms().addAll(concept.getAntonyms());
+            target.getSynonyms().addAll(concept.getSynonyms());
+            target.getAlternativeSyn().addAll(concept.getAlternativeSyn());
+            target.getAlternativeAnt().addAll(concept.getAlternativeAnt());
+        }
         return entry;
     }
 
@@ -198,7 +231,7 @@ public class CustomGraph {
         if (!entryLookup.containsKey(entry.word)) {
             entryLookup.put(entry.word, new Hashtable<>());
         }
-        System.out.println("Adding entry to lookup: " + entry);
+        logger.info("Adding entry to lookup: " + entry);
 
         //FIXME: Not a fitting null check here. This should be solved somewhere general
         if(entry.type == null) {
@@ -209,28 +242,33 @@ public class CustomGraph {
 
 
     private void storeLookupMap() {
-        System.out.println("Storing entryLookup");
+        logger.info("Storing entryLookup");
         try {
+            Path p = Path.of(connectedIndexFilePath);
+            if (Files.exists(p)) {
+                Files.move(p, Path.of(connectedIndexFilePath + "_" + new Date()));
+            }
+
             FileOutputStream connectedIndexFile;
             connectedIndexFile = new FileOutputStream(connectedIndexFilePath, false);
             ObjectOutputStream out = new ObjectOutputStream(connectedIndexFile);
             out.writeObject(entryLookup);
-            System.out.println("done storing entryLookup");
+            logger.info("done storing entryLookup");
         }
         catch (Exception ex) {
-            System.out.println("Could not store entryLookup: " + ex.getLocalizedMessage());
+            logger.error("Could not store entryLookup: " + ex.getLocalizedMessage());
         }
     }
 
     private void loadLookupMap() {
-        System.out.println("Loading entryLookup");
+        logger.info("Loading entryLookup");
         try {
             FileInputStream connectedIndexFile;
             connectedIndexFile = new FileInputStream(connectedIndexFilePath);
             ObjectInputStream in = new ObjectInputStream(connectedIndexFile);
             entryLookup = (Hashtable<String, Hashtable<WordType, CustomEntry>>) in.readObject();
-            System.out.println("Loaded lookup map");
-            System.out.println("Creating entries list");
+            logger.info("Loaded lookup map");
+            logger.info("Creating entries list");
 
             for (Hashtable<WordType, CustomEntry> types : entryLookup.values()) {
                 for (CustomEntry entry : types.values()) {
@@ -239,7 +277,7 @@ public class CustomGraph {
             }
             nextInternalIndex = entries.size() + 1;
 
-            System.out.println("Created entries list");
+            logger.info("Created entries list");
 
             testLookup();
             testConnections();
@@ -248,13 +286,13 @@ public class CustomGraph {
             entryLookup = new Hashtable<>();
             entries = new ArrayList<>();
             entriesById = new Hashtable<>();
-            System.out.println("Could not store entryLookup: " + ex.getLocalizedMessage());
+            logger.error("Could not store entryLookup: " + ex.getLocalizedMessage());
         }
     }
     private void testLookup() {
         System.out.println("------Starting lookup test-------");
         System.out.println("Entries: " + entryLookup.size());
-        int limit = Math.min(1100, entryLookup.size());
+        int limit = Math.min(1000000, entryLookup.size());
         Enumeration<String> e = entryLookup.keys();
         for (int i = 0; i < limit; i++) {
             String word = e.nextElement();
@@ -268,22 +306,13 @@ public class CustomGraph {
                 System.out.println("Entry: " + typesList.get(type));
             }
         }
-        System.out.println("Checking Monday, id: 87, fileIndex: 348");
-        try {
-            loadConcept(87);
-        }
-        catch (Exception ex) {
-            System.out.println("Error while getting monday: ");
-            ex.printStackTrace();
-        }
-
         System.out.println("------Finished lookup test-------");
     }
 
     private void testConnections() {
         System.out.println("------Starting connections test-------");
 
-        int limit = Math.min(110000, entryLookup.size());
+        int limit = Math.min(1000000, entryLookup.size());
         Enumeration<String> e = entryLookup.keys();
         for (int i = 0; i < limit; i++) {
             String word = e.nextElement();
@@ -297,24 +326,27 @@ public class CustomGraph {
                 System.out.println("Entry: " + entry);
                 loadEntry(entry);
                 System.out.println("Concept: " + entry.concept);
-
             }
         }
 
         System.out.println("------Finished connections test-------");
-
     }
 
     private void storeGraph() {
         try {
             System.out.println("Storing entries: " + entries.size());
 
+            Path p = Path.of(connectionsFilePath);
+            if (Files.exists(p)) {
+                Files.move(p, Path.of(connectionsFilePath + "_" + new Date()));
+            }
+
             RandomAccessFile connectionsFile;
             connectionsFile =
                     new RandomAccessFile(connectionsFilePath, "rw");
             connectionsFile.setLength(0);
 
-            System.out.println("Storing graph");
+            logger.info("Storing graph");
             iterator = entries.listIterator();
             while(iterator.hasNext()) {
                 CustomEntry entry = iterator.next();
@@ -324,7 +356,7 @@ public class CustomGraph {
             iterator = null;
         }
         catch (IOException ex) {
-            System.out.println("Could not store everything: " + ex.getLocalizedMessage());
+            logger.error("Could not store everything: " + ex.getLocalizedMessage());
             ex.printStackTrace();
         }
     }
@@ -333,63 +365,67 @@ public class CustomGraph {
     private void writeEntry(RandomAccessFile file, CustomEntry entry) {
         //this will write a single entries references into the connections file
 
+        //This only loads when needed
+        loadEntry(entry);
+
         Concept concept = entry.concept;
 
-        System.out.println("Logging everything about: " + entry);
-        System.out.println(("Definitions: " + concept.getDefinitions()));
-        System.out.println(("Definitions num: " + concept.getDefinitions().size()));
+        logger.debug("Logging everything about: " + entry);
+        logger.debug("Logging everything about: " + concept);
+        logger.debug(("Definitions: " + concept.getDefinitions()));
+        logger.debug(("Definitions num: " + concept.getDefinitions().size()));
 
         try {
 
             for (Definition def : concept.getDefinitions()) {
-                System.out.println("Got definition");
+                logger.debug("Got definition");
                 storeDefinition(file, def);
             }
 
             for (Concept connection : concept.getAlternativeSyn()) {
-                System.out.println("Got 1");
+                logger.debug("Got 1");
                 storeConnection(file, connection, 1);
             }
 
             for (Concept connection : concept.getAlternativeAnt()) {
-                System.out.println("Got 2");
+                logger.debug("Got 2");
                 storeConnection(file, connection, 2);
             }
 
             for (Concept connection : concept.getSynonyms()) {
-                System.out.println("Got 3");
+                logger.debug("Got 3");
                 storeConnection(file, connection, 3);
             }
 
             for (Concept connection : concept.getAntonyms()) {
-                System.out.println("Got 4");
+                logger.debug("Got 4");
                 storeConnection(file, connection, 4);
             }
 
             for (Concept connection : concept.getHypernyms()) {
-                System.out.println("Got 5");
+                logger.debug("Got 5");
                 storeConnection(file, connection, 5);
             }
 
             for (Concept connection : concept.getHyponyms()) {
-                System.out.println("Got 6");
+                logger.debug("Got 6");
                 storeConnection(file, connection, 6);
             }
 
             for (Concept connection : concept.getDerivations()) {
-                System.out.println("Got 7");
+                logger.debug("Got 7");
                 storeConnection(file, connection, 7);
             }
 
             for (Concept connection : concept.getArbitraryRelations()) {
-                System.out.println("Got 8");
+                logger.debug("Got 8");
                 storeConnection(file, connection, 8);
             }
             //Delimiter, for the list of connections
             file.writeInt(-1);
         }
         catch (IOException ex) {
-            System.out.println("Could not write into connections file: " + ex.getLocalizedMessage());
+            logger.error("Could not write into connections file: " + ex.getLocalizedMessage());
         }
     }
 
@@ -400,7 +436,7 @@ public class CustomGraph {
     private void storeConnection(RandomAccessFile file, CustomEntry entry, int type) throws IOException {
 
         int internalIndex = entry.index;
-        System.out.println("Storing in " + file.getFilePointer() + ": "+type+", "+internalIndex);
+        logger.info("Storing in " + file.getFilePointer() + ": "+type+", "+internalIndex);
         // store the type of the connection
         file.writeInt(type);
 
@@ -435,10 +471,10 @@ public class CustomGraph {
 
 
     private Concept loadConceptFromFile(CustomEntry entry) {
-        System.out.println("Loading entry: " + entry);
+        logger.info("Loading entry: " + entry);
 
         if(entry.fileIndex < 0) {
-            System.out.println("No file index given for : " + entry);
+            logger.warn("No file index given for : " + entry);
         }
 
         long fileIndex = entry.fileIndex;
@@ -446,7 +482,7 @@ public class CustomGraph {
         concept.setWordType(entry.type);
 
         try {
-            System.out.println("Seeking in connections file: " + fileIndex);
+            logger.debug("Seeking in connections file: " + fileIndex);
             connectionsFile.seek(fileIndex);
             boolean definitionLoaded = false;
             Definition def = new Definition();
@@ -455,7 +491,7 @@ public class CustomGraph {
             while (true) {
                 //read stuff from the file
                 int connectionType = connectionsFile.readInt();
-                System.out.println("Type: " + connectionType);
+                logger.debug("Type: " + connectionType);
                 //-1 is the end of the current words connections
                 if (connectionType == -1) {
                     break mainloop;
@@ -465,7 +501,7 @@ public class CustomGraph {
                     definitionLoaded = false;
                 }
                 int connectionTarget = connectionsFile.readInt();
-                System.out.println("Target: " + connectionTarget);
+                logger.debug("Target: " + connectionTarget);
 
                 CustomEntry connectedEntry = getEntryForId(connectionTarget);
 
@@ -533,23 +569,23 @@ public class CustomGraph {
             mainloop:
             while (true) {
                 //read stuff from the file
-                System.out.println("File pointer: " + file.getFilePointer());
+                logger.info("File pointer: " + file.getFilePointer());
                 int connectionType = file.readInt();
-                System.out.println("Type: " + connectionType);
+                logger.info("Type: " + connectionType);
                 //-1 is the end of the current words connections
                 if (connectionType == -1) {
                     continue ;
                 }
                 int connectionTarget = file.readInt();
-                System.out.println("Target: " + connectionTarget);
+                logger.info("Target: " + connectionTarget);
             }
         }
         catch (EOFException ex) {
             //TODO: This is just a test, but still, this should be checked differently...
-            System.out.println("End of file!");
+            logger.info("End of file!");
         }
         catch (IOException ex) {
-            System.out.println("IOError,Unexpected IOException while dumping connections");
+            logger.warn("IOError,Unexpected IOException while dumping connections");
             ex.printStackTrace();
         }
 

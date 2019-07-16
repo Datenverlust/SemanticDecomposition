@@ -105,16 +105,27 @@ public class Decomposition {
         System.out.println(concept.getAntonyms());
         logger.info("We are done: " + concept.toString());
 
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                System.out.println("Shutdown Hook is running! Saving...");
-                customGraph.save();
-                customGraph.dumpConnections();
-            }
-        });
+        storeEverything();
     }
 
     private static void storeEverything() {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                System.out.println("Shutdown Hook is running! Saving...");
+                try {
+                    System.out.println("sleeping");
+                    Thread.sleep(60000);
+                    //customGraph.save();
+                    //customGraph.dumpConnections();
+
+                }
+                catch (InterruptedException ex) {
+                    System.out.println("Woke up: ");
+                    ex.printStackTrace();
+                }
+            }
+        });
+
         IWiktionaryEdition wkt = WiktionaryCrawler.wkt;
         WiktionaryEntryFilter filter = new WiktionaryEntryFilter();
         filter.setAllowedWordLanguages(Language.GERMAN, Language.ENGLISH);
@@ -127,24 +138,13 @@ public class Decomposition {
         int i = 0;
 
         //it.forEach(o -> {
-        while (it.hasNext() && i++ < 100) {
+        while (it.hasNext() && i++ < 600000) {
             System.out.println("Got next entry");
             IWiktionaryEntry entry = (IWiktionaryEntry) it.next();
             System.out.println("Decomposing entry");
-            Concept concept = decomposition.multiThreadedDecompose(entry.getWord(), WordType.UNKNOWN, 1);
+            Concept concept = decomposition.decompose(entry.getWord(), WordType.UNKNOWN, 1);
             System.out.println("Storing entry");
             customGraph.addConcept(concept);
-        }
-
-        try {
-            System.out.println("sleeping");
-            Thread.sleep(10000);
-            customGraph.save();
-
-        }
-        catch (InterruptedException ex) {
-            System.out.println("Woke up: ");
-            ex.printStackTrace();
         }
     }
 
@@ -401,7 +401,13 @@ public class Decomposition {
     public static Concept getKnownConcept(Concept concept) {
         assert concept != null;
         try {
-            concept = customGraph.getConceptForWordAndType(concept.getLitheral(), concept.getWordType());
+            if(concept.getWordType() == WordType.UNKNOWN) {
+                concept = customGraph.getConceptForWord(concept.getLitheral());
+            }
+            else {
+                concept = customGraph.getConceptForWordAndType(concept.getLitheral(), concept.getWordType());
+            }
+
         }
         catch (DictionaryDoesNotContainConceptException ex) {
             //Nothing?
@@ -504,6 +510,7 @@ public class Decomposition {
             //Concept knownConcept = conceptCache.get(Long.valueOf(concept.hashCode()));
             Concept knownConcept = getKnownConcept(concept);
             if (knownConcept.getDecompositionlevel() < 0 || knownConcept.getDecompositionlevel() < decompositionDepth) {
+                System.out.println("Actually decomposing: " + concept);
                 Concept lock = lockMap.get(concept.hashCode());
                 if (lock == null) {
                     //System.out.println("locking: " + concept.getLitheral() + " with " + lockcount + " locks in use.");
