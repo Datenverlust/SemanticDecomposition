@@ -3,7 +3,6 @@ package de.dailab.nsm.decomposition.Dictionaries.customDictionary;
 import com.google.common.collect.Iterables;
 import de.dailab.nsm.decomposition.Concept;
 import de.dailab.nsm.decomposition.Definition;
-import de.dailab.nsm.decomposition.Dictionaries.Dictionary;
 import de.dailab.nsm.decomposition.WordType;
 import de.dailab.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
 import de.dailab.nsm.decomposition.settings.Config;
@@ -12,8 +11,6 @@ import org.apache.log4j.Logger;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
 import java.util.*;
 
 public class CustomGraph {
@@ -38,7 +35,14 @@ public class CustomGraph {
 
     private final static boolean MERGE_CONCEPTS = false;
 
+    private final boolean disableStorage;
+
     public CustomGraph() {
+        this(false);
+    }
+    public CustomGraph(boolean disableStorage) {
+        this.disableStorage = disableStorage;
+
         if( Config.LANGUAGE.GER ==
                 Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
 
@@ -262,6 +266,14 @@ public class CustomGraph {
 
     private void loadLookupMap() {
         logger.info("Loading entryLookup");
+
+        if (disableStorage) {
+            entryLookup = new Hashtable<>();
+            entries = new ArrayList<>();
+            entriesById = new Hashtable<>();
+            logger.debug("Did not load lookup map");
+        }
+
         try {
             FileInputStream connectedIndexFile;
             connectedIndexFile = new FileInputStream(connectedIndexFilePath);
@@ -333,6 +345,12 @@ public class CustomGraph {
     }
 
     private void storeGraph() {
+
+        if (disableStorage) {
+            logger.debug("skipping the storing part");
+            return;
+        }
+
         try {
             System.out.println("Storing entries: " + entries.size());
 
@@ -372,9 +390,14 @@ public class CustomGraph {
 
         logger.debug("Logging everything about: " + entry);
         logger.debug("Logging everything about: " + concept);
-        logger.debug(("Definitions: " + concept.getDefinitions()));
-        logger.debug(("Definitions num: " + concept.getDefinitions().size()));
+        logger.debug("Definitions: " + concept.getDefinitions());
+        logger.debug("Definitions num: " + concept.getDefinitions().size());
 
+
+        if (disableStorage) {
+            logger.debug("Skipping the storing part");
+            return;
+        }
         try {
 
             for (Definition def : concept.getDefinitions()) {
@@ -434,6 +457,10 @@ public class CustomGraph {
     }
 
     private void storeConnection(RandomAccessFile file, CustomEntry entry, int type) throws IOException {
+        if (disableStorage) {
+            logger.debug("skipping the storing part");
+            return;
+        }
 
         int internalIndex = entry.index;
         logger.info("Storing in " + file.getFilePointer() + ": "+type+", "+internalIndex);
@@ -445,6 +472,11 @@ public class CustomGraph {
     }
 
     private void storeDefinition(RandomAccessFile file, Definition def) throws IOException {
+        if (disableStorage) {
+            logger.debug("skipping the storing part");
+            return;
+        }
+
         for(Concept concept : def.getDefinition()) {
             storeConnection(file, concept, 27);
         }
@@ -473,8 +505,16 @@ public class CustomGraph {
     private Concept loadConceptFromFile(CustomEntry entry) {
         logger.info("Loading entry: " + entry);
 
+        if (disableStorage) {
+            logger.debug("skipping the loading part");
+            Concept concept = new Concept(entry.word, entry.type);
+            return concept;
+        }
+
         if(entry.fileIndex < 0) {
             logger.warn("No file index given for : " + entry);
+            Concept concept = new Concept(entry.word, entry.type);
+            return concept;
         }
 
         long fileIndex = entry.fileIndex;

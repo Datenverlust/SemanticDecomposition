@@ -54,10 +54,15 @@ public class Decomposition {
     private int lockcount = 0;
 
     private static CustomGraph customGraph = new CustomGraph();
+    public static void setCustomGraph(CustomGraph customGraph) {
+        Decomposition.customGraph = customGraph;
+    }
 
     public void cleanUp(){
         ConceptCache.cleanUp();
     }
+
+    private static boolean disableCache = false;
 
     public Decomposition() {
         init();
@@ -77,6 +82,11 @@ public class Decomposition {
 //    public static void setKnownConcepts(Map<Integer, Concept> knownConcepts) {
 //        Decomposition.knownConcepts = knownConcepts;
 //    }
+
+    public static boolean disableCache(boolean disableCacheParam) {
+        disableCache = disableCacheParam;
+        return disableCache;
+    }
 
     public static Concept getConcept() {
         return concept;
@@ -115,7 +125,7 @@ public class Decomposition {
                 try {
                     System.out.println("sleeping");
                     Thread.sleep(60000);
-                    //customGraph.save();
+                    customGraph.save();
                     //customGraph.dumpConnections();
 
                 }
@@ -138,12 +148,13 @@ public class Decomposition {
         int i = 0;
 
         //it.forEach(o -> {
-        while (it.hasNext() && i++ < 600000) {
-            System.out.println("Got next entry");
+        while (it.hasNext() && i++ < 100) {
+            System.out.println("Got next entry: " + i);
             IWiktionaryEntry entry = (IWiktionaryEntry) it.next();
-            System.out.println("Decomposing entry");
-            Concept concept = decomposition.decompose(entry.getWord(), WordType.UNKNOWN, 1);
-            System.out.println("Storing entry");
+            System.out.println("Decomposing entry: " + entry.getWord());
+            Concept concept = decomposition.decompose(
+                    entry.getWord(), WordType.UNKNOWN, 1);
+            System.out.println("Storing concept: " + concept);
             customGraph.addConcept(concept);
         }
     }
@@ -399,6 +410,9 @@ public class Decomposition {
      * @return boolean indication if the concept is known.
      */
     public static Concept getKnownConcept(Concept concept) {
+        if(disableCache) {
+            return concept;
+        }
         assert concept != null;
         try {
             if(concept.getWordType() == WordType.UNKNOWN) {
@@ -423,6 +437,9 @@ public class Decomposition {
      * @param decompsotedConcept the concept added to the known entries.
      */
     public static void addKnownConcept(Concept decompsotedConcept) {
+        if(disableCache) {
+            return;
+        }
         assert decompsotedConcept != null;
         assert decompsotedConcept.getDecompositionlevel() >= 0;
         customGraph.addConcept(decompsotedConcept);
@@ -488,6 +505,7 @@ public class Decomposition {
         }
         //Create the decomposition recursively until the maximal decomposition depth is found.
         concept = multiThreadedDecompose(concept, decompositionDepth);
+
         return concept;
     }
 
@@ -509,6 +527,7 @@ public class Decomposition {
             }
             //Concept knownConcept = conceptCache.get(Long.valueOf(concept.hashCode()));
             Concept knownConcept = getKnownConcept(concept);
+            logger.debug("Got known concept: " + concept);
             if (knownConcept.getDecompositionlevel() < 0 || knownConcept.getDecompositionlevel() < decompositionDepth) {
                 System.out.println("Actually decomposing: " + concept);
                 Concept lock = lockMap.get(concept.hashCode());
@@ -642,7 +661,6 @@ public class Decomposition {
         }
         return decompose(concept,decompositionDepth);
     }
-
 
 
     public Concept decompose(Concept concept, int decompositionDepth) {
