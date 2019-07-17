@@ -9,7 +9,11 @@ import de.tudarmstadt.ukp.jwktl.api.filter.WiktionaryEntryFilter;
 import de.tudarmstadt.ukp.jwktl.api.util.IWiktionaryIterator;
 import de.tudarmstadt.ukp.jwktl.api.util.Language;
 import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 
+
+import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +26,8 @@ public class DecompositionTest extends Decomposition {
 
     private Instant lastInstant = null;
     private Set<String> _words100 = null;
+
+    private final int maxDecompDepth = 1;
 
     @Test
     public void decomposeStatic() {
@@ -50,7 +56,7 @@ public class DecompositionTest extends Decomposition {
             try {
                 Concept loaded = Decomposition.customGraph.getConceptForWordAndType(concept.getLitheral(), concept.getWordType());
                 //it has to be literally the same object, not just the same litheral
-                assert loaded == concept;
+                assert loaded.equals(concept);
             }
             catch (DictionaryDoesNotContainConceptException ex) {
                 assert false;
@@ -76,7 +82,7 @@ public class DecompositionTest extends Decomposition {
         Decomposition.disableCache(false);
         Decomposition decomposition = new Decomposition();
         logTime("start decomping");
-        for (int i = 1; i < 3; i++) {
+        for (int i = 1; i <= maxDecompDepth; i++) {
 
             for (String word : words) {
                 logTime("start decomp " + i);
@@ -84,7 +90,12 @@ public class DecompositionTest extends Decomposition {
                 logTime("start 2nd decomp " + i);
                 Concept concept2 = decomposition.decompose(word, WordType.UNKNOWN, i);
                 logTime("finished decomp " + i);
-                assert concept1 == concept2;
+                System.out.println(concept1);
+                System.out.println(concept2);
+                System.out.println(concept1.hashCode());
+                System.out.println(concept2.hashCode());
+                assert concept1.equals(concept2);
+
             }
         }
         logTime("end decomp");
@@ -121,7 +132,7 @@ public class DecompositionTest extends Decomposition {
         Concept connectedWord2 = decomposition.decompose(connectedWord, WordType.UNKNOWN, 1);
         logTime("finished decomp connectedWord 2");
 
-        assert connectedWord1 == connectedWord2;
+        assert connectedWord1.equals(connectedWord2);
 
         logTime("end reuseConcept");
     }
@@ -283,11 +294,12 @@ public class DecompositionTest extends Decomposition {
         logTime();
     }
     private void logTime() {
-        synchronized (lastInstant) {
+        synchronized (this) {
             Instant instant = Instant.now();
             System.out.println("This instant: " + instant);
             if(lastInstant != null) {
-                System.out.println("Diff to last: " + instant.compareTo(lastInstant));
+                long distance = Duration.between(lastInstant, instant).toNanos();
+                System.out.println("Diff to last: " + distance);
             }
             lastInstant = instant;
         }

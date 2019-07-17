@@ -37,7 +37,7 @@ public class CustomGraph {
 
     private final boolean disableStorage;
 
-    public static boolean disableTests = false;
+    public static boolean disableTests = true;
 
     public CustomGraph() {
         this(false);
@@ -169,6 +169,9 @@ public class CustomGraph {
 
         CustomEntry entry = entryLookup.get(word).get(type);
         loadEntry(entry);
+
+        assert entry != null;
+        assert entry.concept != null;
 
         return entry;
     }
@@ -516,12 +519,14 @@ public class CustomGraph {
         if (disableStorage) {
             logger.debug("skipping the loading part");
             Concept concept = new Concept(entry.word, entry.type);
+            entry.concept = concept;
             return concept;
         }
 
         if(entry.fileIndex < 0) {
             logger.warn("No file index given for : " + entry);
             Concept concept = new Concept(entry.word, entry.type);
+            entry.concept = concept;
             return concept;
         }
 

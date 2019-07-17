@@ -410,23 +410,23 @@ public class Decomposition {
      * @return boolean indication if the concept is known.
      */
     public static Concept getKnownConcept(Concept concept) {
+        assert concept != null;
         if(disableCache) {
             return concept;
         }
-        assert concept != null;
-        try {
+        try {/*
             if(concept.getWordType() == WordType.UNKNOWN) {
                 concept = customGraph.getConceptForWord(concept.getLitheral());
             }
-            else {
+            else {*/
                 concept = customGraph.getConceptForWordAndType(concept.getLitheral(), concept.getWordType());
-            }
+            /*}*/
 
         }
         catch (DictionaryDoesNotContainConceptException ex) {
             //Nothing?
         }
-
+        assert concept != null;
         return concept;
         //return conceptCache.get(concept.getId());
     }
