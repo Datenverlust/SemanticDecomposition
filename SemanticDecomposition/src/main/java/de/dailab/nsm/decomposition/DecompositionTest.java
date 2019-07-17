@@ -25,8 +25,12 @@ public class DecompositionTest extends Decomposition {
 
     @Test
     public void decomposeStatic() {
-        logTime("start decomposeStatic");
         //Decompose "words" with the empty cache
+
+        //did it work?
+        //is it stored in the cache?
+        logTime("start decomposeStatic");
+
         CustomGraph.disableTests = true;
         CustomGraph customGraph = new CustomGraph(true);
         Decomposition.customGraph = customGraph;
@@ -41,9 +45,6 @@ public class DecompositionTest extends Decomposition {
             Concept concept = decomposition.decompose(word, WordType.UNKNOWN, 1);
             concepts.add(concept);
         }
-
-        //did it work?
-        //is it stored in the cache?
 
         for (Concept concept : concepts) {
             try {
@@ -65,7 +66,9 @@ public class DecompositionTest extends Decomposition {
         //Decompose "words" with depth 1-3 (add them to the cache)
         // and then decompose the same words, while using the cache
 
-        //Decompose "words" with the empty cache
+        //compare the two results, are they the same?
+        //compare the speed, and possibly memory usage
+
         CustomGraph.disableTests = true;
         CustomGraph customGraph = new CustomGraph(true);
         Decomposition.customGraph = customGraph;
@@ -85,8 +88,6 @@ public class DecompositionTest extends Decomposition {
             }
         }
         logTime("end decomp");
-        //compare the two results, are they the same?
-        //compare the speed, and possibly memory usage
     }
 
     @Test
@@ -95,6 +96,9 @@ public class DecompositionTest extends Decomposition {
         //Decompose the connectedWord without using the cache
         //decompose words with the cache
         //decompose the connectedWord with the cache
+
+        //compare the two results for the connectedWord, are they the same?
+        //compare the speed, and possibly memory usage
 
         CustomGraph.disableTests = true;
         CustomGraph customGraph = new CustomGraph(true);
@@ -120,9 +124,6 @@ public class DecompositionTest extends Decomposition {
         assert connectedWord1 == connectedWord2;
 
         logTime("end reuseConcept");
-
-        //compare the two results for the connectedWord, are they the same?
-        //compare the speed, and possibly memory usage
     }
 
     @Test
@@ -131,6 +132,8 @@ public class DecompositionTest extends Decomposition {
         //generate? a list of 100 words
         //Decompose them with the cache enabled
         //Decompose them again
+
+        //compare the two results, the number of nodes/edges, and the speed and memory usage
 
         Set<String> words100 = get100Words();
 
@@ -156,7 +159,6 @@ public class DecompositionTest extends Decomposition {
         logTime("Decomposing 100 end 2");
 
         logTime("end decomposeALot");
-        //compare the two results, the number of nodes/edges, and the speed and memory usage
     }
 
     @Test
@@ -164,6 +166,8 @@ public class DecompositionTest extends Decomposition {
         logTime("start repeadetlyDecompose");
         //decompose the connectedWord with cache disabled 100 times
         //decompose the connectedWord with cache enabled 100 times
+
+        //compare the speed, and possibly memory usage
 
         CustomGraph.disableTests = true;
         CustomGraph customGraph = new CustomGraph(true);
@@ -187,7 +191,6 @@ public class DecompositionTest extends Decomposition {
         logTime("end 100 repetition 2");
 
         logTime("end repeadetlyDecompose");
-        //compare the speed, and possibly memory usage
     }
 
     @Test
@@ -199,6 +202,8 @@ public class DecompositionTest extends Decomposition {
         //load the graph
         //decompose the same 100 words with the cache enabled
 
+        //compare the speed, and possibly memory usage
+        // note the time it took to save and load
 
         Set<String> words100 = get100Words();
 
@@ -240,8 +245,6 @@ public class DecompositionTest extends Decomposition {
         logTime("decomposed 100 loaded");
 
         logTime("end saveAndLoad");
-        //compare the speed, and possibly memory usage
-        // note the time it took to save and load
     }
 
     @Test
@@ -249,6 +252,8 @@ public class DecompositionTest extends Decomposition {
         logTime("start generateConnectionCount");
         //generate? a list of 100 words
         //decompose 100 words with the cache enabled
+
+        //count the number of connections on each word
 
         Set<String> words100 = get100Words();
 
@@ -266,12 +271,11 @@ public class DecompositionTest extends Decomposition {
             total += concept.getDecompositionElementCount();
         }
 
+        //total contains the total, counting duplicates, total / 100 is the average
         System.out.println("Total: " + total);
 
         logTime("end generateConnectionCount");
-        //total contains the total, counting duplicates, total / 100 is the average
 
-        //count the number of connections on each word
     }
 
     private void logTime(String comment) {
