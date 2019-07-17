@@ -41,7 +41,7 @@ public class DecompositionTest extends Decomposition {
         CustomGraph customGraph = new CustomGraph(true);
         Decomposition.customGraph = customGraph;
 
-        Decomposition.disableCache(true);
+        Decomposition.disableCache(false);
         Decomposition decomposition = new Decomposition();
 
 
