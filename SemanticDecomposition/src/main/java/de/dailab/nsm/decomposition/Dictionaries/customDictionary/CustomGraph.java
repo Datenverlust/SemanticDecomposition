@@ -37,6 +37,8 @@ public class CustomGraph {
 
     private final boolean disableStorage;
 
+    public static boolean disableTests = false;
+
     public CustomGraph() {
         this(false);
     }
@@ -302,6 +304,9 @@ public class CustomGraph {
         }
     }
     private void testLookup() {
+        if (disableTests) {
+            return;
+        }
         System.out.println("------Starting lookup test-------");
         System.out.println("Entries: " + entryLookup.size());
         int limit = Math.min(1000000, entryLookup.size());
@@ -322,6 +327,9 @@ public class CustomGraph {
     }
 
     private void testConnections() {
+        if(disableTests) {
+            return;
+        }
         System.out.println("------Starting connections test-------");
 
         int limit = Math.min(1000000, entryLookup.size());
