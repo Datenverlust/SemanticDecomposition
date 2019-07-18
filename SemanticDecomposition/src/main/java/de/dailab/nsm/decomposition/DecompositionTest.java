@@ -47,11 +47,14 @@ public class DecompositionTest extends Decomposition {
 
         Set<Concept> concepts = new HashSet<>();
 
+        logTime("Starting first decomposition");
         for (String word : words) {
             Concept concept = decomposition.decompose(word, WordType.UNKNOWN, 1);
             concepts.add(concept);
         }
+        logTime("Finished first decomposition");
 
+        logTime("Started second decomposition");
         for (Concept concept : concepts) {
             try {
                 Concept loaded = Decomposition.customGraph.getConceptForWordAndType(concept.getLitheral(), concept.getWordType());
@@ -61,8 +64,9 @@ public class DecompositionTest extends Decomposition {
             catch (DictionaryDoesNotContainConceptException ex) {
                 assert false;
             }
-
         }
+        logTime("Finished second decomposition");
+
         logTime("end decomposeStatic");
     }
 
