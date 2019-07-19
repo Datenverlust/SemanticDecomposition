@@ -50,7 +50,6 @@ public class Decomposition {
     private static ConceptCache conceptCache = null;
     private static Concept concept = null;
     ExecutorService cachedThreadPool = Executors.newFixedThreadPool(DecompositionConfig.getThreadCount());//Executors.newCachedThreadPool();
-    ConcurrentHashMap.KeySetView<Future<Concept>,Boolean> futures = ConcurrentHashMap.newKeySet();
     private int lockcount = 0;
 
     public static CustomGraph customGraph = new CustomGraph();
@@ -517,6 +516,7 @@ public class Decomposition {
      * @param decompositionDepth integer to specify the depth of the decomposition. If set to -1 infinity is used.
      */
     private Concept multiThreadedDecompose(Concept concept, int decompositionDepth) {
+
         if (0 < decompositionDepth) {
             if (concepts2Ignore.contains(concept)) {
                 return concept;
@@ -539,26 +539,20 @@ public class Decomposition {
                     //
                     fillConcept(concept, concept.getWordType());
 
-                    DecomposeChildren(concept, decompositionDepth);
-                    //Wait for children to be done.
-                    for (int i = 0; i < futures.size(); i++) {
-                        try {
-                            futures.iterator().next().get();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    Future future = DecomposeChildren(concept, decompositionDepth);
+                    try {
+                        future.get();
+                        concept.setDecompositionlevel(decompositionDepth);
+                        addKnownConcept(concept);
 
-                    concept.setDecompositionlevel(decompositionDepth);
-                    addKnownConcept(concept);
-                    //synchronized (lock) {
-                    lockMap.remove(concept.hashCode());
-                    //lock.notifyAll();
-                    //System.out.println("Notify: " + concept.getLitheral() + " with " + lockcount + " locks in use.");
-                    //}
-                    //logger.info("Decomposed: " + concept.getLitheral() + " @ lvl " + decompositionDepth);
+                        lockMap.remove(concept.hashCode());
+                    }
+                    catch (ExecutionException ex) {
+
+                    }
+                    catch (InterruptedException ex) {
+
+                    }
                     return concept;
                 } else { //concept unknown and we have a lock
                     //waitOnLock(concept, lock);
@@ -581,25 +575,35 @@ public class Decomposition {
         return concept;
     }
 
-    private void DecomposeChildren(Concept concept, int decompositionDepth) {
+    private CompletableFuture<Void> DecomposeChildren(Concept concept, int decompositionDepth) {
+
+        ArrayList<CompletableFuture<Void>> futures = new ArrayList<>();
+
         //multiThreadedDecompose the definitions of the concept
-        decomposeDefinitions(concept, decompositionDepth);
+        futures.add(decomposeDefinitions(concept, decompositionDepth));
         //now lets multiThreadedDecompose all synonyms so that the graph gets broader and we can faster find common entries.
         //TODO maybe we have to ignore the given concept from the synonyms list?
-        decomposeChildren(concept.getSynonyms(), decompositionDepth);
+        futures.add(decomposeChildren(concept.getSynonyms(), decompositionDepth));
         //now lets multiThreadedDecompose all hyponyms so that the graph gets broader and we can faster find common entries.
-        decomposeChildren(concept.getHyponyms(), decompositionDepth);
+        futures.add(decomposeChildren(concept.getHyponyms(), decompositionDepth));
         //now lets multiThreadedDecompose all hypernyms so that the graph gets broader and we can faster find common entries.
-        decomposeChildren(concept.getHypernyms(), decompositionDepth);
+        futures.add(decomposeChildren(concept.getHypernyms(), decompositionDepth));
         //now lets multiThreadedDecompose all antonyms so that the graph gets broader and we can faster find common entries.
-        decomposeChildren(concept.getAntonyms(), decompositionDepth);
+        futures.add(decomposeChildren(concept.getAntonyms(), decompositionDepth));
         //now lets multiThreadedDecompose all meronyms so that the graph gets broader and we can faster find common entries.
-        decomposeChildren(concept.getMeronyms(), decompositionDepth);
+        futures.add(decomposeChildren(concept.getMeronyms(), decompositionDepth));
         //now lets multiThreadedDecompose all arbitrary relations
-        decomposeChildren(concept.getArbitraryRelations(), decompositionDepth);
+        futures.add(decomposeChildren(concept.getArbitraryRelations(), decompositionDepth));
+
+        CompletableFuture<Void> allFutures = CompletableFuture
+                .allOf(futures.toArray(new CompletableFuture[futures.size()]));
+        return allFutures;
     }
 
-    private void decomposeDefinitions(Concept concept, int decompositionDepth) {
+    private CompletableFuture<Void> decomposeDefinitions(Concept concept, int decompositionDepth) {
+
+        List<CompletableFuture<Concept>> futures = new ArrayList<>();
+
         for (Definition def2decompose : concept.getDefinitions()) {
             for (Concept def : def2decompose.getDefinition()) {
                 if (def.equals(concept) || lockMap.get(def) != null) {
@@ -607,14 +611,18 @@ public class Decomposition {
                 } else {
                     //System.out.println("Starting thread for concept: " + def.getLitheral());
                     futures.add(startDecompositionThread(def, decompositionDepth - 1));
-                    //System.out.println("Got the concept: " + def.getLitheral());
+
                 }
             }
         }
+        CompletableFuture<Void> allFutures = CompletableFuture
+                .allOf(futures.toArray(new CompletableFuture[futures.size()]));
+        return allFutures;
     }
 
 
-    private void decomposeChildren(Set<Concept> concepts2Decompost, int decompositionDepth) {
+    private CompletableFuture<Void> decomposeChildren(Set<Concept> concepts2Decompost, int decompositionDepth) {
+        List<CompletableFuture<Concept>> futures = new ArrayList<>();
         for (Concept child : concepts2Decompost) {
             if (child.equals(concept) || lockMap.get(child) != null) {
                 continue;
@@ -622,6 +630,9 @@ public class Decomposition {
                 futures.add(startDecompositionThread(child, decompositionDepth - 1));
             }
         }
+        CompletableFuture<Void> allFutures = CompletableFuture
+                .allOf(futures.toArray(new CompletableFuture[futures.size()]));
+        return allFutures;
     }
 
     private void decomposeChildrenSingleThreaded(Set<Concept> concepts2Decompost, int decompositionDepth) {
@@ -779,15 +790,12 @@ public class Decomposition {
      * @param decompositionDepth the depth to decompose the concept in. This should be greater then 0.
      * @return the future which contains the decomposition task.
      */
-    private Future<Concept> startDecompositionThread(Concept concept2decompose, int decompositionDepth) {
-
-        Future<Concept> future = cachedThreadPool.submit(new Callable<Concept>() {
-            @Override
-            public Concept call() {
-                //System.out.println("Execute Call for concept: " + concept2decompose.getLitheral());
-                return decompose(concept2decompose, decompositionDepth - 1);
-            }
-        });
+    private CompletableFuture<Concept> startDecompositionThread(Concept concept2decompose, int decompositionDepth) {
+        //CompletableFuture
+        CompletableFuture<Concept> future = CompletableFuture.supplyAsync(() -> {
+            Concept concept = decompose(concept2decompose, decompositionDepth - 1);
+            return concept;
+        }, cachedThreadPool);
         return future;
     }
 
