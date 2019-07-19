@@ -8,7 +8,7 @@ The decomposition is thought to provide semantic graphs for the implementation o
 
 To get the project running you will need:
 
-    - Java 8
+    - Java 11
     - Maven
     - A machine with at least 8GB of RAM 16GB are recommended.
 
