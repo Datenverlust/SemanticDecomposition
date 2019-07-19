@@ -373,14 +373,16 @@ public class CustomGraph {
             RandomAccessFile connectionsFile;
             connectionsFile =
                     new RandomAccessFile(connectionsFilePath, "rw");
-            connectionsFile.setLength(0);
+            //connectionsFile.setLength(0);
 
             logger.info("Storing graph");
             iterator = entries.listIterator();
             while(iterator.hasNext()) {
                 CustomEntry entry = iterator.next();
-                entry.fileIndex = connectionsFile.getFilePointer();
-                writeEntry(connectionsFile, entry);
+                if(entry.fileIndex < 0) {
+                    entry.fileIndex = connectionsFile.getFilePointer();
+                    writeEntry(connectionsFile, entry);
+                }
             }
             iterator = null;
         }
