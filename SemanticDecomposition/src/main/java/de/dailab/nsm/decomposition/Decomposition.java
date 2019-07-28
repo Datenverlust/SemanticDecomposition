@@ -115,6 +115,7 @@ public class Decomposition {
         logger.info("We are done: " + concept.toString());
 
         storeEverything();
+        System.out.println("End of execution.");
     }
 
     private static void storeEverything() {
@@ -134,6 +135,7 @@ public class Decomposition {
                 }
             }
         });
+        System.out.println("Shutdown Hook registered");
 
         IWiktionaryEdition wkt = WiktionaryCrawler.wkt;
         WiktionaryEntryFilter filter = new WiktionaryEntryFilter();

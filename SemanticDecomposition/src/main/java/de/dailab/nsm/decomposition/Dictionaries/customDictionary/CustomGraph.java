@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class CustomGraph {
@@ -45,23 +46,8 @@ public class CustomGraph {
     public CustomGraph(boolean disableStorage) {
         this.disableStorage = disableStorage;
 
-        if( Config.LANGUAGE.GER ==
-                Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
-
-            connectionsFilePath = Config.CUSTOM_ARCHIVE_GER_PATH + File.separator +
-                    Config.CUSTOM_ARCHIVE_CONNECTIONS_NAME;
-            connectedIndexFilePath = Config.CUSTOM_ARCHIVE_GER_PATH + File.separator +
-                    Config.CUSTOM_ARCHIVE_INDEX_NAME;
-        }
-        //else if( Config.LANGUAGE.EN ==
-        //       Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
-        else {
-            connectionsFilePath = Config.CUSTOM_ARCHIVE_EN_PATH + File.separator +
-                    Config.CUSTOM_ARCHIVE_CONNECTIONS_NAME;
-            connectedIndexFilePath = Config.CUSTOM_ARCHIVE_EN_PATH + File.separator +
-                    Config.CUSTOM_ARCHIVE_INDEX_NAME;
-        }
-
+        connectionsFilePath = getConnectionFilePath();
+        connectedIndexFilePath = getIndexFilePath();
 
         try {
             connectionsFile = new RandomAccessFile(connectionsFilePath, "r");
@@ -73,6 +59,32 @@ public class CustomGraph {
         }
 
     }
+
+    private static String getConnectionFilePath() {
+        if( Config.LANGUAGE.GER ==
+                Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
+
+            return Config.CUSTOM_ARCHIVE_GER_PATH + File.separator +
+                    Config.CUSTOM_ARCHIVE_CONNECTIONS_NAME;
+        }
+        else {
+            return Config.CUSTOM_ARCHIVE_EN_PATH + File.separator +
+                    Config.CUSTOM_ARCHIVE_CONNECTIONS_NAME;
+        }
+    }
+    private static String getIndexFilePath() {
+        if( Config.LANGUAGE.GER ==
+                Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
+
+            return Config.CUSTOM_ARCHIVE_GER_PATH + File.separator +
+                    Config.CUSTOM_ARCHIVE_INDEX_NAME;
+        }
+        else {
+            return Config.CUSTOM_ARCHIVE_EN_PATH + File.separator +
+                    Config.CUSTOM_ARCHIVE_INDEX_NAME;
+        }
+    }
+
 
     private void addEntry(CustomEntry entry) {
         if(iterator == null) {
@@ -646,4 +658,22 @@ public class CustomGraph {
 
     }
 
+    public static void deleteArchive() {
+        try {
+            Files.deleteIfExists(Paths.get(getIndexFilePath()));
+        }
+        catch (Exception ex) {
+            logger.error("could not delete index file");
+            ex.printStackTrace();
+        }
+
+        try {
+            Files.deleteIfExists(Paths.get(getConnectionFilePath()));
+        }
+        catch (Exception ex) {
+            logger.error("could not delete connection file");
+            ex.printStackTrace();
+        }
+
+    }
 }
