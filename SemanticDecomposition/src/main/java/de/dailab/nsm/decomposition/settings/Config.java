@@ -53,7 +53,8 @@ public class Config {
     public static final String WIKTIONARY_DB_PATH_GER = WIKTIONARY_DB_BASE_PATH + File.separator + "de";
     public static final String WIKTIONARY_DB_EN_ARCHIVE_FILE_NAME = "enwiktionary-latest-pages-meta-current.xml.bz2";
     public static final String WIKTIONARY_DB_GER_ARCHIVE_FILE_NAME = "dewiktionary-latest-pages-meta-current.xml.bz2";
-    public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/Wiktionary/";
+    //public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/Wiktionary/";
+    public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "https://dumps.wikimedia.org/dewiktionary/latest/";
 
 
     /**
@@ -68,6 +69,7 @@ public class Config {
     public static final String WIKTIONARY_DB_EN_ARCHIVE_KEY  = "wiktionaryArchiveEN";
     public static final String WIKTIONARY_DB_GER_ARCHIVE_KEY  = "wiktionaryArchiveGER";
     public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI_KEY  = "wiktionarySourceUri";
+    public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI_GER_KEY  = "wiktionarySourceUriGER";
 
 
 
