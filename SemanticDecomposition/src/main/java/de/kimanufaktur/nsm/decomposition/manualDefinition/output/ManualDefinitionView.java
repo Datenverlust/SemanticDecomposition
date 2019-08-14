@@ -3,7 +3,8 @@
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- */
+ *//*
+
 
 package de.kimanufaktur.nsm.decomposition.manualDefinition.output;
 import javafx.collections.FXCollections;
@@ -21,9 +22,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+*/
 /**
  * Created by Ghadh on 03.11.2015.
- */
+ *//*
+
 public class ManualDefinitionView  {
 
     private Text text;
@@ -178,3 +181,4 @@ public class ManualDefinitionView  {
         return tg;
     }
 }
+*/

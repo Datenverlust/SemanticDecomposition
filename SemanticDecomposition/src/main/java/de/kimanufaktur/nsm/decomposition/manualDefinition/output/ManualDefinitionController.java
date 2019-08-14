@@ -3,7 +3,8 @@
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- */
+ *//*
+
 
 package de.kimanufaktur.nsm.decomposition.manualDefinition.output;
 
@@ -27,10 +28,12 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * model
  * Created by Ghadh on 03.11.2015.
- */
+ *//*
+
 public class ManualDefinitionController {
 
     private Concept concept;
@@ -65,7 +68,9 @@ public class ManualDefinitionController {
                 initialize();
             }
         }.init(this.view));
-             /* Events for GUI-elements*/
+             */
+/* Events for GUI-elements*//*
+
     }
 
 
@@ -209,11 +214,13 @@ public class ManualDefinitionController {
     public void setDelegate(Delegate delegate) {
         this.delegate = delegate;
     }
-    /*
+    */
+/*
     **********************
         Events
     **********************
-     */
+     *//*
+
 
     class CheckButtonEvent implements EventHandler<ActionEvent> {
 
@@ -267,10 +274,12 @@ public class ManualDefinitionController {
 
                 if (selectedConcept.equals(conceptInDef.get(i))) {
                     selectedConcept = conceptInDef.get(i);
-                    /*only the concepts with alternative words will be showed*/
+                    */
+/*only the concepts with alternative words will be showed*//*
+
                     showConceptDetails(selectedConcept);
                 }
             }
         }
     }
-}
+}*/

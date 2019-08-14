@@ -3,7 +3,8 @@
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- */
+ *//*
+
 
 package de.kimanufaktur.nsm.decomposition.manualDefinition.input;
 
@@ -18,9 +19,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+*/
 /**
  * Created by Ghadh on 03.11.2015.
- */
+ *//*
+
 public class InputView {
 
     private final Label label4valid;
@@ -108,3 +111,4 @@ public class InputView {
         stage.show();
     }
 }
+*/

@@ -13,8 +13,8 @@ import de.kimanufaktur.nsm.decomposition.Dictionaries.RDFXMLDictionary;
 import de.kimanufaktur.nsm.decomposition.Dictionaries.WiktionaryDictionary;
 import de.kimanufaktur.nsm.decomposition.Dictionaries.WordNetDictionary;
 import de.kimanufaktur.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
-import de.kimanufaktur.nsm.decomposition.manualDefinition.ManualDecompositionGUI;
-import de.kimanufaktur.nsm.decomposition.manualDefinition.model.Delegate;
+//import de.kimanufaktur.nsm.decomposition.manualDefinition.ManualDecompositionGUI;
+//import de.kimanufaktur.nsm.decomposition.manualDefinition.model.Delegate;
 import de.kimanufaktur.nsm.decomposition.persistence.ConceptCache;
 import de.kimanufaktur.nsm.decomposition.settings.Config;
 import org.apache.log4j.Logger;
@@ -619,7 +619,7 @@ public class Decomposition {
      * @param concept the concept to get a definitions for.
      * @return the given concept with an definitions.
      */
-    private Concept getManualDefinition(Concept concept) {
+    /*private Concept getManualDefinition(Concept concept) {
         ManualDecompositionGUI manualDecompositionGUI = new ManualDecompositionGUI(concept.getLitheral());
 
         Delegate delegate = new Delegate();
@@ -639,7 +639,7 @@ public class Decomposition {
             concept = delegate.getManualDefinition(concept);
         }
         return concept;
-    }
+    }*/
 
     /**
      * Decompose the concept which are connceted to the given concept in an single threaded environment.

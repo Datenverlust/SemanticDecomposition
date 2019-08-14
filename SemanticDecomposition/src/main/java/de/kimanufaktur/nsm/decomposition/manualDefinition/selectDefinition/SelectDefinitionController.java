@@ -3,7 +3,8 @@
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- */
+ *//*
+
 
 package de.kimanufaktur.nsm.decomposition.manualDefinition.selectDefinition;
 
@@ -19,9 +20,11 @@ import javafx.scene.paint.Color;
 
 import java.util.Iterator;
 
+*/
 /**
  * Created by Ghadh on 01.11.2015.
- */
+ *//*
+
 public class SelectDefinitionController {
 
     private static Concept concept;
@@ -122,4 +125,4 @@ public class SelectDefinitionController {
 
     }
 
-}
+}*/

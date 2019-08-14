@@ -3,7 +3,8 @@
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- */
+ *//*
+
 
 package de.kimanufaktur.nsm.decomposition.manualDefinition.model;
 
@@ -18,9 +19,11 @@ import edu.stanford.nlp.util.ArraySet;
 
 import java.util.*;
 
+*/
 /**
  * Created by Ghadh on 11.11.2015.
- */
+ *//*
+
 public class Delegate {
     static Map<Integer, Concept> definedConcepts = Collections.synchronizedMap(new HashMap<>());
     private Decomposition decomposition;
@@ -46,12 +49,14 @@ public class Delegate {
         this.decomposition = decomposition;
     }
 
-    /**
+    */
+/**
      * Create a list of ignored {@link Concept} from the List of {@link Definition}
      *
      * @param definition list of concept that should be checked
      * @return a list of ignored concept
-     */
+     *//*
+
     public List<Concept> createIgnoredConcepts(List<Concept> definition) {
         List<Concept> ignoredList = new ArrayList<Concept>();
         Collection<Concept> cs = Decomposition.getConcepts2Ignore();
@@ -64,13 +69,15 @@ public class Delegate {
         return ignoredList;
     }
 
-    /**
+    */
+/**
      * Create a definition from a string-input
      *
      * @param concept a concept that should be defined
      * @param input   a string definition
      * @return the given concept with the created definition
-     */
+     *//*
+
     public Concept createDefinitionFromString(Concept concept, String input) {
         if (concept != null && input != null) {
             if (concept.getDefinitions() != null) {
@@ -83,12 +90,14 @@ public class Delegate {
         return concept;
     }
 
-    /**
+    */
+/**
      * Count of concepts in the first definition of the given concept
      *
      * @param concept a concept that its first definition will be counted
      * @return integer number of the concepts in the first definition in the given concept
-     */
+     *//*
+
     public int noOfConceptsInDefinition(Concept concept) {
         if (concept != null) {
             if (concept.getDefinitions() != null) {
@@ -100,12 +109,14 @@ public class Delegate {
         return 0;
     }
 
-    /**
+    */
+/**
      * remove all circular definitions of the given concept
      *
      * @param concept a concept that its definition should be checked if a circular definition
      * @return the given concept with its non-circular definitions
-     */
+     *//*
+
     public Concept removeCycleDef(Concept concept) {
 
         List<Definition> list4removedDef = new ArrayList<>();
@@ -118,12 +129,14 @@ public class Delegate {
         return concept;
     }
 
-    /**
+    */
+/**
      * A interface to GUI, that allows a user to select a definition for a given concept
      *
      * @param concept a concept, that should be defined
      * @return the given concept with the selected definition
-     */
+     *//*
+
     public Concept showSelectDefinition(Concept concept) {
         assert concept != null;
         if (!definedConcepts.containsKey(concept.hashCode())) {
@@ -144,13 +157,15 @@ public class Delegate {
         return concept;
     }
 
-    /**
+    */
+/**
      * Compare all concepts in the definition and their features with the given concept
      *
      * @param concept    a concept that will be compared with concepts of a given definition
      * @param definition a definition to compare it with a given concept
      * @return true if the given concept equal to any concept in the definition
-     */
+     *//*
+
     private boolean compareIfEqual(Concept concept, Definition definition, int depth) {
         boolean equal = false;
         if (depth < 0) {
@@ -192,14 +207,16 @@ public class Delegate {
         return equal;
     }
 
-    /**
+    */
+/**
      * Circularity detecting .
      *
      * @param concept  a concept that will be checked if circular with the given concept
      * @param def      a definition that will be checked if it is circular with the given concept
      * @param maxDepth a depth of the search for the circularity
      * @return false if the definition does not contain cycle with the given concept
-     */
+     *//*
+
     public boolean checkCycle(Concept concept, Definition def, int maxDepth) {
         boolean isCircular = false;
         if (maxDepth < 0) {
@@ -234,12 +251,14 @@ public class Delegate {
         return isCircular;
     }
 
-    /**
+    */
+/**
      * @param concept  a concept that will be compared with concepts of the given definition and their synonyms and antonyms
      * @param def      a definition that should  be checked if it is circular
      * @param maxDepth a maximal depth for the checking of synonyms and antonyms
      * @return a concept in the given definition that it is not allowed to exists in the definition
-     */
+     *//*
+
     public Concept getConceptWithCycle(Concept concept, Definition def, int maxDepth) {
         Concept cycleConceptInDef = null;
         if (maxDepth < 0) {
@@ -280,14 +299,16 @@ public class Delegate {
         return cycleConceptInDef;
     }
 
-    /**
+    */
+/**
      * Checking, which concept in the given definition or its synonyms and antonyms equals the given concept
      *
      * @param concept    a concept that will be compared with the concepts of the given definition
      * @param definition a definition that it concepts should be checked
      * @param maxDepth   a maximal depth for the checking of synonyms and antonyms
      * @return a concept in the given definition that equals the given concept or one of its synonyms or antonyms
-     */
+     *//*
+
     private Concept getCycleConceptInDef(Concept concept, Definition definition, int maxDepth) {
         Concept cycleConcept = null;
         if (maxDepth < 0) {
@@ -327,12 +348,14 @@ public class Delegate {
         return cycleConcept;
     }
 
-    /**
+    */
+/**
      * Fill all concepts in the first definition of the given concept (e.g. the synonyms and the definitions)
      *
      * @param concept a concept, which its definition should  be filled
      * @return the given concept with a first filled definition
-     */
+     *//*
+
     public Concept fillConceptInDefinition(Concept concept) {
         if (concept != null) {
             if (concept.getDefinitions() != null && concept.getDefinitions().size() > 0) {
@@ -361,13 +384,15 @@ public class Delegate {
         return concept;
     }
 
-    /**
+    */
+/**
      * Check the definition of the given concept to create a good definition for
      * the semantic decomposition (this will be used by the manuel definition)
      *
      * @param concept the concept to be checked
      * @return the given concept with the created definition
-     */
+     *//*
+
     public Concept checkDefinition(Concept concept) {
 
         int k = noOfConceptsInDefinition(concept);
@@ -425,7 +450,9 @@ public class Delegate {
                         definition.get(i).getAlternativeSyn().add(c);
                     }
                 }
-                /* known synonym is fined*/
+                */
+/* known synonym is fined*//*
+
                 if (concept.getDefinitions().iterator().next().getDefinition().get(i).getAlternativeSyn().size() > 1) continue;
                 if (flagForPrimeAnt) {
                     Concept not = Decomposition.createConcept("not");
@@ -471,12 +498,14 @@ public class Delegate {
 
     }
 
-    /**
+    */
+/**
      * Check the definition if its concepts can will be replaced with synonym or antonym of primes or known concepts
      *
      * @param concept the concept, that its definition will be checked
      * @return the given concept with its definition after the checking
-     */
+     *//*
+
     public Concept checkDefinitionForSelection(Concept concept) {
         assert concept != null;
         int k = noOfConceptsInDefinition(concept);
@@ -584,12 +613,14 @@ public class Delegate {
         return concept;
     }
 
-    /**
+    */
+/**
      * A interface for a GUI, which the user can enter a definition for the given concept
      *
      * @param concept the concept which will be defined by the user
      * @return the given concept with the entered definition
-     */
+     *//*
+
     public Concept getManualDefinition(Concept concept) {
         assert concept != null;
         if (!definedConcepts.containsKey(concept.hashCode())) {
@@ -616,3 +647,4 @@ public class Delegate {
         return definedConcepts;
     }
 }
+*/

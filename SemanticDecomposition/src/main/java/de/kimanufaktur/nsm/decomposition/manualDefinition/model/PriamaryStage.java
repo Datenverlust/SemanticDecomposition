@@ -3,15 +3,18 @@
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- */
+ *//*
+
 
 package de.kimanufaktur.nsm.decomposition.manualDefinition.model;
 
 import javafx.stage.Stage;
 
+*/
 /**
  * Created by Ghadh on 10.11.2015.
- */
+ *//*
+
 public class PriamaryStage {
 
     //single pattern, allow once to instance
@@ -40,3 +43,4 @@ public class PriamaryStage {
         this.primaryStage = primaryStage;
     }
 }
+*/

@@ -3,15 +3,18 @@
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- */
+ *//*
+
 
 package de.kimanufaktur.nsm.decomposition.manualDefinition.input;
 
 import javafx.scene.control.TextField;
 
+*/
 /**
  * Created by Ghadh on 08.12.2015.
- */
+ *//*
+
 public class LetterTextField extends TextField {
 
 
@@ -33,3 +36,4 @@ public class LetterTextField extends TextField {
 
 
 }
+*/

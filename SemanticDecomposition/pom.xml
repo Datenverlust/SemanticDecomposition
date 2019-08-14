@@ -16,7 +16,7 @@
     <groupId>de.kimanufaktur.nsm.Decomposition</groupId>
     <artifactId>SemanticDecomposition</artifactId>
     <name>Semantic Decomposition into NSM</name>
-    <url>http://nsm.dai-labor.de</url>
+    <url>http://nsm.kimanufaktur.de</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <corenlp.version>3.9.2</corenlp.version>
