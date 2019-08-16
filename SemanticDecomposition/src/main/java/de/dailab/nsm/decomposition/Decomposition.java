@@ -41,7 +41,7 @@ public class Decomposition {
     }
 
     //private static Map<Integer, Concept> knownConcepts = Collections.synchronizedMap(new HashMap<Integer, Concept>());
-    private static ConceptCache conceptCache = null;
+    private static ConceptCache conceptCache =  ConceptCache.getInstance();
     private static Concept concept = null;
     ExecutorService cachedThreadPool = Executors.newFixedThreadPool(DecompositionConfig.getThreadCount());//Executors.newCachedThreadPool();
     ConcurrentHashMap.KeySetView<Future<Concept>,Boolean> futures = ConcurrentHashMap.newKeySet();
@@ -342,7 +342,8 @@ public class Decomposition {
      */
     public static Concept getKnownConcept(Concept concept) {
         assert concept != null;
-        return conceptCache.get(concept.getId());
+       // return conceptCache.get(concept.getId());
+        return  ConceptCache.getInstance().get(concept.getId());
     }
 
     /**

@@ -13,12 +13,9 @@ import de.dailab.nsm.decomposition.Decomposition;
 import de.dailab.nsm.decomposition.Definition;
 import de.dailab.nsm.decomposition.WordType;
 import de.dailab.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawler;
-import de.dailab.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawlerGerman;
 import de.dailab.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
 import de.dailab.nsm.decomposition.settings.Config;
 import de.tudarmstadt.ukp.jwktl.api.*;
-import de.tudarmstadt.ukp.jwktl.api.util.ILanguage;
-import de.tudarmstadt.ukp.jwktl.api.util.Language;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -90,7 +87,7 @@ public class WiktionaryDictionary extends BaseDictionary {
                     Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
 
                 String path2DB = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_PATH_GER_KEY);
-                String archiveName = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_PATH_GER_KEY);
+                String archiveName = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_GER_ARCHIVE_KEY);
                 String sourceURI = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_ARCHIVE_SOURCE_URI_KEY);
                 //System.out.println("Init Wiktionary: DB Path:  " + path2DB +", "+ "Archive Path" + archiveName + " Source Path" + sourceURI);
                 this.wiktionaryCrawler = new WiktionaryCrawler(path2DB, archiveName, sourceURI);
