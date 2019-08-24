@@ -628,7 +628,7 @@ public class Decomposition {
         if (concept.getDefinitions() != null && concept.getDefinitions().size() == 1) {
             boolean cycle = delegate.checkCycle(concept, concept.getDefinitions().iterator().next(), 3);
             if (cycle) {
-                concept = delegate.getManualDefinition(concept);
+                concept = delegate.getManualD efinition(concept);
             }
         }
         if (concept.getDefinitions() != null && concept.getDefinitions().size() > 1) {
