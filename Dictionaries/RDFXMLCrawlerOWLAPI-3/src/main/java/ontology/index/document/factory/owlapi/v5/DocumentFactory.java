@@ -73,6 +73,8 @@ public class DocumentFactory {
         if(val != null){
             if (val instanceof OWLLiteral) {
                 doc.add(new TextField(Fields.ANNOTATION_VALUE, ((OWLLiteral) val).getLiteral(), Field.Store.YES));
+            } else {
+                doc.add(new StringField(Fields.ANNOTATION_VALUE, val.toString(), Field.Store.YES ));
             }
         }
         return doc;
@@ -110,6 +112,7 @@ public class DocumentFactory {
         //string fields are "atomic" ; their content is not analyzed by the registered analyzer, but stored anyway.
         doc.add(new StringField(Fields.IRI, iri, Field.Store.YES));
         doc.add(new TextField(Fields.ENTITY_NAME, entityName, Field.Store.YES));
+
         return doc;
     }
 
