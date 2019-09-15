@@ -5,9 +5,9 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package test.de.dailab.nsm.decomposition;
+package test.de.kimanufaktur.nsm.decomposition;
 
-import de.dailab.nsm.decomposition.nlp.GermanLemma;
+import de.kimanufaktur.nsm.decomposition.nlp.GermanLemma;
 import org.languagetool.AnalyzedToken;
 import org.languagetool.tagging.de.GermanTagger;
 

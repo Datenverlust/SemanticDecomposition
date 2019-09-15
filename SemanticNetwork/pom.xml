@@ -8,13 +8,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>de.dailab.NSM</groupId>
+        <groupId>de.kimanufaktur.nsm</groupId>
         <artifactId>NaturalSemanticMetalanguage</artifactId>
         <version>0.2-SNAPSHOT</version>
     </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+  <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
   <artifactId>SemanticNetwork</artifactId>
   <packaging>jar</packaging>
 
@@ -49,17 +49,17 @@
           <version>3.3</version>
       </dependency>
       <dependency>
-          <groupId>de.tuberlin</groupId>
-          <artifactId>spreadalgo</artifactId>
-          <version>0.0.1</version>
+          <groupId>de.kimanufaktur</groupId>
+          <artifactId>markerpassing</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
-          <groupId>de.dailab.NSM.Decomposition</groupId>
+          <groupId>de.kimanufaktur.nsm.Decomposition</groupId>
           <artifactId>SemanticDecomposition</artifactId>
           <version>${project.version}</version>
       </dependency>
       <dependency>
-          <groupId>de.dailab.NSM.NaturalSemanticMetalanguage.SemanticDistanceMeasures</groupId>
+          <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage.SemanticDistanceMeasures</groupId>
           <artifactId>SemanticDistanceMeasureAPI</artifactId>
           <version>${project.version}</version>
       </dependency>

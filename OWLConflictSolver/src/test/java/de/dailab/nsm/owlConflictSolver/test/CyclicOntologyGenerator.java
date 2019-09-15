@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.dailab.nsm.owlConflictSolver.test;
+package de.kimanufaktur.nsm.owlConflictSolver.test;
 
 import java.io.File;
 import java.io.IOException;

@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.dailab.nsm.owlConflictSolver.test;
+package de.kimanufaktur.nsm.owlConflictSolver.test;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
 
-import de.dailab.nsm.owlConflictSolver.impl.ConflictSolver;
+import de.kimanufaktur.nsm.owlConflictSolver.impl.ConflictSolver;
 
 /**
  * Configure by changing the AMOUNT_TEST_CYCLES value.

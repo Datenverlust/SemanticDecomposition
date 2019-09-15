@@ -4,10 +4,10 @@ package test;/*
  *
  */
 
-import de.dailab.nsm.decomposition.Concept;
-import de.dailab.nsm.decomposition.Decomposition;
-import de.dailab.nsm.decomposition.WordType;
-import de.dailab.nsm.decomposition.graph.conceptCache.GraphUtil;
+import de.kimanufaktur.nsm.decomposition.Concept;
+import de.kimanufaktur.nsm.decomposition.Decomposition;
+import de.kimanufaktur.nsm.decomposition.WordType;
+import de.kimanufaktur.nsm.decomposition.graph.conceptCache.GraphUtil;
 import org.jgrapht.Graph;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-import de.dailab.nsm.decomposition.dictionaries.rdfxmlcrawler.RDFXMLCrawler;
+import de.kimanufaktur.nsm.decomposition.dictionaries.rdfxmlcrawler.RDFXMLCrawler;
 import ontology.index.indexer.core.Fields;
 import org.apache.lucene.document.Document;
 import org.junit.Assert;

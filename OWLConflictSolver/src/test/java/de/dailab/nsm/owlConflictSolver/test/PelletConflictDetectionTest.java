@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.dailab.nsm.owlConflictSolver.test;
+package de.kimanufaktur.nsm.owlConflictSolver.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

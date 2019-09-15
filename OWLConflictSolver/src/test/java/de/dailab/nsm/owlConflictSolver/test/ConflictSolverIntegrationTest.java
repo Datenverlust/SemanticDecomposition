@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.dailab.nsm.owlConflictSolver.test;
+package de.kimanufaktur.nsm.owlConflictSolver.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,8 +26,8 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import com.clarkparsia.owlapiv3.OWL;
 import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
 
-import de.dailab.nsm.owlConflictSolver.impl.ConflictSolver;
-import de.dailab.nsm.owlConflictSolver.local.OWLOntologyChangeListenerImpl;
+import de.kimanufaktur.nsm.owlConflictSolver.impl.ConflictSolver;
+import de.kimanufaktur.nsm.owlConflictSolver.local.OWLOntologyChangeListenerImpl;
 
 /**
  * Tests the {@link ConflictSolver} concerning the implemented ISA relation

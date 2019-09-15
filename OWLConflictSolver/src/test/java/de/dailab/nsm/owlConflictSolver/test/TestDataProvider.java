@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.dailab.nsm.owlConflictSolver.test;
+package de.kimanufaktur.nsm.owlConflictSolver.test;
 
 import java.io.File;
 
@@ -17,7 +17,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
 import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
 
-import de.dailab.nsm.decomposition.owlConverter.AbstractOWLOntologyFactory;
+import de.kimanufaktur.nsm.decomposition.owlConverter.AbstractOWLOntologyFactory;
 
 /**
  * Manages loading of test datas and test ontologies.

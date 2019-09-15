@@ -5,13 +5,13 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package test.de.dailab.nsm.decomposition;
+package test.de.kimanufaktur.nsm.decomposition;
 
-import de.dailab.nsm.decomposition.Concept;
-import de.dailab.nsm.decomposition.Decomposition;
-import de.dailab.nsm.decomposition.Definition;
-import de.dailab.nsm.decomposition.WordType;
-import de.dailab.nsm.decomposition.settings.Config;
+import de.kimanufaktur.nsm.decomposition.Concept;
+import de.kimanufaktur.nsm.decomposition.Decomposition;
+import de.kimanufaktur.nsm.decomposition.Definition;
+import de.kimanufaktur.nsm.decomposition.WordType;
+import de.kimanufaktur.nsm.decomposition.settings.Config;
 
 import java.io.BufferedReader;
 import java.io.IOException;

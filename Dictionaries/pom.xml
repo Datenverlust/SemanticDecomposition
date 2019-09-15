@@ -8,13 +8,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>de.dailab.NSM</groupId>
+        <groupId>de.kimanufaktur.nsm</groupId>
         <artifactId>NaturalSemanticMetalanguage</artifactId>
         <version>0.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+    <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
     <artifactId>Dictionaries</artifactId>
     <packaging>pom</packaging>
 
@@ -42,8 +42,8 @@
         <module>WikidataCrawler</module>
         <module>CorpusLinguisticStatistics</module>
         <!--module>EmojiNetCrawler</module-->
-        <!--module>RDFXMLCrawler</module-->
-        <module>RDFXMLCrawlerOWLAPI-3</module>
+        <module>RDFXMLCrawler</module>
+        <module>RDFXMLCrawlerOWLAPI</module>
     </modules>
 
 
