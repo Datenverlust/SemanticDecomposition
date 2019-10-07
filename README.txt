@@ -1,13 +1,17 @@
 This is the readme for the setup of the Decomposition Framework
 
-
+Install Pellet Reasoner
+Clone: https://github.com/stardog-union/pellet.git
+Install pellet: mvn clean install
 
 
 
 The next steps are only to be done if no settings.xml has been provided.
 
 
-Installing Word2Vec
+
+
+For some experiments we need to installing Word2Vec. Do not do this until you realy need to.
 
 3. Download source of nd4j:             git clone https://github.com/deeplearning4j/nd4j
 4. Download source of Canova:           git clone https://github.com/deeplearning4j/Canova

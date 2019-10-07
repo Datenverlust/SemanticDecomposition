@@ -5,10 +5,10 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.decomposition.graph.entities.nodes;
+package de.kimanufaktur.nsm.graph.entities.nodes;
 
-import de.kimanufaktur.nsm.decomposition.graph.entities.links.WeightedLink;
-import de.kimanufaktur.nsm.decomposition.graph.entities.marker.DoubleMarker;
+import de.kimanufaktur.nsm.graph.entities.links.WeightedLink;
+import de.kimanufaktur.nsm.graph.entities.marker.DoubleMarker;
 import de.kimanufaktur.markerpassing.Link;
 import de.kimanufaktur.markerpassing.Marker;
 import de.kimanufaktur.markerpassing.Node;

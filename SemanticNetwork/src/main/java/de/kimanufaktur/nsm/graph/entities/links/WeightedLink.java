@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.semanticDistanceMeasures.decomposition.graph.entities.links;
+package de.kimanufaktur.nsm.graph.entities.links;
 
 import de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing.MarkerPassingConfig;
 import de.kimanufaktur.markerpassing.Link;

@@ -7,7 +7,7 @@
 
 package de.kimanufaktur.nsm.decomposition.graph.entities.relations;
 
-import de.kimanufaktur.nsm.decomposition.graph.entities.Entity;
+import de.kimanufaktur.nsm.graph.entities.Entity;
 
 import java.util.List;
 

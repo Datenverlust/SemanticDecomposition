@@ -5,11 +5,9 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.decomposition.graph.entities.marker;
+package de.kimanufaktur.nsm.graph.entities.marker;
 
 import de.kimanufaktur.nsm.decomposition.Concept;
-import de.kimanufaktur.nsm.decomposition.graph.edges.WeightedEdge;
-import de.kimanufaktur.nsm.decomposition.graph.entities.links.WeightedLink;
 import de.kimanufaktur.markerpassing.Link;
 import de.kimanufaktur.markerpassing.Marker;
 

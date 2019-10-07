@@ -5,17 +5,16 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.decomposition.graph.entities.nodes;
+package de.kimanufaktur.nsm.graph.entities.nodes;
 
 import de.kimanufaktur.nsm.decomposition.Concept;
-import de.kimanufaktur.nsm.decomposition.graph.entities.links.WeightedLink;
-import de.kimanufaktur.nsm.decomposition.graph.entities.marker.DoubleMarkerWithOrigin;
+import de.kimanufaktur.nsm.graph.entities.links.WeightedLink;
+import de.kimanufaktur.nsm.graph.entities.marker.DoubleMarkerWithOrigin;
 import de.kimanufaktur.markerpassing.Link;
 import de.kimanufaktur.markerpassing.Marker;
 import de.kimanufaktur.markerpassing.Node;
 import de.kimanufaktur.markerpassing.SpreadingStep;
 
-import java.nio.channels.ConnectionPendingException;
 import java.util.*;
 
 /**

@@ -5,17 +5,18 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing;
+package de.kimanufaktur.nsm.semanticDistanceMeasures.decomposition.graph.spreadingActivation.MarkerPassing;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.Decomposition;
 import de.kimanufaktur.nsm.decomposition.Definition;
-import de.kimanufaktur.nsm.decomposition.graph.entities.links.DefinitionLink;
-import de.kimanufaktur.nsm.decomposition.graph.entities.links.SynonymLink;
-import de.kimanufaktur.nsm.decomposition.graph.entities.marker.TypedMarker;
-import de.kimanufaktur.nsm.decomposition.graph.entities.nodes.TypedNode;
+import de.kimanufaktur.nsm.graph.entities.links.DefinitionLink;
+import de.kimanufaktur.nsm.graph.entities.links.SynonymLink;
+import de.kimanufaktur.nsm.graph.entities.marker.TypedMarker;
+import de.kimanufaktur.nsm.graph.spreadingActivation.MarkerPassing.TypedMarkerPassingConfig;
+import de.kimanufaktur.nsm.graph.entities.nodes.TypedNode;
 import de.kimanufaktur.markerpassing.*;
 import org.jgrapht.Graph;
 

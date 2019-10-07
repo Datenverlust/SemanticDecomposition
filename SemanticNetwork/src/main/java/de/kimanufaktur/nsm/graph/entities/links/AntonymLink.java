@@ -5,16 +5,17 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.decomposition.graph.entities.links;
+package de.kimanufaktur.nsm.graph.entities.links;
 
 import de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing.MarkerPassingConfig;
 
 /**
- * Created by faehndrich on 30.07.15.
+ * Created by faehndrich on 13.08.15.
  */
-public class HypernymLink extends WeightedLink {
+public class AntonymLink extends WeightedLink   {
     @Override
     public double getWeight() {
-        return MarkerPassingConfig.getHypernymLinkWeight();
+        return MarkerPassingConfig.getAntonymLinkWeight();
     }
+
 }

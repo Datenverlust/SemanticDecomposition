@@ -16,7 +16,7 @@ import de.kimanufaktur.nsm.decomposition.Dictionaries.WordNetDictionary;
 import de.kimanufaktur.nsm.decomposition.WordType;
 import de.kimanufaktur.nsm.decomposition.graph.SemanticNet;
 import de.kimanufaktur.nsm.decomposition.graph.edges.*;
-import de.kimanufaktur.nsm.decomposition.graph.entities.Entity;
+import de.kimanufaktur.nsm.graph.entities.Entity;
 import de.kimanufaktur.nsm.decomposition.graph.entities.relations.Relation;
 import de.kimanufaktur.nsm.decomposition.graph.entities.relations.Synonym;
 import de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing.MarkerPassingConfig;
@@ -24,8 +24,6 @@ import org.apache.log4j.Logger;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultListenableGraph;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.jgrapht.io.*;
 
 import java.io.*;

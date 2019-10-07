@@ -5,9 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing;
-
-import java.io.Serializable;
+package de.kimanufaktur.nsm.graph.spreadingActivation.MarkerPassing;
 
 /**
  * Created by root on 10.12.15.

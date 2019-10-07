@@ -1,11 +1,9 @@
-/*
+package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter;/*
  * Copyright (C) Johannes Fähndrich - All Rights Reserved.
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
-
-package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -18,6 +16,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.OWLOntologyFactory;
+import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.OWLOntologyTestDataProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLAxiom;

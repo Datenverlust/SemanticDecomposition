@@ -11,7 +11,7 @@ package de.kimanufaktur.nsm.decomposition.graph.entities.relations;
  * Created by faehndrich on 01.05.15.
  */
 
-import de.kimanufaktur.nsm.decomposition.graph.entities.Entity;
+import de.kimanufaktur.nsm.graph.entities.Entity;
 
 /**
  * This is the lowerst edge in the graph and is implemented through the DefaultWeightedEdge of the Jgrapht framework

@@ -20,6 +20,7 @@
         <nd4j.version>1.0.0-beta3</nd4j.version>
         <dl4j.version>1.0.0-beta3</dl4j.version>
         <canova.version>0.0.0.17</canova.version>
+        <pellet.version>2.4.0-SNAPSHOT</pellet.version>
     </properties>
     <dependencies>
         <dependency>

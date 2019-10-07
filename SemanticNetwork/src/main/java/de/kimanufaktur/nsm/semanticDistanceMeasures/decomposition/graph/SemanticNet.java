@@ -8,7 +8,7 @@
 package de.kimanufaktur.nsm.decomposition.graph;
 
 import de.kimanufaktur.nsm.decomposition.graph.entities.relations.Relation;
-import de.kimanufaktur.nsm.decomposition.graph.entities.Entity;
+import de.kimanufaktur.nsm.graph.entities.Entity;
 
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultListenableGraph;

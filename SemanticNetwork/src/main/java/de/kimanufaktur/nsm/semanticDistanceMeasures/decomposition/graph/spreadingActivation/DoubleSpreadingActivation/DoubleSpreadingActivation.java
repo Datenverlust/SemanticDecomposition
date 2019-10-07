@@ -9,10 +9,10 @@ package de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.DoubleSpread
 
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.Definition;
-import de.kimanufaktur.nsm.decomposition.graph.entities.links.*;
-import de.kimanufaktur.nsm.decomposition.graph.entities.marker.DoubleMarker;
-import de.kimanufaktur.nsm.decomposition.graph.entities.nodes.DoubleNode;
+import de.kimanufaktur.nsm.graph.entities.marker.DoubleMarker;
+import de.kimanufaktur.nsm.graph.entities.nodes.DoubleNode;
 import de.kimanufaktur.markerpassing.*;
+import de.kimanufaktur.nsm.graph.entities.links.*;
 import org.jgrapht.Graph;
 
 import java.util.*;

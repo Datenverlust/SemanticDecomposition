@@ -12,8 +12,8 @@ import com.google.common.collect.HashBiMap;
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.Decomposition;
 import de.kimanufaktur.nsm.decomposition.Definition;
-import de.kimanufaktur.nsm.decomposition.graph.entities.links.*;
-import de.kimanufaktur.nsm.decomposition.graph.entities.nodes.DoubleNodeWithMultipleThresholds;
+import de.kimanufaktur.nsm.graph.entities.links.*;
+import de.kimanufaktur.nsm.graph.entities.nodes.DoubleNodeWithMultipleThresholds;
 import de.kimanufaktur.markerpassing.*;
 import org.jgrapht.Graph;
 

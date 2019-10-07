@@ -5,15 +5,15 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.semanticDistanceMeasures.decomposition.graph.entities.nodes;
+package de.kimanufaktur.nsm.graph.entities.nodes;
 
 import de.kimanufaktur.markerpassing.Link;
 import de.kimanufaktur.markerpassing.Marker;
 import de.kimanufaktur.markerpassing.Node;
 import de.kimanufaktur.markerpassing.SpreadingStep;
 import de.kimanufaktur.nsm.decomposition.Concept;
-import de.kimanufaktur.nsm.decomposition.graph.entities.marker.TypedMarker;
-import de.kimanufaktur.nsm.semanticDistanceMeasures.decomposition.graph.entities.links.WeightedLink;
+import de.kimanufaktur.nsm.graph.entities.marker.TypedMarker;
+import de.kimanufaktur.nsm.graph.entities.links.WeightedLink;
 
 import java.util.ArrayList;
 import java.util.Collection;
