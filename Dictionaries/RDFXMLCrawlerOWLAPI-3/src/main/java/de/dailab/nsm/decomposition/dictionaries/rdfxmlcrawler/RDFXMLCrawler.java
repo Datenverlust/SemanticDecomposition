@@ -18,6 +18,8 @@ import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -201,7 +203,9 @@ public class RDFXMLCrawler {
                 _ontology.getAnnotationAssertionAxioms((OWLAnnotationSubject)entity.getIRI());
         for(OWLAnnotationAssertionAxiom a : annos){
             try {
-                _ontIndexer.index(_indexDocFactory.createOWLAnnotationAssertionDoc(a));
+                Document annoDoc = _indexDocFactory.createOWLAnnotationAssertionDoc(a);
+                annoDoc.add(new TextField(Fields.ANNOTATED_ENTITY_IRI, entity.getIRI().toString(), Field.Store.YES));
+                _ontIndexer.index(annoDoc);
             } catch (IOException e) {
                 e.printStackTrace();
             }
