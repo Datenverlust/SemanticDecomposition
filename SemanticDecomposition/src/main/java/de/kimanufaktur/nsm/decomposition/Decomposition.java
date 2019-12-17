@@ -18,6 +18,7 @@ import de.kimanufaktur.nsm.decomposition.exceptions.DictionaryDoesNotContainConc
 import de.kimanufaktur.nsm.decomposition.persistence.ConceptCache;
 import de.kimanufaktur.nsm.decomposition.settings.Config;
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -106,8 +107,8 @@ public class Decomposition {
         if (dictionaries.size() > 0) {
             return;
         }
-//        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
-//        dictionaries.add(wordNetDict);
+        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
+        dictionaries.add(wordNetDict);
 
         BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
         dictionaries.add(measureMentOntology);
@@ -425,19 +426,7 @@ public class Decomposition {
             if (knownConcept.getDecompositionlevel() < 0 || knownConcept.getDecompositionlevel() < decompositionDepth) {
                 Concept lock = lockMap.get(concept.hashCode());
                 if (lock == null) {
-                    //System.out.println("locking: " + concept.getLitheral() + " with " + lockcount + " locks in use.");
-                    lock = concept;
-                    lockMap.put(concept.hashCode(), concept);
-                    //Fill concept: this fills e.g. the synonyms and the definitions
-                    for (BaseDictionary dic : dictionaries) {
-                        try {
-                            concept.setDecompositionlevel(decompositionDepth);
-                            dic.fillConcept(concept, concept.getWordType());
-                        } catch (DictionaryDoesNotContainConceptException ignored) {
-                            //Adding a manual definition because the dictionaries did not contain one.
-//                            getManualDefinition(concept);
-                        }
-                    }
+                    lockAndFillConcept(concept, decompositionDepth);
                     DecomposeChildren(concept, decompositionDepth);
                     //Wait for children to be done.
                     for (int i = 0; i < futures.size(); i++) {
@@ -464,20 +453,32 @@ public class Decomposition {
                     return concept;
                 }
             } else { // concept known and we have a no lock
-                Concept lock = lockMap.get(knownConcept.hashCode());
-                if (lock == null) {
-                    return knownConcept;
-                } else {
-                    //synchronized (lock) {
-                    lockMap.remove(knownConcept.hashCode());
-                    //lock.notifyAll();
-                    // }
-                    return knownConcept;
-                }
+                return releaseLockAndReturnConcept(knownConcept);
             }
 
         }
         return concept;
+    }
+
+    /**
+     * Lock oncept in the lockMap and fill concept with all the dictionaries defined in the init() method.
+     * @param concept concept to fill with information form the initialized dictionaries.
+     * @param decompositionDepth the decomposition depth in the current iteration.
+     */
+    private void lockAndFillConcept(Concept concept, int decompositionDepth) {
+        Concept lock;
+        lock = concept;
+        lockMap.put(concept.hashCode(), concept);
+        //Fill concept: this fills e.g. the synonyms and the definitions
+        for (BaseDictionary dic : dictionaries) {
+            try {
+                concept.setDecompositionlevel(decompositionDepth);
+                dic.fillConcept(concept, concept.getWordType());
+            } catch (DictionaryDoesNotContainConceptException ignored) {
+                //Adding a manual definition because the dictionaries did not contain one.
+//                            getManualDefinition(concept);
+            }
+        }
     }
 
     private void DecomposeChildren(Concept concept, int decompositionDepth) {
@@ -577,18 +578,7 @@ public class Decomposition {
                 Concept lock = lockMap.get(concept.hashCode());
                 if (lock == null) {
                     //System.out.println("locking: " + concept.getLitheral() + " with " + lockcount + " locks in use.");
-                    lock = concept;
-                    lockMap.put(concept.hashCode(), concept);
-                    //Fill concept: this fills e.g. the synonyms and the definitions
-                    for (BaseDictionary dic : dictionaries) {
-                        try {
-                            concept.setDecompositionlevel(decompositionDepth);
-                            dic.fillConcept(concept, concept.getWordType());
-                        } catch (DictionaryDoesNotContainConceptException ignored) {
-                            //Adding a manual definition because the dictionaries did not contain one.
-                            //concept = getManualDefinition(concept);
-                        }
-                    }
+                    lockAndFillConcept(concept, decompositionDepth);
                     decomposeChildrenSingleThreaded(concept, decompositionDepth);
                     concept.setDecompositionlevel(decompositionDepth);
                     addKnownConcept(concept);
@@ -598,17 +588,22 @@ public class Decomposition {
                     return concept;
                 }
             } else { // concept known and we have a no lock
-                Concept lock = lockMap.get(knownConcept.hashCode());
-                if (lock == null) {
-                    return knownConcept;
-                } else {
-                    lockMap.remove(knownConcept.hashCode());
-                    return knownConcept;
-                }
+                return releaseLockAndReturnConcept(knownConcept);
             }
 
         }
         return concept;
+    }
+
+    @NotNull
+    private Concept releaseLockAndReturnConcept(Concept knownConcept) {
+        Concept lock = lockMap.get(knownConcept.hashCode());
+        if (lock == null) {
+            return knownConcept;
+        } else {
+            lockMap.remove(knownConcept.hashCode());
+            return knownConcept;
+        }
     }
 
     /**

@@ -48,13 +48,13 @@ public class RDFXMLCrawlerTest {
 
         List<Document> results = rdfxmlCrawler.findEntity(query);
         System.out.println(results.size() + " hits for " +query+ " on EntityName.");
-        Assert.assertNotEquals(results.isEmpty(), true);
+        Assert.assertEquals(results.isEmpty(), false);
 
         String fields[] = new String[]{Fields.ENTITY_NAME, Fields.ENTITY_TYPE};
         query = "OWLClass, Kunde~"; //search for OWLClass OR like(Kunde) in the two fields
         results = rdfxmlCrawler.find(fields, query);
         System.out.println(results.size() + " hits for " +query+ " on " +fields[0]+", " + fields[1] );
-        Assert.assertNotEquals(results.isEmpty(), true);
+        Assert.assertEquals(results.isEmpty(), false);
 
         System.out.println("Empty Query Testing");
         query = "";
