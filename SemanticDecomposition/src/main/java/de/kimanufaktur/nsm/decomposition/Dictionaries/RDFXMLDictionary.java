@@ -249,4 +249,8 @@ public class RDFXMLDictionary extends BaseDictionary {
         //TODO: what to do here?
         return concept;
     }
+
+    public RDFXMLCrawler getCrawler(){
+        return _crawler;
+    }
 }

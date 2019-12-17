@@ -54,7 +54,8 @@ public class RDFXMLCrawler {
 
         _path2DBLocation = System.getProperty("user.home") + File.separator + ".decomposition" + File.separator + "RDF";
         String[] urlParts = source.split("/");
-        _dictFileName = urlParts[urlParts.length - 1];
+        String tmp = urlParts[urlParts.length - 1];
+        _dictFileName = "om-2.0.owl";//urlParts[urlParts.length - 1];
         this._source = source;
         _manager = OWLManager.createOWLOntologyManager();
         _language = language;
@@ -154,6 +155,7 @@ public class RDFXMLCrawler {
         for( OWLClass c : _ontology.getClassesInSignature(true)){
             try {
                 _ontIndexer.index(_indexDocFactory.createOWLClassDoc(c));
+                indexAnnotationfor(c);
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
@@ -162,6 +164,7 @@ public class RDFXMLCrawler {
         for(OWLDataProperty dp :  _ontology.getDataPropertiesInSignature(true)){
             try {
                 _ontIndexer.index(_indexDocFactory.createOWLDataProperty(dp));
+                indexAnnotationfor(dp);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -170,6 +173,7 @@ public class RDFXMLCrawler {
         for(OWLObjectProperty objp: _ontology.getObjectPropertiesInSignature(true)){
             try {
                 _ontIndexer.index(_indexDocFactory.createOWLObjectPropertyDoc(objp));
+                indexAnnotationfor(objp);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -178,18 +182,30 @@ public class RDFXMLCrawler {
         for(OWLNamedIndividual i: _ontology.getIndividualsInSignature(true)){
             try {
                 _ontIndexer.index(_indexDocFactory.createOWLNamedIndividualDoc(i));
+                indexAnnotationfor(i);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        //TODO; index assertion axioms, disjoint axioms  as well
 
         _ontIndexer.flush();
         _ontIndexer.closeWriter();
 
         //init reader
         _indexReader = new Finder(_ontIndexer.getIndex(), _ontIndexer.getAnalyzer());
+    }
+
+    private void indexAnnotationfor(OWLEntity entity){
+
+        Set<OWLAnnotationAssertionAxiom> annos =
+                _ontology.getAnnotationAssertionAxioms((OWLAnnotationSubject)entity.getIRI());
+        for(OWLAnnotationAssertionAxiom a : annos){
+            try {
+                _ontIndexer.index(_indexDocFactory.createOWLAnnotationAssertionDoc(a));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -509,6 +525,10 @@ public class RDFXMLCrawler {
             }
         }
         return ax.getProperty().getIRI().toString();
+    }
+
+    public OWLOntology getOntology(){
+        return _ontology;
     }
 
 }

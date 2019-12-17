@@ -11,6 +11,11 @@ import de.kimanufaktur.nsm.decompostion.Dictionaries.DictUtil;
 import de.tudarmstadt.ukp.jwktl.JWKTL;
 import de.tudarmstadt.ukp.jwktl.api.*;
 
+import de.tudarmstadt.ukp.jwktl.api.util.Language;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,7 +47,7 @@ public class WiktionaryCrawler {
 
     public WiktionaryCrawler(){
         path2DBLocation = System.getProperty("user.home") + File.separator + ".decomposition" + File.separator + "wiktionary";
-        dictFileName = "enwiktionary-latest-pages-meta-current.xml.bz2";
+        dictFileName = "enwiktionary-latest-pages-meta-current.xml";
         source = "https://dumps.wikimedia.org/enwiktionary/latest/";
     }
 
@@ -277,9 +282,18 @@ public class WiktionaryCrawler {
                 //e.printStackTrace();
 //                    DictUtil.downloadFile(source + dictFileName, path2DBLocation+dictFileName);
 
-                DictUtil.downloadFileParalell(source + dictFileName, path2DBLocation + File.separator + dictFileName);
+                //the actual unpacked dump file is a file with almost identical name as the downloaded archive - except the archive type ending
+                String dictDumpFileName = dictFileName.replace(".bz2","");
+                File dumpFile = new File(path2DBLocation + File.separator + dictDumpFileName);
+                if( !dumpFile.exists() ){
+                    //if we never downloaded the archive do so now
+                    DictUtil.downloadFileParalell(source + dictFileName, path2DBLocation + File.separator + dictFileName);
+                }
+                //parse the extracted archives dump file and create a databasae from it
                 initDictDBfromDumpFile();
                 wkt = JWKTL.openEdition(new File(path2DBLocation + File.separator +dictFileName), 100000L);
+
+                //delete the donwloaded archive
                 DictUtil.deleteFile(path2DBLocation + File.separator + dictFileName);
             }
 
@@ -318,7 +332,13 @@ public class WiktionaryCrawler {
                 e.printStackTrace();
             }*/
 
-            JWKTL.parseWiktionaryDump(dictFile, file, overwriteExisting, true);
+        try {
+            JWKTL.parseWiktionaryDump(dictFile, file, true, true);
+        } catch (Exception e) {
+            //There seems to be a problem with different german dumps which all lead to a nullpointer exeption
+            //in the parsing library when about 811 MB of data have been parsed.
+            e.printStackTrace();
+        }
        /* }catch (IllegalStateException e){
             e.printStackTrace();
         }*/

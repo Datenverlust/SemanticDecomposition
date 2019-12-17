@@ -41,7 +41,7 @@ public class Config {
     public static final String DEFAULT_PROPERTY_DIRECTORY = DEFAULT_BASE_DIRECTORY + File.separator + ".decomposition";
     public static final String DEFAULT_PRIMES_DIRECTORY = DEFAULT_PROPERTY_DIRECTORY + File.separator + "primes";
     public static final String CONFIG_FILE_NAME = "decomposition.cfg";
-    public static final LANGUAGE DEFAUL_LANGUAGE = Config.LANGUAGE.EN;
+    public static final LANGUAGE DEFAUL_LANGUAGE = Config.LANGUAGE.GER;
     public static final String PRIMES_FILE_PREFIX = "NSM_PRIMES_";
     public static final String STOPWORDS_FILE_PREFIX = "stopwords_";
 
@@ -53,7 +53,8 @@ public class Config {
     public static final String WIKTIONARY_DB_PATH_GER = WIKTIONARY_DB_BASE_PATH + File.separator + "de";
     public static final String WIKTIONARY_DB_EN_ARCHIVE_FILE_NAME = "enwiktionary-latest-pages-meta-current.xml.bz2";
     public static final String WIKTIONARY_DB_GER_ARCHIVE_FILE_NAME = "dewiktionary-latest-pages-meta-current.xml.bz2";
-    public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/Wiktionary/";
+    //public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/Wiktionary/";
+    public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "https://dumps.wikimedia.org/dewiktionary/latest/";
 
 
     /**
@@ -185,7 +186,7 @@ public class Config {
         userProps.put(WIKTIONARY_DB_PATH_EN_KEY,WIKTIONARY_DB_PATH_EN);
         userProps.put(WIKTIONARY_DB_PATH_GER_KEY,WIKTIONARY_DB_PATH_GER);
         userProps.put(WIKTIONARY_DB_BASE_PATH_KEY,WIKTIONARY_DB_BASE_PATH);
-        userProps.put(WIKTIONARY_DB_ARCHIVE_SOURCE_URI_KEY,WIKTIONARY_DB_ARCHIVE_SOURCE_URI);
+        userProps.put(WIKTIONARY_DB_ARCHIVE_SOURCE_URI_KEY, WIKTIONARY_DB_ARCHIVE_SOURCE_URI);
     }
 
     private void setup(){

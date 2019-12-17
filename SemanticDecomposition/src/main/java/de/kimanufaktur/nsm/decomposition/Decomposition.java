@@ -42,7 +42,7 @@ public class Decomposition {
     }
 
     //private static Map<Integer, Concept> knownConcepts = Collections.synchronizedMap(new HashMap<Integer, Concept>());
-    private static ConceptCache conceptCache = null;
+    private static ConceptCache conceptCache =  ConceptCache.getInstance();
     private static Concept concept = null;
     ExecutorService cachedThreadPool = Executors.newFixedThreadPool(DecompositionConfig.getThreadCount());//Executors.newCachedThreadPool();
     ConcurrentHashMap.KeySetView<Future<Concept>,Boolean> futures = ConcurrentHashMap.newKeySet();
@@ -107,13 +107,15 @@ public class Decomposition {
         if (dictionaries.size() > 0) {
             return;
         }
-        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
-        dictionaries.add(wordNetDict);
+//        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
+//        dictionaries.add(wordNetDict);
 
         BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
+        measureMentOntology.setDictName("Measurement");
         dictionaries.add(measureMentOntology);
 
         BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
+        wiktionaryDict.setDictName("Wiktionary");
         dictionaries.add(wiktionaryDict);
 
 //        IDictionary wikidataDict = WikidataDictionary.getInstance();
@@ -341,7 +343,8 @@ public class Decomposition {
      */
     public static Concept getKnownConcept(Concept concept) {
         assert concept != null;
-        return conceptCache.get(concept.getId());
+       // return conceptCache.get(concept.getId());
+        return  ConceptCache.getInstance().get(concept.getId());
     }
 
     /**
