@@ -14,7 +14,7 @@
     </parent>
   <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
+  <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
   <artifactId>SemanticNetwork</artifactId>
   <packaging>jar</packaging>
 
@@ -50,7 +50,7 @@
       </dependency>
       <dependency>
           <groupId>de.kimanufaktur</groupId>
-          <artifactId>spreadalgo</artifactId>
+          <artifactId>markerpassing</artifactId>
           <version>0.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>

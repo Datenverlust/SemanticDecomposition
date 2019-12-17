@@ -13,6 +13,7 @@ import de.kimanufaktur.nsm.decomposition.Definition;
 import de.kimanufaktur.nsm.decomposition.WordType;
 import de.kimanufaktur.nsm.decomposition.dictionaries.wordnet.WordNetCrawler;
 import de.kimanufaktur.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
+import de.kimanufaktur.nsm.decomposition.settings.Config;
 import edu.mit.jwi.item.ISenseKey;
 import edu.mit.jwi.item.IWord;
 import edu.mit.jwi.item.IWordID;
@@ -328,7 +329,9 @@ public class WordNetDictionary extends BaseDictionary {
                     ISenseKey senskey = synsetWord.getSenseKey();
                     definition.setSensekey(senskey.toString());
                 }
-                word.getDefinitions().add(definition);
+                if (!word.getDefinitions().contains(definition)) {
+                    word.getDefinitions().add(definition);
+                }
             }
         }
         return word;

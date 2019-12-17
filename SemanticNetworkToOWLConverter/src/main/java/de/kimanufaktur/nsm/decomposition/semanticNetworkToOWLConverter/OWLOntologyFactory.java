@@ -7,11 +7,20 @@
 
 package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter;
 
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+
 import de.kimanufaktur.nsm.decomposition.owlConverter.AbstractOWLOntologyFactory;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLProperty;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLRelation;
 import de.kimanufaktur.nsm.decomposition.owlConverter.util.OWLNamespace;
-import org.semanticweb.owlapi.model.*;
 
 public class OWLOntologyFactory extends AbstractOWLOntologyFactory {
 

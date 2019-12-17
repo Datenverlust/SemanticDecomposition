@@ -7,6 +7,18 @@
 
 package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.semanticweb.owlapi.vocab.OWL2Datatype;
+
 import de.kimanufaktur.nsm.decomposition.owlConverter.AbstractOWLOntologyFactory;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLConcept;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLProperty;
@@ -15,17 +27,6 @@ import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.Sem
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkProperty;
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkRelation;
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkRelationType;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-import org.semanticweb.owlapi.vocab.OWL2Datatype;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 
 public class OWLOntologyTestDataProvider {
 

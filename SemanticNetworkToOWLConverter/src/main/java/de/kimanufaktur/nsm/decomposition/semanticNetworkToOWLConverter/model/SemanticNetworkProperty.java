@@ -7,8 +7,9 @@
 
 package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model;
 
-import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLProperty;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
+
+import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLProperty;
 
 /**
  * A property of a semantic network entity.

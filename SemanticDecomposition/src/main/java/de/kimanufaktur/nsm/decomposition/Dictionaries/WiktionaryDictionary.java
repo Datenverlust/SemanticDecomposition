@@ -13,9 +13,12 @@ import de.kimanufaktur.nsm.decomposition.Decomposition;
 import de.kimanufaktur.nsm.decomposition.Definition;
 import de.kimanufaktur.nsm.decomposition.WordType;
 import de.kimanufaktur.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawler;
+import de.kimanufaktur.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawlerGerman;
 import de.kimanufaktur.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
 import de.kimanufaktur.nsm.decomposition.settings.Config;
 import de.tudarmstadt.ukp.jwktl.api.*;
+import de.tudarmstadt.ukp.jwktl.api.util.ILanguage;
+import de.tudarmstadt.ukp.jwktl.api.util.Language;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -46,7 +49,7 @@ public class WiktionaryDictionary extends BaseDictionary {
     public static  WiktionaryDictionary getInstance(){
         if(instance == null){
            instance = new WiktionaryDictionary();
-            System.out.println("Wiktionary intitialised [" + language.getName() + "]");
+            System.out.println("Wiktionary intitialised [" + instance.language.getName() + "]");
         }
         return instance;
     }
@@ -321,7 +324,9 @@ public class WiktionaryDictionary extends BaseDictionary {
                 Definition definition = null;
                 definition = new Definition(gloss.getPlainText());//TODO: choos definition
                 definition.setTerm(word);
-                word.getDefinitions().add(definition);
+                if (!word.getDefinitions().contains(definition)) {
+                    word.getDefinitions().add(definition);
+                }
             }
         }
     }

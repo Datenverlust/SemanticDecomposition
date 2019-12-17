@@ -7,17 +7,24 @@
 
 package de.kimanufaktur.nsm.owlConflictSolver.impl.rule;
 
-import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
-import de.kimanufaktur.nsm.owlConflictSolver.local.OWLOntologyChangeListenerImpl;
-import de.kimanufaktur.nsm.owlConflictSolver.util.Messages;
-import org.apache.log4j.Logger;
-import org.semanticweb.owlapi.model.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.apache.log4j.Logger;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChange;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+
+import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
+
+import de.kimanufaktur.nsm.owlConflictSolver.local.OWLOntologyChangeListenerImpl;
+import de.kimanufaktur.nsm.owlConflictSolver.util.Messages;
 
 /**
  * Rule to resolve reflexive ISA relation conflicts by removing them. Rule can

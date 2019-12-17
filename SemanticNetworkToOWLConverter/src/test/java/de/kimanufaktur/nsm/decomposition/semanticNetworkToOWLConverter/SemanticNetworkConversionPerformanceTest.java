@@ -7,17 +7,18 @@
 
 package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter;
 
-import de.kimanufaktur.nsm.decomposition.Concept;
-import de.kimanufaktur.nsm.decomposition.Decomposition;
-import de.kimanufaktur.nsm.decomposition.graph.conceptCache.GraphUtil;
-import de.kimanufaktur.nsm.decomposition.graph.edges.WeightedEdge;
-import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLConcept;
+import java.util.Collection;
+
 import org.apache.log4j.Logger;
 import org.jgrapht.Graph;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
-import java.util.Collection;
+import de.kimanufaktur.nsm.decomposition.Concept;
+import de.kimanufaktur.nsm.decomposition.Decomposition;
+import de.kimanufaktur.nsm.decomposition.graph.conceptCache.GraphUtil;
+import de.kimanufaktur.nsm.decomposition.graph.edges.WeightedEdge;
+import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLConcept;
 
 public class SemanticNetworkConversionPerformanceTest {
 

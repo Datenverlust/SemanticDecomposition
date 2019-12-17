@@ -5,13 +5,14 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package java.de.kimanufaktur.nsm.decomposition;
+package test.de.kimanufaktur.nsm.decomposition;
 
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.Decomposition;
 import de.kimanufaktur.nsm.decomposition.Definition;
 import de.kimanufaktur.nsm.decomposition.WordType;
 import de.kimanufaktur.nsm.decomposition.manualDefinition.model.Delegate;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CycleDefintionTest {
 
     private void testInit() {
         decomposition = new Decomposition();
-        Decomposition.init();
+        decomposition.init();
         d = new Delegate();
         d.setDecomposition(decomposition);
         use = new Concept("use");

@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package java.de.kimanufaktur.nsm.decomposition;
+package test.de.kimanufaktur.nsm.decomposition;
 
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.Decomposition;

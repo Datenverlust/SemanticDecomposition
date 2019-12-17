@@ -1,11 +1,11 @@
 //package de.kimanufaktur.nsm.decomposition.Dictionaries;
 //
-//import Concept;
-//import Definition;
-//import WordType;
+//import de.kimanufaktur.nsm.decomposition.Concept;
+//import de.kimanufaktur.nsm.decomposition.Definition;
+//import de.kimanufaktur.nsm.decomposition.WordType;
 //
 //import de.kimanufaktur.nsm.decomposition.dictionaries.corpuslinguistics.CorpusLinguisticStatistics;
-//import DictionaryDoesNotContainConceptException;
+//import de.kimanufaktur.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
 //
 //import java.util.HashSet;
 //import java.util.List;

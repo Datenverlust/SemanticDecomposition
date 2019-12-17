@@ -7,10 +7,10 @@
 
 package de.kimanufaktur.nsm.owlConflictSolver.test;
 
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * Generates an ontology with [CYLES_AMOUNT] reflexive class membership (is_a)
@@ -48,6 +48,7 @@ public class CyclicOntologyGenerator {
 	try {
 	    generateCylicOwlontology(CYLES_AMOUNT, FILE_NAME_SAVING_PREFIX + CYLES_AMOUNT + FILE_NAME_SUFFIX);
 	} catch (IOException e) {
+	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }

@@ -13,19 +13,18 @@ import de.kimanufaktur.nsm.decomposition.Definition;
 import de.kimanufaktur.nsm.decomposition.manualDefinition.model.Delegate;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 import java.util.Iterator;
+import java.util.List;
 
 */
 /**
  * Created by Ghadh on 01.11.2015.
  *//*
 
-public class SelectDefinitionController {
+public class  {
 
     private static Concept concept;
     private SelectDefinitionView view;

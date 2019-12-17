@@ -9,7 +9,7 @@ package de.kimanufaktur.nsm.semanticDistanceMeasures;
 /**
  * Created by faehndrich on 07.05.15.
  */
-public class SimilarityPair extends DataExample{
+public class SimilarityPair extends DataExample {
     String string1 = null;
     String string2 = null;
 

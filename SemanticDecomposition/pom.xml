@@ -16,10 +16,9 @@
     <groupId>de.kimanufaktur.nsm.Decomposition</groupId>
     <artifactId>SemanticDecomposition</artifactId>
     <name>Semantic Decomposition into NSM</name>
-    <url>http://nsm.kimanufaktur.de</url>
+    <url>http://nsm.dai-labor.de</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <corenlp.version>3.9.2</corenlp.version>
     </properties>
     <dependencies>
         <dependency>
@@ -39,13 +38,13 @@
             <version>19.0-rc3</version>
         </dependency>
         <!--<dependency>-->
-        <!--<groupId>de.kimanufaktur.nsm.mid</groupId>-->
+            <!--<groupId>de.kimanufaktur.nsm.mid</groupId>-->
             <!--<artifactId>MonolingualDictionaries</artifactId>-->
             <!--<version>${project.version}</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
-            <artifactId>RDFXMLCrawlerOWLAPI-3</artifactId>
+            <artifactId>RDFXMLCrawlerOWLAPI</artifactId>
             <version>${project.version}</version>
             <!--<scope>compile</scope>-->
             <!--<exclusions>-->
@@ -63,17 +62,17 @@
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j</artifactId>
-            <version>2.3.2</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-neo4j</artifactId>
-            <version>3.0.2.RELEASE</version>
+            <version>3.1.5.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j</artifactId>
-            <version>3.0.0-M05</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.neo4j</groupId>
@@ -119,12 +118,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>1.2.6.RELEASE</version>
+            <version>2.1.7.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>3.0.0.rc1</version>
+            <version>3.8.0</version>
         </dependency>
         <dependency>
             <groupId>javax.cache</groupId>
@@ -134,7 +133,7 @@
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>${corenlp.version}</version>
+            <version>3.9.1</version>
             <exclusions>
                 <exclusion>
                     <artifactId>lucene-core</artifactId>
@@ -149,7 +148,7 @@
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>${corenlp.version}</version>
+            <version>3.9.1</version>
             <classifier>models-german</classifier>
             <exclusions>
                 <exclusion>
@@ -165,7 +164,7 @@
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>${corenlp.version}</version>
+            <version>3.9.1</version>
             <classifier>models</classifier>
             <exclusions>
                 <exclusion>
@@ -209,7 +208,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.7</version>
+            <version>3.9</version>
         </dependency>
         <dependency>
             <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage.SemanticDistanceMeasures</groupId>
@@ -248,12 +247,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>Neo4J-repo</id>
-            <name>Neo4J Complete</name>
-            <url>https://m2.neo4j.org/content/repositories/releases</url>
-        </repository>
-    </repositories>
 </project>

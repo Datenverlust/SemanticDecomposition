@@ -7,12 +7,13 @@
 
 package de.kimanufaktur.nsm.decomposition.owlConverter;
 
+import java.util.Collection;
+
+import org.jgrapht.Graph;
+
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.graph.edges.WeightedEdge;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLConcept;
-import org.jgrapht.Graph;
-
-import java.util.Collection;
 
 /**
  * Each ToOWLConverter needs a parser which parses the specific knowledge graph

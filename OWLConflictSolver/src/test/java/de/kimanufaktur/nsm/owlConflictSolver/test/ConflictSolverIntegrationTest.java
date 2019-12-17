@@ -7,18 +7,27 @@
 
 package de.kimanufaktur.nsm.owlConflictSolver.test;
 
-import com.clarkparsia.owlapiv3.OWL;
-import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
-import de.kimanufaktur.nsm.owlConflictSolver.impl.ConflictSolver;
-import de.kimanufaktur.nsm.owlConflictSolver.local.OWLOntologyChangeListenerImpl;
-import org.junit.Test;
-import org.semanticweb.owlapi.model.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+
+import com.clarkparsia.owlapiv3.OWL;
+import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
+
+import de.kimanufaktur.nsm.owlConflictSolver.impl.ConflictSolver;
+import de.kimanufaktur.nsm.owlConflictSolver.local.OWLOntologyChangeListenerImpl;
 
 /**
  * Tests the {@link ConflictSolver} concerning the implemented ISA relation

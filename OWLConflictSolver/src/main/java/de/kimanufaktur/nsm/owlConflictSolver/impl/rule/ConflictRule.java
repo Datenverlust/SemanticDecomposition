@@ -7,10 +7,11 @@
 
 package de.kimanufaktur.nsm.owlConflictSolver.impl.rule;
 
-import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
+import java.util.List;
+
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 
-import java.util.List;
+import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
 
 /**
  * Interface each new ConflictRule has to implement.

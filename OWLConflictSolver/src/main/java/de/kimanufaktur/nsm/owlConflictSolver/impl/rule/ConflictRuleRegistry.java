@@ -7,10 +7,10 @@
 
 package de.kimanufaktur.nsm.owlConflictSolver.impl.rule;
 
-import de.kimanufaktur.nsm.owlConflictSolver.impl.ConflictSolver;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import de.kimanufaktur.nsm.owlConflictSolver.impl.ConflictSolver;
 
 /**
  * Simple rule registry to encapsulate {@link ConflictRule}'s and providing an

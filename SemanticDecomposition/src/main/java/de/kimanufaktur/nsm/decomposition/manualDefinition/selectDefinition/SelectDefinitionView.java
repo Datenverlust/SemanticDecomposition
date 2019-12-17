@@ -5,6 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  *//*
 
+
 package de.kimanufaktur.nsm.decomposition.manualDefinition.selectDefinition;
 
 import javafx.collections.FXCollections;
@@ -19,9 +20,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-*//**
+*/
+/**
  * Created by Ghadh on 08.11.2015.
  *//*
+
 public class SelectDefinitionView {
     private GridPane grid;
     private Label label;
@@ -103,4 +106,5 @@ public class SelectDefinitionView {
     public Button getManuelDef() {
         return manuelDef;
     }
-}*/
+}
+*/

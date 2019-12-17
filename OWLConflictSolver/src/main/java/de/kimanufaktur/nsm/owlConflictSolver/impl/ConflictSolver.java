@@ -7,19 +7,22 @@
 
 package de.kimanufaktur.nsm.owlConflictSolver.impl;
 
-import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
-import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
-import de.kimanufaktur.nsm.owlConflictSolver.impl.rule.ConflictRule;
-import de.kimanufaktur.nsm.owlConflictSolver.impl.rule.ConflictRuleRegistry;
-import de.kimanufaktur.nsm.owlConflictSolver.local.OWLOntologyChangeListenerImpl;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+
+import javax.ws.rs.core.MultivaluedMap;
+
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
-import javax.ws.rs.core.MultivaluedMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
+import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
+import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
+
+import de.kimanufaktur.nsm.owlConflictSolver.impl.rule.ConflictRule;
+import de.kimanufaktur.nsm.owlConflictSolver.impl.rule.ConflictRuleRegistry;
+import de.kimanufaktur.nsm.owlConflictSolver.local.OWLOntologyChangeListenerImpl;
 
 /**
  * The ConflictSolver is the main entry point for solving given owl conflicts.

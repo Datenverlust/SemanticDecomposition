@@ -7,15 +7,17 @@
 
 package de.kimanufaktur.nsm.owlConflictSolver.test;
 
-import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
-import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
-import de.kimanufaktur.nsm.decomposition.owlConverter.AbstractOWLOntologyFactory;
+import java.io.File;
+
 import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
-import java.io.File;
+import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
+import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
+
+import de.kimanufaktur.nsm.decomposition.owlConverter.AbstractOWLOntologyFactory;
 
 /**
  * Manages loading of test datas and test ontologies.

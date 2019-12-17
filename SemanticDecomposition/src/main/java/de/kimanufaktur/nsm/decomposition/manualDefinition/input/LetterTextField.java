@@ -8,7 +8,11 @@
 
 package de.kimanufaktur.nsm.decomposition.manualDefinition.input;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TextField;
+
+import java.util.Objects;
 
 */
 /**

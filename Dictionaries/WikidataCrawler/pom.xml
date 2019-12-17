@@ -14,7 +14,7 @@
         <version>0.2-SNAPSHOT</version>
     </parent>
   <artifactId>WikidataCrawler</artifactId>
-    <groupId>de.kimanufaktur.nsm.Wikidata</groupId>
+  <groupId>de.kimanufaktur.nsm.Wikidata</groupId>
   <modelVersion>4.0.0</modelVersion>
   <name>Wikidata Dictionary Implementation</name>
   <packaging>jar</packaging>

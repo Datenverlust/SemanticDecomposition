@@ -10,8 +10,10 @@ package de.kimanufaktur.nsm.decomposition.persistence;
 import de.kimanufaktur.nsm.decomposition.Concept;
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;
+import org.ehcache.config.CacheConfiguration;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.impl.config.ResourcePoolsImpl;
 
 import java.util.ArrayList;
 
@@ -21,11 +23,15 @@ import java.util.ArrayList;
 public class EhConceptCache {
     private static EhConceptCache instance;
 
-    private static CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-            .withCache("ConceptCache",
-                    CacheConfigurationBuilder.newCacheConfigurationBuilder(Long.class, Concept.class)
-                            .build())
-            .build(true);
+    private static CacheManager cacheManager;
+    private static ResourcePoolsImpl pools;
+    static {
+        cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+                .withCache("ConceptCache",
+                        CacheConfigurationBuilder.newCacheConfigurationBuilder(Long.class, Concept.class, pools)
+                                .build())
+                .build(true);
+    }
 
 
     private static Cache<Long, Concept> conceptCache = null;

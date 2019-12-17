@@ -8,7 +8,6 @@
 
 package de.kimanufaktur.nsm.decomposition.manualDefinition;
 
-
 import de.kimanufaktur.nsm.decomposition.manualDefinition.input.InputController;
 import de.kimanufaktur.nsm.decomposition.manualDefinition.model.PriamaryStage;
 import javafx.application.Application;

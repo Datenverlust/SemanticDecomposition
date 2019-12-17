@@ -7,12 +7,12 @@
 
 package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLConcept;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLProperty;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLRelation;
-
-import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * A concept of a semantic network. It's a possible node type in the graph. A

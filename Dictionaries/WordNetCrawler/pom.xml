@@ -14,7 +14,7 @@
     </parent>
   <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.kimanufaktur.nsm.WordNet</groupId>
+  <groupId>de.kimanufaktur.nsm.WordNet</groupId>
   <artifactId>WordNetCrawler</artifactId>
   <packaging>jar</packaging>
 
@@ -22,16 +22,16 @@
   <url>http://maven.apache.org</url>
 
   <dependencies>
-    <!--  <dependency>
+      <dependency>
           <groupId>edu.mit</groupId>
           <artifactId>jwi</artifactId>
           <version>2.2.3</version>
-      </dependency>-->
-     <!-- <dependency>
+      </dependency>
+      <dependency>
           <groupId>edu.mit</groupId>
           <artifactId>jwi</artifactId>
-          <version>2.2.6</version>
-      </dependency>-->
+          <version>2.2.3</version>
+      </dependency>
       <dependency>
           <groupId>de.kimanufaktur.nsm.decomposition.dictionaries.utils</groupId>
           <artifactId>DictionaryUtils</artifactId>

@@ -42,8 +42,8 @@
         <module>WikidataCrawler</module>
         <module>CorpusLinguisticStatistics</module>
         <!--module>EmojiNetCrawler</module-->
-        <!--module>RDFXMLCrawler</module-->
-        <module>RDFXMLCrawlerOWLAPI-3</module>
+        <module>RDFXMLCrawler</module>
+        <module>RDFXMLCrawlerOWLAPI</module>
     </modules>
 
 

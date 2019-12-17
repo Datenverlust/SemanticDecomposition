@@ -20,6 +20,7 @@
         <nd4j.version>1.0.0-beta3</nd4j.version>
         <dl4j.version>1.0.0-beta3</dl4j.version>
         <canova.version>0.0.0.17</canova.version>
+        <pellet.version>2.4.0-SNAPSHOT</pellet.version>
     </properties>
     <dependencies>
         <dependency>
@@ -30,7 +31,7 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.2.2</version>
+            <version>3.2.1</version>
         </dependency>
         <!--<dependency>-->
         <!--<groupId>edu.stanford.nlp</groupId>-->
@@ -53,17 +54,21 @@
         <!--<artifactId>jwktl</artifactId>-->
         <!--<version>1.0.1</version>-->
         <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.dkpro.jwktl/dkpro-jwktl -->
         <dependency>
             <groupId>org.dkpro.jwktl</groupId>
             <artifactId>dkpro-jwktl</artifactId>
             <version>1.1.0</version>
         </dependency>
 
+
+        <!-- https://mvnrepository.com/artifact/berkeleydb/berkeleydb-native -->
         <dependency>
             <groupId>berkeleydb</groupId>
             <artifactId>berkeleydb-native</artifactId>
             <version>4.2</version>
         </dependency>
+
         <!--<dependency>-->
             <!--<groupId>xerces</groupId>-->
             <!--<artifactId>xercesImpl</artifactId>-->
@@ -100,7 +105,6 @@
                 <version>3.3</version>
             </plugin>
 
-
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.4.2</version>
@@ -113,8 +117,6 @@
                 </dependencies>
             </plugin>
         </plugins>
-
-
 
     </build>
 

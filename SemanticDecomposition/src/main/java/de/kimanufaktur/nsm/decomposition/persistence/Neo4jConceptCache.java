@@ -38,6 +38,8 @@ public class Neo4jConceptCache {
     }
 
     public void init() {
+
+
         Components.setDriver(new EmbeddedDriver());
         Components.configuration()
                 .driverConfiguration()

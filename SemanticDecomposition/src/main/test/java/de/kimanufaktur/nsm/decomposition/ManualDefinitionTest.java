@@ -5,15 +5,15 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package java.de.kimanufaktur.nsm.decomposition;
+package test.de.kimanufaktur.nsm.decomposition;
+
+import static org.junit.Assert.assertEquals;
 
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.Decomposition;
 import de.kimanufaktur.nsm.decomposition.Definition;
 import de.kimanufaktur.nsm.decomposition.WordType;
 import de.kimanufaktur.nsm.decomposition.manualDefinition.model.Delegate;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Ghadh on 25.10.2015.
@@ -28,7 +28,7 @@ public class ManualDefinitionTest {
 
     private void testInit() {
         decomposition = new Decomposition();
-        Decomposition.init();
+        decomposition.init();
         d = new Delegate();
         d.setDecomposition(decomposition);
 

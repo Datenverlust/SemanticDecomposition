@@ -7,18 +7,29 @@
 
 package de.kimanufaktur.nsm.decomposition.owlConverter;
 
-import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLConcept;
-import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLProperty;
-import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLRelation;
-import de.kimanufaktur.nsm.decomposition.owlConverter.util.OWLNamespace;
-import org.apache.commons.lang.StringUtils;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.*;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import org.apache.commons.lang.StringUtils;
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.AddAxiom;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+
+import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLConcept;
+import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLProperty;
+import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLRelation;
+import de.kimanufaktur.nsm.decomposition.owlConverter.util.OWLNamespace;
 
 /**
  * This factory wraps the OWLDataFactory. By constructing this factory, an
@@ -214,7 +225,7 @@ public abstract class AbstractOWLOntologyFactory {
 	return factory.getOWLClass(
 		IRI.create(
 			OWLNamespace.OWL_CLASS_NAMESPACE
-                    + (type != null ? OWLNamespace.removeIllegalNamespaceCharacters(type) : StringUtils.EMPTY)));
+				+ (type != null ? OWLNamespace.removeIllegalNamespaceCharacters(type.toString()) : StringUtils.EMPTY)));
     }
 
     /**

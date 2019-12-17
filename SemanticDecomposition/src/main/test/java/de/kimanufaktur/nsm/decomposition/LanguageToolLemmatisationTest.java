@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package java.de.kimanufaktur.nsm.decomposition;
+package test.de.kimanufaktur.nsm.decomposition;
 
 import de.kimanufaktur.nsm.decomposition.nlp.GermanLemma;
 import org.languagetool.AnalyzedToken;
@@ -30,7 +30,7 @@ public class LanguageToolLemmatisationTest {
 
     public static void testGermanLemmatisation(){
         GermanLemma gl = new GermanLemma();
-        List<String> words = Arrays.asList("batterie", "Batterie", "betrieben", "betreiben", "betriebenes", "batteriebetrieben", "batteriebetriebenes", "übrigbleibst", "Haus", "gewässert", "Häuserkämpfe");
+        List<String> words = Arrays.asList(new String[]{"batterie","Batterie","betrieben","betreiben","betriebenes","batteriebetrieben","batteriebetriebenes","übrigbleibst","Haus","gewässert","Häuserkämpfe"});
         for(String word: words){
             System.out.println(word + " Lemma: " + gl.lemma(word));
         }

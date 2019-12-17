@@ -7,12 +7,13 @@
 
 package de.kimanufaktur.nsm.owlConflictSolver.test;
 
-import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
 
 /**
  * Test if pellet already detects certain conflict cases concerning the ISA

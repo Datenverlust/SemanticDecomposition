@@ -1,11 +1,31 @@
-/*
+package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter;/*
  * Copyright (C) Johannes Fähndrich - All Rights Reserved.
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.OWLOntologyFactory;
+import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.OWLOntologyTestDataProvider;
+import org.junit.Before;
+import org.junit.Test;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
 import de.kimanufaktur.nsm.decomposition.owlConverter.AbstractOWLOntologyFactory;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLConcept;
@@ -14,16 +34,6 @@ import de.kimanufaktur.nsm.decomposition.owlConverter.util.OWLNamespace;
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkConcept;
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkRelation;
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkRelationType;
-import org.junit.Before;
-import org.junit.Test;
-import org.semanticweb.owlapi.model.*;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class OWLOntologyFactoryTest {
 

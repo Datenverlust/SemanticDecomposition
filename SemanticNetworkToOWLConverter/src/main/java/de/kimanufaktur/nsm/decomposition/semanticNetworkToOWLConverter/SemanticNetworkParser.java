@@ -7,6 +7,15 @@
 
 package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.jgrapht.Graph;
+import org.semanticweb.owlapi.vocab.OWL2Datatype;
+
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.Definition;
 import de.kimanufaktur.nsm.decomposition.WordType;
@@ -20,14 +29,6 @@ import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.Sem
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkProperty;
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkRelation;
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkRelationType;
-import org.jgrapht.Graph;
-import org.semanticweb.owlapi.vocab.OWL2Datatype;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class SemanticNetworkParser implements Parser {
 

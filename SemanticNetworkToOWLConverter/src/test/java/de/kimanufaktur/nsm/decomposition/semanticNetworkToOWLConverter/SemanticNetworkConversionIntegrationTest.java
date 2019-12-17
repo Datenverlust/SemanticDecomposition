@@ -7,6 +7,22 @@
 
 package de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
+import org.jgrapht.Graph;
+import org.junit.Before;
+import org.junit.Test;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.Decomposition;
 import de.kimanufaktur.nsm.decomposition.graph.conceptCache.GraphUtil;
@@ -15,21 +31,6 @@ import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLConcept;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLProperty;
 import de.kimanufaktur.nsm.decomposition.owlConverter.model.OWLRelation;
 import de.kimanufaktur.nsm.decomposition.semanticNetworkToOWLConverter.model.SemanticNetworkRelationType;
-import org.jgrapht.Graph;
-import org.junit.Before;
-import org.junit.Test;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Integration test. Decomposes a word, creates a semanticNetwork out of it and

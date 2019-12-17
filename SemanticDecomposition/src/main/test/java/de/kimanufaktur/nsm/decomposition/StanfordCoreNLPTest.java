@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package java.de.kimanufaktur.nsm.decomposition;
+package test.de.kimanufaktur.nsm.decomposition;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -25,7 +25,7 @@ public class StanfordCoreNLPTest {
     public static void main(String[] args){
         // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution
         Properties props =StringUtils.argsToProperties(
-                "-props", "StanfordCoreNLP-german.properties");
+                new String[]{"-props", "StanfordCoreNLP-german.properties"});
         //props.put("annotators", "tokenize, ssplit, pos, lemma, parse, depparse");
         long start = System.currentTimeMillis();
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);

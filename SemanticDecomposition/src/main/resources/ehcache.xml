@@ -7,7 +7,7 @@
 
 <ehcache:config
         xmlns:ehcache="http://www.ehcache.org/v3"
->
+        xmlns:jcache="http://www.ehcache.org/v3/jsr107">
 
 <!--<ehcache xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true" monitoring="autodetect" dynamicConfig="true">-->
     <!--<diskStore path="$user.home/.decomposition/ConceptCache" />-->
@@ -37,8 +37,7 @@
           OPTIONAL, defaults to java.lang.Object
             The FQCN of the type of values V we'll use with the Cache<K, V>
         -->
-        <ehcache:value-type copier="org.ehcache.impl.copy.SerializingCopier">de.kimanufaktur.nsm.decomposition.Concept
-        </ehcache:value-type>
+        <ehcache:value-type copier="org.ehcache.impl.copy.SerializingCopier">de.kimanufaktur.nsm.decomposition.Concept</ehcache:value-type>
 
         <!--
           OPTIONAL, defaults to no expiry
