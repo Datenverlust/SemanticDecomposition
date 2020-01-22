@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.decomposition.graph.entities.relations;
+package de.kimanufaktur.nsm.graph.entities.relations;
 
 import de.kimanufaktur.nsm.graph.entities.Entity;
 
