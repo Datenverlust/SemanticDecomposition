@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package de.kimanufaktur.nsm.semanticDistanceMeasures.decomposition.graph.spreadingActivation.MarkerPassing;
+package de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
