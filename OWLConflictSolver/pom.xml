@@ -10,12 +10,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>de.dailab.NSM</groupId>
+        <groupId>de.kimanufaktur.nsm</groupId>
         <artifactId>NaturalSemanticMetalanguage</artifactId>
         <version>0.2-SNAPSHOT</version>
     </parent>
 
-    <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+    <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
     <artifactId>OWLConflictSolver</artifactId>
     <!--version>0.1-SNAPSHOT</version-->
     <packaging>jar</packaging>
@@ -31,12 +31,12 @@
         <!-- OWL Conflict Solver -->
 
         <dependency>
-            <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+            <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
             <artifactId>SemanticNetworkToOWLConverter</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.dailab.NSM.NaturalSemanticMetalanguage</groupId>
+            <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage</groupId>
             <artifactId>ToOWLConverterAPI</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -76,12 +76,12 @@
         <dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-core</artifactId>
-            <version>2.3.0</version>
+            <version>${pellet.version}</version>
         </dependency>
         <dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-modularity</artifactId>
-            <version>2.3.0</version>
+            <version>${pellet.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mindswap.pellet</groupId>
@@ -106,7 +106,7 @@
         <dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-explanation</artifactId>
-            <version>2.3.0</version>
+            <version>${pellet.version}</version>
         </dependency>
         <dependency>
             <groupId>com.clarkparsia.pellet</groupId>
@@ -116,7 +116,7 @@
         <dependency>
             <groupId>com.clarkparsia.pellet</groupId>
             <artifactId>pellet-query</artifactId>
-            <version>2.3.0</version>
+            <version>${pellet.version}</version>
         </dependency>
 
         <!-- Utils  -->
