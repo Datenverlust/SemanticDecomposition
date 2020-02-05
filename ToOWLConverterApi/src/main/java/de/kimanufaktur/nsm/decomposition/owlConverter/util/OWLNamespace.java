@@ -14,7 +14,7 @@ package de.kimanufaktur.nsm.decomposition.owlConverter.util;
  */
 public enum OWLNamespace {
 
-    OWL_NAMESPACE_PREFIX("http://www.dailab.de/ontologies/"),
+    OWL_NAMESPACE_PREFIX("http://www.kimanufaktur.de/ontologies/"),
     OWL_ONTOLOGY_NAMESPACE(OWL_NAMESPACE_PREFIX + "ontology#"),
     OWL_CLASS_NAMESPACE(OWL_NAMESPACE_PREFIX + "class#"),
     OWL_RELATION_NAMESPACE(OWL_NAMESPACE_PREFIX + "relation#"),

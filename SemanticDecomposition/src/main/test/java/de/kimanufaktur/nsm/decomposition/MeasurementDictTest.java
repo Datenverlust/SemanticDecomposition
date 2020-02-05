@@ -1,4 +1,4 @@
-package de.dailab.nsm.decomposition;
+package de.kimanufaktur.nsm.decomposition;
 /*
  *
  *
@@ -6,8 +6,8 @@ package de.dailab.nsm.decomposition;
  *
  */
 
-import de.dailab.nsm.decomposition.Dictionaries.RDFXMLDictionary;
-import de.dailab.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
+import de.kimanufaktur.nsm.decomposition.Dictionaries.RDFXMLDictionary;
+import de.kimanufaktur.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
 
 public class MeasurementDictTest {
 

@@ -7,6 +7,7 @@
 
 package de.kimanufaktur.nsm.decomposition.graph.spreadingActivation;
 
+
 import de.kimanufaktur.markerpassing.ProcessingStep;
 
 /**

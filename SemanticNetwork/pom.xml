@@ -49,14 +49,14 @@
           <version>3.3</version>
       </dependency>
       <dependency>
-          <groupId>de.kimanufaktur</groupId>
-          <artifactId>markerpassing</artifactId>
-          <version>0.0.1-SNAPSHOT</version>
-      </dependency>
-      <dependency>
           <groupId>de.kimanufaktur.nsm.Decomposition</groupId>
           <artifactId>SemanticDecomposition</artifactId>
           <version>${project.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>de.kimanufaktur</groupId>
+          <artifactId>markerpassingalgorithm</artifactId>
+          <version>0.0.3-SNAPSHOT</version>
       </dependency>
       <dependency>
           <groupId>de.kimanufaktur.nsm.NaturalSemanticMetalanguage.SemanticDistanceMeasures</groupId>

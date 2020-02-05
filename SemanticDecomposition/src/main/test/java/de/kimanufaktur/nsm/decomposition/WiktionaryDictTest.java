@@ -1,4 +1,4 @@
-package de.dailab.nsm.decomposition;
+package de.kimanufaktur.nsm.decomposition;
 /*
  *
  *
@@ -6,8 +6,8 @@ package de.dailab.nsm.decomposition;
  *
  */
 
-import de.dailab.nsm.decomposition.Dictionaries.WiktionaryDictionary;
-import de.dailab.nsm.decomposition.settings.Config;
+import de.kimanufaktur.nsm.decomposition.Dictionaries.WiktionaryDictionary;
+import de.kimanufaktur.nsm.decomposition.settings.Config;
 
 public class WiktionaryDictTest {
 
