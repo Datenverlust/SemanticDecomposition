@@ -138,7 +138,7 @@ public class RDFXMLCrawler {
             } else{
 
                 if(customStopWords != null){
-                    indexAnalyzer = new StandardAnalyzer(customStopWords);
+                    indexAnalyzer = new StandardAnalyzer(org.apache.lucene.analysis.CharArraySet.copy(customStopWords));
                 } else {
                     indexAnalyzer = new StandardAnalyzer();
                 }
