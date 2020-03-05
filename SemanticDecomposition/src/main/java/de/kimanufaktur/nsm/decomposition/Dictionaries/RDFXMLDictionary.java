@@ -61,7 +61,7 @@ public class RDFXMLDictionary extends BaseDictionary {
      */
     public RDFXMLDictionary(){
         //TODO: remove DAI-Lab URL and re-host ontology or load locally
-       init("http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/RDF/om-2.0.rdf");
+       init("http://kimanufaktur.de/Dictionaries/RDF/om-2.0.rdf");
     }
 
     private void init(String source){

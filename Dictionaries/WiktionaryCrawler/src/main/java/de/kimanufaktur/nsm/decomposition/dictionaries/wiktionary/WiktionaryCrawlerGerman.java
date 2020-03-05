@@ -15,6 +15,6 @@ public class WiktionaryCrawlerGerman extends WiktionaryCrawler {
     public WiktionaryCrawlerGerman(){
         path2DBLocation = System.getProperty("user.home") + File.separator + ".decomposition" + File.separator + "wiktionary" + File.separator + "de";
         dictFileName = "dewiktionary-latest-pages-meta-current.xml.bz2";
-        source = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/Wiktionary/";
+        source = "http://kimanufaktur.de/Dictionaries/";
     }
 }

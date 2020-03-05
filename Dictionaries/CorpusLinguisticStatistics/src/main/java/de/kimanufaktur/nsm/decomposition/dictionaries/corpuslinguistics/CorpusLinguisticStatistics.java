@@ -23,7 +23,7 @@ public class CorpusLinguisticStatistics {
     String path2Vec = System.getProperty("user.home") + File.separator + ".decomposition" + File.separator + "CorpusLinguisticDictionary";
     String corpusdownloadFileName = "GoogleNews-vectors-negative300.bin.gz";
     String corpusFileName = "GoogleNews-vectors-negative300.bin";
-    String source = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/Corpora/";
+    String source = "http://kimanufaktur.de/Dictionaries/";
     //String corpusdownloadFileName = "enwik9";
     //String corpusdownloadFileName = "freebase-vectors-skipgram1000.bin.gz"
     WordVectors vec;

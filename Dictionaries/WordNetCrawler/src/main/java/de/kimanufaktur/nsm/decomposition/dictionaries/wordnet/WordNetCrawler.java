@@ -37,7 +37,7 @@ public class WordNetCrawler {
     //String path2Dict = null;
     String path2DBLocation = null;
 
-    String source = "http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/WordNet/";
+    String source = "http://kimanufaktur.de/Dictionaries/WordNet/";
     private String dictFileName = "wordNetDict.zip";
 //    private String dictFileName = "wordnet.zip";
 //    String source = "http://127.0.0.1/wordnet/ger/";

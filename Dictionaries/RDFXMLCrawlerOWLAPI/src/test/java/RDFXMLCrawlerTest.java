@@ -24,7 +24,7 @@ public class RDFXMLCrawlerTest {
 
     @Before
    public void test(){
-        rdfxmlCrawler = new RDFXMLCrawler("http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/RDF/om-2.0.rdf", "GER");
+        rdfxmlCrawler = new RDFXMLCrawler("http://kimanufaktur.de/Dictionaries/RDF/om-2.0.rdf", "GER");
 
         //local file test
         //rdfxmlCrawler = new RDFXMLCrawler("file:/Users/borchert/Repositories/git/audamac/oaf/oaf/ontologymapper/som/target/classes/client_source.owl", "GER");
@@ -37,7 +37,7 @@ public class RDFXMLCrawlerTest {
 
     @Test
     public void testIndexSimple(){
-//        RDFXMLCrawler rdfxmlCrawler = new RDFXMLCrawler("http://dainas.dai-labor.de/~faehndrich@dai/Dictionaries/RDF/om-2.0.rdf", "GER");
+//        RDFXMLCrawler rdfxmlCrawler = new RDFXMLCrawler("http://kimanufaktur.de/Dictionaries/RDF/om-2.0.rdf", "GER");
 //        File localFile = new File(rdfxmlCrawler.getPath2DBLocation() + File.separator +  rdfxmlCrawler.getDictFileName());
 //        Assert.assertTrue(localFile.exists());
         long start = System.currentTimeMillis();
