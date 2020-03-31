@@ -19,6 +19,7 @@ import de.kimanufaktur.nsm.decomposition.persistence.ConceptCache;
 import de.kimanufaktur.nsm.decomposition.settings.Config;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.omg.CORBA.Environment;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -107,17 +108,16 @@ public class Decomposition {
         if (dictionaries.size() > 0) {
             return;
         }
-//        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
-//        dictionaries.add(wordNetDict);
+        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
+        dictionaries.add(wordNetDict);
 
-        BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
-        measureMentOntology.setDictName("Measurement");
-        dictionaries.add(measureMentOntology);
+//        BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
+//        measureMentOntology.setDictName("Measurement");
+//        dictionaries.add(measureMentOntology);
 
         BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
         wiktionaryDict.setDictName("Wiktionary");
         dictionaries.add(wiktionaryDict);
-
 //        IDictionary wikidataDict = WikidataDictionary.getInstance();
 //        dictionaries.add(wikidataDict);
     }
