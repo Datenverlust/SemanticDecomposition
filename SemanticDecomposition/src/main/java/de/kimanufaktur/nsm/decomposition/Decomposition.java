@@ -19,7 +19,6 @@ import de.kimanufaktur.nsm.decomposition.persistence.ConceptCache;
 import de.kimanufaktur.nsm.decomposition.settings.Config;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-import org.omg.CORBA.Environment;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -86,12 +85,12 @@ public class Decomposition {
         if (args.length > 0) {
             word2Decompose = args[0];
         } else {
-            word2Decompose = "girl";
+            word2Decompose = "mother";
         }
         logger.info("Semantic decomposition of " + word2Decompose + ".");
         Decomposition decomposition = new Decomposition();
         init();
-        concept = decomposition.multiThreadedDecompose(word2Decompose, WordType.VB, 2);
+        concept = decomposition.multiThreadedDecompose(word2Decompose, WordType.NN, 2);
         System.out.println(concept.getSynonyms());
         System.out.println(concept.getDecomposition());
         System.out.println(concept.getAntonyms());
@@ -118,6 +117,7 @@ public class Decomposition {
         BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
         wiktionaryDict.setDictName("Wiktionary");
         dictionaries.add(wiktionaryDict);
+
 //        IDictionary wikidataDict = WikidataDictionary.getInstance();
 //        dictionaries.add(wikidataDict);
     }
