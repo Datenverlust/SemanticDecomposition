@@ -5,12 +5,8 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package test.de.kimanufaktur.nsm.decomposition;
+package de.kimanufaktur.nsm.decomposition;
 
-import de.kimanufaktur.nsm.decomposition.Concept;
-import de.kimanufaktur.nsm.decomposition.Decomposition;
-import de.kimanufaktur.nsm.decomposition.Definition;
-import de.kimanufaktur.nsm.decomposition.WordType;
 import de.kimanufaktur.nsm.decomposition.settings.Config;
 
 import java.io.BufferedReader;
@@ -37,6 +33,7 @@ public class DecompositionTest {
 
         System.out.println("Finisched: " +midday);
         //System.out.println(noon);
+        System.exit(0);
     }
 
 

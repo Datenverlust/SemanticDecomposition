@@ -103,16 +103,19 @@ public class Decomposition {
      * NSM semantic primes and concepts to ignore like "the","an" and "a".
      */
     public static void init() {
+        //Check if a conceptCache is used. If so, the init has been called before.
         conceptCache = ConceptCache.getInstance();
         if (dictionaries.size() > 0) {
             return;
         }
-//        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
-//        dictionaries.add(wordNetDict);
+        //Initialize the dictionarries
 
-        BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
-        measureMentOntology.setDictName("Measurement");
-        dictionaries.add(measureMentOntology);
+        BaseDictionary wordNetDict = WordNetDictionary.getInstance(); //Create WordNet Dictionary in memory
+        dictionaries.add(wordNetDict);
+
+        //BaseDictionary measureMentOntology = new RDFXMLDictionary();//RDFXMLDictionary.getInstance();
+        //measureMentOntology.setDictName("Measurement");
+        //dictionaries.add(measureMentOntology);
 
         BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
         wiktionaryDict.setDictName("Wiktionary");
@@ -155,6 +158,11 @@ public class Decomposition {
         return ignoredConcepts;
     }
 
+    /**
+     * Load the stopwords from a file.
+     * @param stopwordFile file to laod the stop words from.
+     * @return list of stop words.
+     */
     private static List<String> loadStopwordList(String stopwordFile) {
         List<String> stopwords = new ArrayList<>();
         File f = new File(stopwordFile);

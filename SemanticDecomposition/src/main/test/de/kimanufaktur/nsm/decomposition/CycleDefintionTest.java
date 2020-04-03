@@ -1,3 +1,5 @@
+
+
 /*
  * Copyright (C) Johannes Fähndrich - All Rights Reserved.
  * Unauthorized copying of this file, via any medium is strictly
@@ -5,7 +7,8 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package test.de.kimanufaktur.nsm.decomposition;
+/*
+package de.kimanufaktur.nsm.decomposition;
 
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.Decomposition;
@@ -19,9 +22,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Ghadh on 17.12.2015.
- */
+
 public class CycleDefintionTest {
     Decomposition decomposition = null;
     Concept use = null;
@@ -132,4 +133,5 @@ public class CycleDefintionTest {
         Concept cycle = d.getConceptWithCycle(use,use.getDefinitions().iterator().next(), 3);
         assertEquals(d1, cycle);
     }
-}
+}*/
+

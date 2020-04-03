@@ -5,7 +5,7 @@
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
  */
 
-package test.de.kimanufaktur.nsm.decomposition;
+package de.kimanufaktur.nsm.decomposition;
 
 import de.kimanufaktur.nsm.decomposition.Concept;
 import de.kimanufaktur.nsm.decomposition.WordType;
