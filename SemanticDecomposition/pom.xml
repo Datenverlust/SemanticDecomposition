@@ -249,11 +249,4 @@
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
-            <id>Neo4J-repo</id>
-            <name>Neo4J Complete</name>
-            <url>https://m2.neo4j.org/content/repositories/releases</url>
-        </repository>
-    </repositories>
 </project>

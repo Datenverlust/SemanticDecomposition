@@ -3,7 +3,8 @@
  * Unauthorized copying of this file, via any medium is strictly
  * prohibited Proprietary and confidential.
  * Written by Johannes Fähndrich <faehndrich@gmail.com.com>,  2011
- */
+ *//*
+
 
 package de.dailab.nsm.decomposition.manualDefinition.input;
 
@@ -17,9 +18,11 @@ import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+*/
 /**
  * Created by Ghadh on 03.11.2015.
- */
+ *//*
+
 public class InputController {
     //view
     public InputView inputView;
@@ -82,13 +85,17 @@ public class InputController {
     }
 
 
-    /**********************
+    */
+/**********************
      * Events
-     **********************/
+     **********************//*
 
-    /**
+
+    */
+/**
      * action handler for 'decomposeButton'
-     */
+     *//*
+
     class DecomposeButtonEvent implements EventHandler<ActionEvent> {
 
         @Override
@@ -122,4 +129,4 @@ public class InputController {
     }
 
 
-}
+}*/

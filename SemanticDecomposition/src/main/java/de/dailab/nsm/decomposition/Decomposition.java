@@ -13,7 +13,6 @@ import de.dailab.nsm.decomposition.Dictionaries.RDFXMLDictionary;
 import de.dailab.nsm.decomposition.Dictionaries.WiktionaryDictionary;
 import de.dailab.nsm.decomposition.Dictionaries.WordNetDictionary;
 import de.dailab.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
-import de.dailab.nsm.decomposition.manualDefinition.ManualDecompositionGUI;
 import de.dailab.nsm.decomposition.manualDefinition.model.Delegate;
 import de.dailab.nsm.decomposition.persistence.ConceptCache;
 import de.dailab.nsm.decomposition.settings.Config;
@@ -620,7 +619,7 @@ public class Decomposition {
      * @param concept the concept to get a definitions for.
      * @return the given concept with an definitions.
      */
-    private Concept getManualDefinition(Concept concept) {
+    /*private Concept getManualDefinition(Concept concept) {
         ManualDecompositionGUI manualDecompositionGUI = new ManualDecompositionGUI(concept.getLitheral());
 
         Delegate delegate = new Delegate();
@@ -640,7 +639,7 @@ public class Decomposition {
             concept = delegate.getManualDefinition(concept);
         }
         return concept;
-    }
+    }*/
 
     /**
      * Decompose the concept which are connceted to the given concept in an single threaded environment.
