@@ -568,6 +568,7 @@ public class WordNetDictionary extends BaseDictionary {
         }
         if (!word.getSensekeyToDefinitionsMap().containsKey(senseKey)) {
           word.getSensekeyToDefinitionsMap().put(senseKey, definition);
+          word.getAvailableSensekeys().add(senseKey);
         }
       }
     }

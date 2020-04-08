@@ -440,7 +440,7 @@ public class WiktionaryDictionary extends BaseDictionary {
       for (IWiktionaryEntry entry :
           page.getEntries()) { // look up every entry of the page as definition
         if (entry.getWordLanguage() != null) {
-          // TODO:DISCUSS: Really language check necessery here?!
+          // TODO:DISCUSS: Really language check necessery here?!analy
           // if (entry.getWordLanguage().equals(language)) {//if we have a language tag we only want
           // the english definition
           lookupSensekeyToDefinitionsMap(word, entry);
@@ -482,6 +482,7 @@ public class WiktionaryDictionary extends BaseDictionary {
       definition.setTerm(word);
       if (!word.getSensekeyToDefinitionsMap().containsKey(senseKey)) {
         word.getSensekeyToDefinitionsMap().put(senseKey, definition);
+        word.getAvailableSensekeys().add(senseKey);
       }
     }
   }
