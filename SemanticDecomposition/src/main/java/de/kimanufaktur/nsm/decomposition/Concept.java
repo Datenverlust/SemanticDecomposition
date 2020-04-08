@@ -60,6 +60,10 @@ public class Concept implements Serializable, IConcept {
   protected HashMap<String, Set<Concept>> sensekeyToMeronymsMap;
   protected HashMap<String, Definition> sensekeyToDefinitionsMap;
 
+  protected Set<String> availableSensekeys;
+
+  protected Set<String> disambiguatedSenseKeys;
+
   public Concept() {
     setDecompositionlevel(-1);
     ids = new Hashtable<>();
@@ -78,6 +82,9 @@ public class Concept implements Serializable, IConcept {
     sensekeyToHyponymsMap = new HashMap<>();
     sensekeyToMeronymsMap = new HashMap<>();
     sensekeyToDefinitionsMap = new HashMap<>();
+
+    availableSensekeys = new HashSet<>();
+    disambiguatedSenseKeys = new HashSet<>();
   }
 
   public Concept(String litheral) {
@@ -209,6 +216,22 @@ public class Concept implements Serializable, IConcept {
 
   public void setSensekeyToDefinitionsMap(HashMap<String, Definition> sensekeyToDefinitionsMap) {
     this.sensekeyToDefinitionsMap = sensekeyToDefinitionsMap;
+  }
+
+  public Set<String> getAvailableSensekeys() {
+    return availableSensekeys;
+  }
+
+  public void setAvailableSensekeys(Set<String> availableSensekeys) {
+    this.availableSensekeys = availableSensekeys;
+  }
+
+  public Set<String> getDisambiguatedSenseKeys() {
+    return disambiguatedSenseKeys;
+  }
+
+  public void setDisambiguatedSenseKeys(Set<String> disambiguatedSenseKeys) {
+    this.disambiguatedSenseKeys = disambiguatedSenseKeys;
   }
 
   public int getDecompositionElementCount() {
