@@ -37,6 +37,7 @@ public class MarkerPassingConfig implements Cloneable {
     static double antonymLinkWeight = -0.9;
     static double hypernymLinkWeight = -0.02;
     static double hyponymLinkWeight = 0.79;
+    static double meronymLinkWeight = 0.79;
     static double defaultArbitraryRelationLinkWeight = 1;
     static HashMap<String, Double> arbitraryRelationWeights;
     static double syntaxLinkWeight = 0.5;
@@ -204,6 +205,14 @@ public class MarkerPassingConfig implements Cloneable {
 
     public static void setHyponymLinkWeight(double hyponymLinkWeight) {
         MarkerPassingConfig.hyponymLinkWeight = hyponymLinkWeight;
+    }
+
+    public static double getMeronymLinkWeight() {
+        return meronymLinkWeight;
+    }
+
+    public static void setMeronymLinkWeight(double meronymLinkWeight) {
+        MarkerPassingConfig.meronymLinkWeight = meronymLinkWeight;
     }
 
     public static HashMap<String, Double> getArbitraryRelationWeights() {
