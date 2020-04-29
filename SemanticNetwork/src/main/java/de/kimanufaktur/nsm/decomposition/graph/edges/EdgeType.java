@@ -15,5 +15,5 @@ import java.io.Serializable;
  */
 
 public enum EdgeType implements Serializable {
-    Synonym, Antonym, Definition, Hypernym, Hyponym, Meronym, Arbitrary, Unknown
+    Synonym, Antonym, Definition, Hypernym, Hyponym, Meronym, Arbitrary, Syntax, SemanticRole, NamedEntity, Unknown
 }
