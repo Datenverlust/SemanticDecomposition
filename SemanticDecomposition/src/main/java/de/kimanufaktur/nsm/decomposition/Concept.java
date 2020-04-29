@@ -8,7 +8,7 @@
 package de.kimanufaktur.nsm.decomposition;
 
 import de.kimanufaktur.nsm.decomposition.Dictionaries.BaseDictionary;
-import de.kimanufaktur.nsm.decomposition.IConcept;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -62,7 +62,9 @@ public class Concept implements Serializable, IConcept {
 
   protected Set<String> availableSensekeys;
 
-  protected Set<String> disambiguatedSenseKeys;
+  protected Set<String> assignedSensekeys;
+
+  protected Set<String> assignedContexts;
 
   public Concept() {
     setDecompositionlevel(-1);
@@ -84,7 +86,8 @@ public class Concept implements Serializable, IConcept {
     sensekeyToDefinitionsMap = new HashMap<>();
 
     availableSensekeys = new HashSet<>();
-    disambiguatedSenseKeys = new HashSet<>();
+    assignedSensekeys = new HashSet<>();
+    assignedContexts = new HashSet<>();
   }
 
   public Concept(String litheral) {
@@ -226,12 +229,20 @@ public class Concept implements Serializable, IConcept {
     this.availableSensekeys = availableSensekeys;
   }
 
-  public Set<String> getDisambiguatedSenseKeys() {
-    return disambiguatedSenseKeys;
+  public Set<String> getAssignedSensekeys() {
+    return assignedSensekeys;
   }
 
-  public void setDisambiguatedSenseKeys(Set<String> disambiguatedSenseKeys) {
-    this.disambiguatedSenseKeys = disambiguatedSenseKeys;
+  public void setAssignedSensekeys(Set<String> assignedSensekeys) {
+    this.assignedSensekeys = assignedSensekeys;
+  }
+
+  public Set<String> getAssignedContexts() {
+    return assignedContexts;
+  }
+
+  public void setAssignedContexts(Set<String> assignedContexts) {
+    this.assignedContexts = assignedContexts;
   }
 
   public int getDecompositionElementCount() {
@@ -357,7 +368,7 @@ public class Concept implements Serializable, IConcept {
    */
   @Override
   public int hashCode() {
-    int hash = this.litheral.hashCode();
+    int hash = Objects.hash(this.litheral,this.assignedSensekeys);
     if (this.id == -1) {
       this.setId(
           Long.valueOf(
