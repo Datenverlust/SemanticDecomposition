@@ -7,6 +7,8 @@
 
 package de.kimanufaktur.nsm.decomposition;
 
+//import org.neo4j.ogm.annotation.NodeEntity;
+
 import org.neo4j.ogm.annotation.NodeEntity;
 
 import java.io.Serializable;
