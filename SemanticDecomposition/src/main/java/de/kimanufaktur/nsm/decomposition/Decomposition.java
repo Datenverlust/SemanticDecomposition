@@ -85,12 +85,12 @@ public class Decomposition {
         if (args.length > 0) {
             word2Decompose = args[0];
         } else {
-            word2Decompose = "mother";
+            word2Decompose = "good";
         }
         logger.info("Semantic decomposition of " + word2Decompose + ".");
         Decomposition decomposition = new Decomposition();
         init();
-        concept = decomposition.multiThreadedDecompose(word2Decompose, WordType.NN, 2);
+        concept = decomposition.decompose(word2Decompose, WordType.NN, 1);
         System.out.println(concept.getSynonyms());
         System.out.println(concept.getDecomposition());
         System.out.println(concept.getAntonyms());
