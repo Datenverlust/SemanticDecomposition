@@ -223,7 +223,7 @@ public class Definition implements Serializable {
 
                 Concept word = Decomposition.createConcept(lemma);
                 // this is the POS tag of the token
-                word.setWordType(WordType.valueOf(pos));
+                word.setWordType(WordType.getType(pos));
                 // this is the NER label of the token
                 //String ne = token.get(CoreAnnotations.NamedEntityTagAnnotation.class);
                 //word.setNer(ne);
