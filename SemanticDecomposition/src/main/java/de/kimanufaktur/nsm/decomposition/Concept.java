@@ -16,7 +16,7 @@ import java.util.*;
 // A concept is a formal conceptualization of the meaning of a word.
 // @NodeEntity
 // @Entity
-public class Concept implements Serializable, IConcept {
+public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.IConcept {
 
   transient Hashtable<BaseDictionary, Object> ids;
   // @Relationship(type = "AlternativeSynonyms")
@@ -62,10 +62,6 @@ public class Concept implements Serializable, IConcept {
 
   protected Set<String> availableSensekeys;
 
-  protected Set<String> assignedSensekeys;
-
-  protected Set<String> assignedContexts;
-
   public Concept() {
     setDecompositionlevel(-1);
     ids = new Hashtable<>();
@@ -86,8 +82,6 @@ public class Concept implements Serializable, IConcept {
     sensekeyToDefinitionsMap = new HashMap<>();
 
     availableSensekeys = new HashSet<>();
-    assignedSensekeys = new HashSet<>();
-    assignedContexts = new HashSet<>();
   }
 
   public Concept(String litheral) {
@@ -229,22 +223,6 @@ public class Concept implements Serializable, IConcept {
     this.availableSensekeys = availableSensekeys;
   }
 
-  public Set<String> getAssignedSensekeys() {
-    return assignedSensekeys;
-  }
-
-  public void setAssignedSensekeys(Set<String> assignedSensekeys) {
-    this.assignedSensekeys = assignedSensekeys;
-  }
-
-  public Set<String> getAssignedContexts() {
-    return assignedContexts;
-  }
-
-  public void setAssignedContexts(Set<String> assignedContexts) {
-    this.assignedContexts = assignedContexts;
-  }
-
   public int getDecompositionElementCount() {
     int tmpdecompositionElementCount = 0;
     for (Definition def : getDefinitions()) {
@@ -368,7 +346,7 @@ public class Concept implements Serializable, IConcept {
    */
   @Override
   public int hashCode() {
-    int hash = Objects.hash(this.litheral,this.assignedSensekeys);
+    int hash = Objects.hash(this.litheral);
     if (this.id == -1) {
       this.setId(
           Long.valueOf(
