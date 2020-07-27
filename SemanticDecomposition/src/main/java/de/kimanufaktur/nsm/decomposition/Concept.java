@@ -8,9 +8,16 @@
 package de.kimanufaktur.nsm.decomposition;
 
 import de.kimanufaktur.nsm.decomposition.Dictionaries.BaseDictionary;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /** Created by faehndrich on 11.11.14. */
 // A concept is a formal conceptualization of the meaning of a word.
@@ -60,7 +67,8 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
   protected HashMap<String, Set<Concept>> sensekeyToMeronymsMap;
   protected HashMap<String, Definition> sensekeyToDefinitionsMap;
 
-  protected Set<String> availableSensekeys;
+  protected Set<String> availableSenseKeys;
+  protected Set<String> assignedSenseKeys;
 
   public Concept() {
     setDecompositionlevel(-1);
@@ -81,7 +89,8 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     sensekeyToMeronymsMap = new HashMap<>();
     sensekeyToDefinitionsMap = new HashMap<>();
 
-    availableSensekeys = new HashSet<>();
+    availableSenseKeys = new HashSet<>();
+    assignedSenseKeys = new HashSet<>();
   }
 
   public Concept(String litheral) {
@@ -215,12 +224,20 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     this.sensekeyToDefinitionsMap = sensekeyToDefinitionsMap;
   }
 
-  public Set<String> getAvailableSensekeys() {
-    return availableSensekeys;
+  public Set<String> getAvailableSenseKeys() {
+    return availableSenseKeys;
   }
 
-  public void setAvailableSensekeys(Set<String> availableSensekeys) {
-    this.availableSensekeys = availableSensekeys;
+  public void setAvailableSenseKeys(Set<String> availableSenseKeys) {
+    this.availableSenseKeys = availableSenseKeys;
+  }
+
+  public java.util.Set<String> getAssignedSenseKeys() {
+    return assignedSenseKeys;
+  }
+
+  public void setAssignedSenseKeys(java.util.Set<String> assignedSenseKeys) {
+    this.assignedSenseKeys = assignedSenseKeys;
   }
 
   public int getDecompositionElementCount() {
@@ -351,7 +368,7 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
       this.setId(
           Long.valueOf(
               hash)); // TODO: fix this, here the concepts should be seperated by their definitions
-                      // (Word sens etc....)
+      // (Word sens etc....)
     }
     return hash;
   }

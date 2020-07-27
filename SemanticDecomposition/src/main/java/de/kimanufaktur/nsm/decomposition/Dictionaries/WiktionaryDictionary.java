@@ -482,7 +482,7 @@ public class WiktionaryDictionary extends BaseDictionary {
       definition.setTerm(word);
       if (!word.getSensekeyToDefinitionsMap().containsKey(senseKey)) {
         word.getSensekeyToDefinitionsMap().put(senseKey, definition);
-        word.getAvailableSensekeys().add(senseKey);
+        word.getAvailableSenseKeys().add(senseKey);
       }
     }
   }
