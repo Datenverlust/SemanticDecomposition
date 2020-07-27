@@ -363,7 +363,7 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
    */
   @Override
   public int hashCode() {
-    int hash = Objects.hash(this.litheral);
+    int hash = Objects.hash(this.litheral, this.assignedSenseKeys);
     if (this.id == -1) {
       this.setId(
           Long.valueOf(
