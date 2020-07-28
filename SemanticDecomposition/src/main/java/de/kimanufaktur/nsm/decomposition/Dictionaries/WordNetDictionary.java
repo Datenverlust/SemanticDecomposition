@@ -537,7 +537,7 @@ public class WordNetDictionary extends BaseDictionary {
     return word;
   }
 
-  public Concept fillSenseKeyToDefinitionMap(Concept word) throws DictionaryDoesNotContainConceptException {
+  public void fillSenseKeyToDefinitionMap(Concept word) throws DictionaryDoesNotContainConceptException {
     Map<String, IWord> wMap = getSenseKeyToWordMap(word.getLitheral(), word.getWordType());
     if (wMap == null || wMap.size() < 1) {
       throw new DictionaryDoesNotContainConceptException(word.getLitheral());
@@ -563,8 +563,8 @@ public class WordNetDictionary extends BaseDictionary {
         Definition definition = new Definition(deftxt);
         definition.setTerm(word);
         for (IWord synsetWord : w.getSynset().getWords()) {
-          ISenseKey senskey = synsetWord.getSenseKey();
-          definition.setSensekey(senskey.toString());
+          ISenseKey sensekey = synsetWord.getSenseKey();
+          definition.setSensekey(sensekey.toString());
         }
         if (!word.getSensekeyToDefinitionsMap().containsKey(senseKey)) {
           word.getSensekeyToDefinitionsMap().put(senseKey, definition);
@@ -572,7 +572,6 @@ public class WordNetDictionary extends BaseDictionary {
         }
       }
     }
-    return word;
   }
 
   /**
