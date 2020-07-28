@@ -631,8 +631,7 @@ public class WordNetCrawler {
     } else {
       for (IWordID wordID : idxWord.getWordIDs()) {
         IWord w = wn.getWord(wordID);
-        String senseKey = "WordNetSense:" + w.getSenseKey().toString();
-        result.put(senseKey, w);
+        result.put(w.getSenseKey().toString(), w);
       }
       return result;
     }
