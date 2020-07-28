@@ -164,6 +164,14 @@ public class Definition implements Serializable {
         this.definition = definition;
     }
 
+    public String getGloss() {
+        return gloss;
+    }
+
+    public void setGloss(String gloss) {
+        this.gloss = gloss;
+    }
+
     /**
      * Create a definition out of a string. The string is parsed, tokenized and the POS is set for each word.
      *
@@ -267,4 +275,6 @@ public class Definition implements Serializable {
     public boolean equals(Object definition) {
         return this.hashCode() == definition.hashCode();
     }
+
+
 }
