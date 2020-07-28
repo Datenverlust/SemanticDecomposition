@@ -39,6 +39,8 @@ public class Definition implements Serializable {
     private Long id;
     private String sensekey = null;
 
+    private String gloss = null;
+
 
     public Definition() {
         if( Config.LANGUAGE.EN ==
@@ -68,6 +70,7 @@ public class Definition implements Serializable {
      */
     public Definition(String def) {
 
+        gloss = def;
         if( Config.LANGUAGE.EN ==
                 Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
             //
