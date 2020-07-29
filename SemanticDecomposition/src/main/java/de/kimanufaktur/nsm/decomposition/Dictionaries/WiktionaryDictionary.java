@@ -492,7 +492,7 @@ public class WiktionaryDictionary extends BaseDictionary {
       String gloss = sense.getGloss().getPlainText();
       if (!word.getSenseKeyToGlossMap().containsKey(senseKey) && gloss.length() > 3) {
         word.getSenseKeyToGlossMap().put(senseKey, gloss);
-        word.getAssignedSenseKeys().add(senseKey);
+//        word.getAssignedSenseKeys().add(senseKey);
       }
     }
   }

@@ -562,7 +562,7 @@ public class WordNetDictionary extends BaseDictionary {
         // TODO: analyze definition, on where a e.g. a example sentence begins.
         if (!word.getSenseKeyToGlossMap().containsKey(senseKey) && deftxt.length() > 3) {
           word.getSenseKeyToGlossMap().put(senseKey, deftxt);
-          word.getAssignedSenseKeys().add(senseKey);
+//          word.getAssignedSenseKeys().add(senseKey);
         }
       }
     }

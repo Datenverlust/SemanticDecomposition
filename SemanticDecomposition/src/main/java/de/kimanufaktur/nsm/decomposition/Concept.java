@@ -218,8 +218,8 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     return senseKeyToGlossMap;
   }
 
-  public void setSenseKeyToDefinitionsMap(HashMap<String, String> senseKeyToDefinitionsMap) {
-    this.senseKeyToGlossMap = senseKeyToDefinitionsMap;
+  public void setSenseKeyToGlossMap(HashMap<String, String> senseKeyToGlossMap) {
+    this.senseKeyToGlossMap = senseKeyToGlossMap;
   }
 
   public java.util.Set<String> getAssignedSenseKeys() {
