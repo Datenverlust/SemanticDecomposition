@@ -14,15 +14,27 @@ import de.kimanufaktur.nsm.decomposition.WordType;
 import de.kimanufaktur.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawler;
 import de.kimanufaktur.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
 import de.kimanufaktur.nsm.decomposition.settings.Config;
-import de.tudarmstadt.ukp.jwktl.api.*;
+import de.tudarmstadt.ukp.jwktl.api.IWikiString;
+import de.tudarmstadt.ukp.jwktl.api.IWiktionaryEntry;
+import de.tudarmstadt.ukp.jwktl.api.IWiktionaryPage;
+import de.tudarmstadt.ukp.jwktl.api.IWiktionaryRelation;
+import de.tudarmstadt.ukp.jwktl.api.IWiktionarySense;
+import de.tudarmstadt.ukp.jwktl.api.IWiktionaryWordForm;
+import de.tudarmstadt.ukp.jwktl.api.PartOfSpeech;
+import de.tudarmstadt.ukp.jwktl.api.RelationType;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.util.CoreMap;
-import org.apache.log4j.Logger;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.regex.Pattern;
+import org.apache.log4j.Logger;
 
 /**
  * Impementation of the Wikitionary as an dictionary used during the decomposition. This is based on
@@ -143,7 +155,7 @@ public class WiktionaryDictionary extends BaseDictionary {
           }
         }
       }
-      sensekeyToSynonymsMap.put(senseKey, conceptSet);
+      if (!conceptSet.isEmpty()) sensekeyToSynonymsMap.put(senseKey, conceptSet);
     }
     return sensekeyToSynonymsMap;
   }
@@ -249,7 +261,7 @@ public class WiktionaryDictionary extends BaseDictionary {
           }
         }
       }
-      toAdd2.put(senseKey, conceptSet);
+      if (!conceptSet.isEmpty()) toAdd2.put(senseKey, conceptSet);
     }
   }
 
@@ -288,7 +300,7 @@ public class WiktionaryDictionary extends BaseDictionary {
           }
         }
       }
-      meronyms.put(senseKey, conceptSet);
+      if (!conceptSet.isEmpty()) meronyms.put(senseKey, conceptSet);
     }
     // logger.debug("Meronyms for " + word.getLitheral() + " are " + meronyms.toString());
     return meronyms;
@@ -342,11 +354,11 @@ public class WiktionaryDictionary extends BaseDictionary {
     word.getHyponyms().addAll(this.getHyponyms(word));
     word.getMeronyms().addAll(this.getMeronyms(word));
 
-    word.getSensekeyToSynonymsMap().putAll(this.getSensekeyToSynonymsMap(word));
-    word.getSensekeyToAntonymsMap().putAll(this.getSensekeyToAntonymsMap(word));
-    word.getSensekeyToHypernymsMap().putAll(this.getSensekeyToHypernymsMap(word));
-    word.getSensekeyToHyponymsMap().putAll(this.getSensekeyToHyponymsMap(word));
-    word.getSensekeyToMeronymsMap().putAll(this.getSensekeyToMeronymsMap(word));
+    word.getSenseKeyToSynonymsMap().putAll(this.getSensekeyToSynonymsMap(word));
+    word.getSenseKeyToAntonymsMap().putAll(this.getSensekeyToAntonymsMap(word));
+    word.getSenseKeyToHypernymsMap().putAll(this.getSensekeyToHypernymsMap(word));
+    word.getSenseKeyToHyponymsMap().putAll(this.getSensekeyToHyponymsMap(word));
+    word.getSenseKeyToMeronymsMap().putAll(this.getSensekeyToMeronymsMap(word));
 
     IWiktionaryPage w = getWord(word.getLitheral(), word.getWordType());
     if (w == null) {
@@ -477,12 +489,10 @@ public class WiktionaryDictionary extends BaseDictionary {
   private void lookupSensekeyToDefinitionsMap(Concept word, IWiktionaryEntry entry) {
     for (IWiktionarySense sense : entry.getSenses()) {
       String senseKey = "WiktionarySense:" + entry.getId() + ":" + sense.getIndex();
-      IWikiString gloss = sense.getGloss();
-      Definition definition = new Definition(gloss.getPlainText()); // TODO: choos definition
-      definition.setTerm(word);
-      if (!word.getSensekeyToDefinitionsMap().containsKey(senseKey)) {
-        word.getSensekeyToDefinitionsMap().put(senseKey, definition);
-        word.getAvailableSenseKeys().add(senseKey);
+      String gloss = sense.getGloss().getPlainText();
+      if (!word.getSenseKeyToGlossMap().containsKey(senseKey) && gloss.length() > 3) {
+        word.getSenseKeyToGlossMap().put(senseKey, gloss);
+        word.getAssignedSenseKeys().add(senseKey);
       }
     }
   }

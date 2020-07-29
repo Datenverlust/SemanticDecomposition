@@ -60,14 +60,13 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
   protected String lemma = null;
   protected String originatedRelationName;
 
-  protected HashMap<String, Set<Concept>> sensekeyToSynonymsMap;
-  protected HashMap<String, Set<Concept>> sensekeyToAntonymsMap;
-  protected HashMap<String, Set<Concept>> sensekeyToHypernymsMap;
-  protected HashMap<String, Set<Concept>> sensekeyToHyponymsMap;
-  protected HashMap<String, Set<Concept>> sensekeyToMeronymsMap;
-  protected HashMap<String, Definition> sensekeyToDefinitionsMap;
+  protected HashMap<String, Set<Concept>> senseKeyToSynonymsMap;
+  protected HashMap<String, Set<Concept>> senseKeyToAntonymsMap;
+  protected HashMap<String, Set<Concept>> senseKeyToHypernymsMap;
+  protected HashMap<String, Set<Concept>> senseKeyToHyponymsMap;
+  protected HashMap<String, Set<Concept>> senseKeyToMeronymsMap;
+  protected HashMap<String, String> senseKeyToGlossMap;
 
-  protected Set<String> availableSenseKeys;
   protected Set<String> assignedSenseKeys;
 
   public Concept() {
@@ -82,14 +81,13 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     definitions = new HashSet<>();
     arbitraryRelations = new HashSet<>();
 
-    sensekeyToSynonymsMap = new HashMap<>();
-    sensekeyToAntonymsMap = new HashMap<>();
-    sensekeyToHypernymsMap = new HashMap<>();
-    sensekeyToHyponymsMap = new HashMap<>();
-    sensekeyToMeronymsMap = new HashMap<>();
-    sensekeyToDefinitionsMap = new HashMap<>();
+    senseKeyToSynonymsMap = new HashMap<>();
+    senseKeyToAntonymsMap = new HashMap<>();
+    senseKeyToHypernymsMap = new HashMap<>();
+    senseKeyToHyponymsMap = new HashMap<>();
+    senseKeyToMeronymsMap = new HashMap<>();
+    senseKeyToGlossMap = new HashMap<>();
 
-    availableSenseKeys = new HashSet<>();
     assignedSenseKeys = new HashSet<>();
   }
 
@@ -176,60 +174,52 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     this.hyponyms = hyponyms;
   }
 
-  public HashMap<String, Set<Concept>> getSensekeyToSynonymsMap() {
-    return sensekeyToSynonymsMap;
+  public HashMap<String, Set<Concept>> getSenseKeyToSynonymsMap() {
+    return senseKeyToSynonymsMap;
   }
 
-  public void setSensekeyToSynonymsMap(HashMap<String, Set<Concept>> sensekeyToSynonymsMap) {
-    this.sensekeyToSynonymsMap = sensekeyToSynonymsMap;
+  public void setSenseKeyToSynonymsMap(HashMap<String, Set<Concept>> senseKeyToSynonymsMap) {
+    this.senseKeyToSynonymsMap = senseKeyToSynonymsMap;
   }
 
-  public HashMap<String, Set<Concept>> getSensekeyToAntonymsMap() {
-    return sensekeyToAntonymsMap;
+  public HashMap<String, Set<Concept>> getSenseKeyToAntonymsMap() {
+    return senseKeyToAntonymsMap;
   }
 
-  public void setSensekeyToAntonymsMap(HashMap<String, Set<Concept>> sensekeyToAntonymsMap) {
-    this.sensekeyToAntonymsMap = sensekeyToAntonymsMap;
+  public void setSenseKeyToAntonymsMap(HashMap<String, Set<Concept>> senseKeyToAntonymsMap) {
+    this.senseKeyToAntonymsMap = senseKeyToAntonymsMap;
   }
 
-  public HashMap<String, Set<Concept>> getSensekeyToHypernymsMap() {
-    return sensekeyToHypernymsMap;
+  public HashMap<String, Set<Concept>> getSenseKeyToHypernymsMap() {
+    return senseKeyToHypernymsMap;
   }
 
-  public void setSensekeyToHypernymsMap(HashMap<String, Set<Concept>> sensekeyToHypernymsMap) {
-    this.sensekeyToHypernymsMap = sensekeyToHypernymsMap;
+  public void setSenseKeyToHypernymsMap(HashMap<String, Set<Concept>> senseKeyToHypernymsMap) {
+    this.senseKeyToHypernymsMap = senseKeyToHypernymsMap;
   }
 
-  public HashMap<String, Set<Concept>> getSensekeyToHyponymsMap() {
-    return sensekeyToHyponymsMap;
+  public HashMap<String, Set<Concept>> getSenseKeyToHyponymsMap() {
+    return senseKeyToHyponymsMap;
   }
 
-  public void setSensekeyToHyponymsMap(HashMap<String, Set<Concept>> sensekeyToHyponymsMap) {
-    this.sensekeyToHyponymsMap = sensekeyToHyponymsMap;
+  public void setSenseKeyToHyponymsMap(HashMap<String, Set<Concept>> senseKeyToHyponymsMap) {
+    this.senseKeyToHyponymsMap = senseKeyToHyponymsMap;
   }
 
-  public HashMap<String, Set<Concept>> getSensekeyToMeronymsMap() {
-    return sensekeyToMeronymsMap;
+  public HashMap<String, Set<Concept>> getSenseKeyToMeronymsMap() {
+    return senseKeyToMeronymsMap;
   }
 
-  public void setSensekeyToMeronymsMap(HashMap<String, Set<Concept>> sensekeyToMeronymsMap) {
-    this.sensekeyToMeronymsMap = sensekeyToMeronymsMap;
+  public void setSenseKeyToMeronymsMap(HashMap<String, Set<Concept>> senseKeyToMeronymsMap) {
+    this.senseKeyToMeronymsMap = senseKeyToMeronymsMap;
   }
 
-  public HashMap<String, Definition> getSensekeyToDefinitionsMap() {
-    return sensekeyToDefinitionsMap;
+  public HashMap<String, String> getSenseKeyToGlossMap() {
+    return senseKeyToGlossMap;
   }
 
-  public void setSensekeyToDefinitionsMap(HashMap<String, Definition> sensekeyToDefinitionsMap) {
-    this.sensekeyToDefinitionsMap = sensekeyToDefinitionsMap;
-  }
-
-  public Set<String> getAvailableSenseKeys() {
-    return availableSenseKeys;
-  }
-
-  public void setAvailableSenseKeys(Set<String> availableSenseKeys) {
-    this.availableSenseKeys = availableSenseKeys;
+  public void setSenseKeyToDefinitionsMap(HashMap<String, String> senseKeyToDefinitionsMap) {
+    this.senseKeyToGlossMap = senseKeyToDefinitionsMap;
   }
 
   public java.util.Set<String> getAssignedSenseKeys() {

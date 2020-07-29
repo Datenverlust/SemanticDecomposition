@@ -127,7 +127,7 @@ public class WordNetDictionary extends BaseDictionary {
         }
         conceptSet.add(s);
       }
-      sensekeyToSynonymsMap.put(senseKey, conceptSet);
+      if(!conceptSet.isEmpty()) sensekeyToSynonymsMap.put(senseKey, conceptSet);
     }
     return sensekeyToSynonymsMap;
   }
@@ -186,7 +186,7 @@ public class WordNetDictionary extends BaseDictionary {
         Concept s = getConcept(w.getID());
         conceptSet.add(s);
       }
-      sensekeyToAntonymsMap.put(senseKey, conceptSet);
+      if(!conceptSet.isEmpty()) sensekeyToAntonymsMap.put(senseKey, conceptSet);
     }
     return sensekeyToAntonymsMap;
   }
@@ -251,7 +251,7 @@ public class WordNetDictionary extends BaseDictionary {
           conceptSet.add(s);
         }
       }
-      sensekeyToHypernymsMap.put(senseKey, conceptSet);
+      if(!conceptSet.isEmpty()) sensekeyToHypernymsMap.put(senseKey, conceptSet);
     }
     // logger.debug("Hypernyms for " + word.getLitheral() + " are " + hypernyms.toString());
     return sensekeyToHypernymsMap;
@@ -313,7 +313,7 @@ public class WordNetDictionary extends BaseDictionary {
         Concept s = getConcept(w.getID());
         conceptSet.add(s);
       }
-      sensekeyToHyponymsMap.put(senseKey, conceptSet);
+      if(!conceptSet.isEmpty()) sensekeyToHyponymsMap.put(senseKey, conceptSet);
     }
     return sensekeyToHyponymsMap;
   }
@@ -391,7 +391,7 @@ public class WordNetDictionary extends BaseDictionary {
         }
         conceptSet.add(m);
       }
-      sensekeyToMeronymsMap.put(senseKey, conceptSet);
+      if(!conceptSet.isEmpty()) sensekeyToMeronymsMap.put(senseKey, conceptSet);
     }
     return sensekeyToMeronymsMap;
   }
@@ -430,22 +430,22 @@ public class WordNetDictionary extends BaseDictionary {
     } else {
       word.getSynonyms().addAll(this.getSynonyms(word));
     }
-    word.getSensekeyToSynonymsMap().putAll(this.getSensekeyToSynonymsMap(word));
+    word.getSenseKeyToSynonymsMap().putAll(this.getSensekeyToSynonymsMap(word));
 
     word.getAntonyms().addAll(this.getAntonyms(word));
-    word.getSensekeyToAntonymsMap().putAll(this.getSensekeyToAntonymsMap(word));
+    word.getSenseKeyToAntonymsMap().putAll(this.getSensekeyToAntonymsMap(word));
 
     word.getHypernyms().addAll(this.getHypernyms(word));
-    word.getSensekeyToHypernymsMap().putAll(this.getSensekeyToHypernymsMap(word));
+    word.getSenseKeyToHypernymsMap().putAll(this.getSensekeyToHypernymsMap(word));
 
     word.getHyponyms().addAll(this.getHyponyms(word));
-    word.getSensekeyToHyponymsMap().putAll(this.getSensekeyToHyponymsMap(word));
+    word.getSenseKeyToHyponymsMap().putAll(this.getSensekeyToHyponymsMap(word));
 
     word.getMeronyms().addAll(this.getMeronyms(word));
-    word.getSensekeyToMeronymsMap().putAll(this.getSensekeyToMeronymsMap(word));
+    word.getSenseKeyToMeronymsMap().putAll(this.getSensekeyToMeronymsMap(word));
     // fillRelated(word)
     fillDefinition(word);
-    fillSenseKeyToDefinitionMap(word);
+    fillSenseKeyToGlossMap(word);
     return word;
   }
 
@@ -537,7 +537,7 @@ public class WordNetDictionary extends BaseDictionary {
     return word;
   }
 
-  public void fillSenseKeyToDefinitionMap(Concept word) throws DictionaryDoesNotContainConceptException {
+  public void fillSenseKeyToGlossMap(Concept word) throws DictionaryDoesNotContainConceptException {
     Map<String, IWord> wMap = getSenseKeyToWordMap(word.getLitheral(), word.getWordType());
     if (wMap == null || wMap.size() < 1) {
       throw new DictionaryDoesNotContainConceptException(word.getLitheral());
@@ -560,15 +560,9 @@ public class WordNetDictionary extends BaseDictionary {
         }
         // Definition tmp = new Definition(deftxt);
         // TODO: analyze definition, on where a e.g. a example sentence begins.
-        Definition definition = new Definition(deftxt);
-        definition.setTerm(word);
-        for (IWord synsetWord : w.getSynset().getWords()) {
-          ISenseKey sensekey = synsetWord.getSenseKey();
-          definition.setSensekey(sensekey.toString());
-        }
-        if (!word.getSensekeyToDefinitionsMap().containsKey(senseKey)) {
-          word.getSensekeyToDefinitionsMap().put(senseKey, definition);
-          word.getAvailableSenseKeys().add(senseKey);
+        if (!word.getSenseKeyToGlossMap().containsKey(senseKey) && deftxt.length() > 3) {
+          word.getSenseKeyToGlossMap().put(senseKey, deftxt);
+          word.getAssignedSenseKeys().add(senseKey);
         }
       }
     }
