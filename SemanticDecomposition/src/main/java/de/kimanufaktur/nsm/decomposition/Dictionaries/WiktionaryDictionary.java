@@ -365,7 +365,6 @@ public class WiktionaryDictionary extends BaseDictionary {
       throw new DictionaryDoesNotContainConceptException(word.getLitheral());
     } else {
       fillDefinition(word);
-      fillSensekeyToDefinitionsMap(word);
     }
     // logger.debug("filling concept: " + word.getLitheral() + " with POS: " + word.getWordType());
     return word;
@@ -445,26 +444,6 @@ public class WiktionaryDictionary extends BaseDictionary {
     return word;
   }
 
-  public Concept fillSensekeyToDefinitionsMap(Concept word) {
-    IWiktionaryPage page = wiktionaryCrawler.getPage(word.getLitheral());
-    if (page != null) {
-      word.getIds().put(this, page.getId());
-      for (IWiktionaryEntry entry :
-          page.getEntries()) { // look up every entry of the page as definition
-        if (entry.getWordLanguage() != null) {
-          // TODO:DISCUSS: Really language check necessery here?!analy
-          // if (entry.getWordLanguage().equals(language)) {//if we have a language tag we only want
-          // the english definition
-          lookupSensekeyToDefinitionsMap(word, entry);
-          // }
-        } else { // look up entries which have no language set
-          lookupSensekeyToDefinitionsMap(word, entry);
-        }
-      }
-    }
-    return word;
-  }
-
   /**
    * This looks up the given word in the dictionary. This adds all definitions found on the wiki
    * page. TODO: here we should select the right definition for the decomposed word.
@@ -473,26 +452,16 @@ public class WiktionaryDictionary extends BaseDictionary {
    * @param entry the entry to search for the given word.
    */
   private void lookupDefinition(Concept word, IWiktionaryEntry entry) {
-    for (IWikiString gloss : entry.getGlosses()) {
-      if (!gloss.getPlainText().equals("")) {
-        Definition definition = null;
-        definition = new Definition(gloss.getPlainText()); // TODO: choos definition
-        definition.setTerm(word);
-        if (!word.getDefinitions().contains(definition)) {
-          word.getDefinitions().add(definition);
-          //                    word.getSensekeyToDefinitionsMap().putAll();
-        }
-      }
-    }
-  }
-
-  private void lookupSensekeyToDefinitionsMap(Concept word, IWiktionaryEntry entry) {
     for (IWiktionarySense sense : entry.getSenses()) {
       String senseKey = "WiktionarySense:" + entry.getId() + ":" + sense.getIndex();
-      String gloss = sense.getGloss().getPlainText();
-      if (!word.getSenseKeyToGlossMap().containsKey(senseKey) && gloss.length() > 3) {
-        word.getSenseKeyToGlossMap().put(senseKey, gloss);
-//        word.getAssignedSenseKeys().add(senseKey);
+      String gloss = sense.getGloss().getPlainText().replace("\t"," ").replace("\n"," ");
+      if (!gloss.isEmpty()) {
+//        Definition definition = new Definition(gloss); // TODO: choos definition
+//        definition.setTerm(word);
+        if (!word.getSenseKeyToGlossMap().containsKey(senseKey)) {
+//          word.getDefinitions().add(definition);
+          word.getSenseKeyToGlossMap().put(senseKey, gloss);
+        }
       }
     }
   }
