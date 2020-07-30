@@ -85,12 +85,12 @@ public class Decomposition {
         if (args.length > 0) {
             word2Decompose = args[0];
         } else {
-            word2Decompose = "I";
+            word2Decompose = "mother";
         }
         logger.info("Semantic decomposition of " + word2Decompose + ".");
         Decomposition decomposition = new Decomposition();
         init();
-        concept = decomposition.decompose(word2Decompose, null, 1);
+        concept = decomposition.decompose(word2Decompose, null, 2);
         System.out.println(concept.getSynonyms());
         System.out.println(concept.getDecomposition());
         System.out.println(concept.getAntonyms());
@@ -115,8 +115,8 @@ public class Decomposition {
 //        dictionaries.add(measureMentOntology);
 
         BaseDictionary wiktionaryDict = WiktionaryDictionary.getInstance();
-        wiktionaryDict.setDictName("Wiktionary");
-        dictionaries.add(wiktionaryDict);
+//        wiktionaryDict.setDictName("Wiktionary");
+//        dictionaries.add(wiktionaryDict);
 
 //        IDictionary wikidataDict = WikidataDictionary.getInstance();
 //        dictionaries.add(wikidataDict);
