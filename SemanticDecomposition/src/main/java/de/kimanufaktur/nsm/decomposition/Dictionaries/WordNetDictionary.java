@@ -49,6 +49,7 @@ public class WordNetDictionary extends BaseDictionary {
 
   @Override
   public void init() {
+    super.init();
     if (wordNetCrawler == null) {
       wordNetCrawler = new WordNetCrawler();
       wordNetCrawler.initWordNet();
@@ -444,7 +445,7 @@ public class WordNetDictionary extends BaseDictionary {
     word.getMeronyms().addAll(this.getMeronyms(word));
     word.getSenseKeyToMeronymsMap().putAll(this.getSensekeyToMeronymsMap(word));
     // fillRelated(word)
-    fillDefinition(word);
+//    fillDefinition(word);
     fillSenseKeyToGlossMap(word);
     return word;
   }
