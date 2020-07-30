@@ -269,7 +269,7 @@ public enum WordType implements Serializable{
 
     public static WordType getType(String name){
         for(WordType t : WordType.values()){
-            if(t.type().equals(name)){
+            if(t.type().equals(name) || t.name().equals(name)){
                 return  t;
             }
         }
