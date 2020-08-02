@@ -68,8 +68,10 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
   protected HashMap<String, String> senseKeyToGlossMap;
 
   protected Set<String> assignedSenseKeys;
+  protected Boolean isNegated;
 
   public Concept() {
+    wordType = WordType.UNKNOWN;
     setDecompositionlevel(-1);
     ids = new Hashtable<>();
     synonyms = new HashSet<>();
@@ -89,6 +91,7 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     senseKeyToGlossMap = new HashMap<>();
 
     assignedSenseKeys = new HashSet<>();
+    isNegated = false;
   }
 
   public Concept(String litheral) {
@@ -230,6 +233,14 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     this.assignedSenseKeys = assignedSenseKeys;
   }
 
+  public Boolean getNegated() {
+    return isNegated;
+  }
+
+  public void setNegated(Boolean negated) {
+    isNegated = negated;
+  }
+
   public int getDecompositionElementCount() {
     int tmpdecompositionElementCount = 0;
     for (Definition def : getDefinitions()) {
@@ -353,7 +364,7 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
    */
   @Override
   public int hashCode() {
-    int hash = Objects.hash(this.litheral, this.assignedSenseKeys);
+    int hash = Objects.hash(this.litheral, this.assignedSenseKeys, this.isNegated);
     if (this.id == -1) {
       this.setId(
           Long.valueOf(
