@@ -70,11 +70,14 @@ public class WordNetCrawler {
     Set<IWord> antonyms = new HashSet<IWord>();
 
     // ritaTest rita = new ritaTest();
-    synonyms = wordNetCrawler.getSynonyms(buffer.toString(), worttype, 10);
+    wordNetCrawler.getSynonyms(buffer.toString(), worttype, 10).values().forEach(synonyms::addAll);
     Set<IWord> recursiveSynonyms = new HashSet<IWord>();
     recursiveSynonyms.addAll(synonyms);
     for (IWord synonym : synonyms) {
-      recursiveSynonyms.addAll(wordNetCrawler.getSynonyms(synonym.getLemma(), worttype, 10));
+      wordNetCrawler
+          .getSynonyms(synonym.getLemma(), worttype, 10)
+          .values()
+          .forEach(recursiveSynonyms::addAll);
     }
 
     wordNetCrawler.printSynsets("Synonyms", recursiveSynonyms);
@@ -181,10 +184,12 @@ public class WordNetCrawler {
     // Now we get hyponyms of all synonyms
     Set<IWord> hypernyms = getHyponyms(word, worttype, numberfoHypernyms);
 
-    Set<IWord> synonyms = getSynonyms(word, worttype, numberfoHypernyms);
-    for (Iterator<IWord> i = synonyms.iterator(); i.hasNext(); ) {
-      IWord synonym = i.next();
-      hypernyms.addAll(getHyponyms(synonym.getLemma(), worttype, numberfoHypernyms));
+    Map<String, Set<IWord>> synonyms = getSynonyms(word, worttype, numberfoHypernyms);
+    for (Set<IWord> synonymSet : synonyms.values()) {
+      for (Iterator<IWord> i = synonymSet.iterator(); i.hasNext(); ) {
+        IWord synonym = i.next();
+        hypernyms.addAll(getHyponyms(synonym.getLemma(), worttype, numberfoHypernyms));
+      }
     }
     return hypernyms;
   }
@@ -503,34 +508,7 @@ public class WordNetCrawler {
    * @param possition The Part of spreach to use i.e. POS.VERB, POS.NOUN,...
    * @return A map of WordNet Ids to the synonyms of the given word.
    */
-  public Set<IWord> getSynonyms(String word, POS possition, int numberOfMeanings) {
-    Set<IWord> result = new HashSet<IWord>();
-
-    IIndexWord idxWord = wn.getIndexWord(word, possition);
-    if (idxWord != null) {
-      List<IWordID> wordIDs = idxWord.getWordIDs(); // 1st meaning
-      if (wordIDs.size() > numberOfMeanings) {
-        wordIDs = wordIDs.subList(0, numberOfMeanings);
-      }
-      for (IWordID wordid : wordIDs) {
-        IWord iword = wn.getWord(wordid);
-        ISynset synset = iword.getSynset();
-
-        // iterate over words associated with the synset
-        for (IWord w : synset.getWords()) {
-          if (result.size() <= numberOfMeanings) {
-            result.add(w);
-          } else {
-            break;
-          }
-        }
-      }
-    }
-    return result;
-  }
-
-  public Map<String, Set<IWord>> getSensekeyToSynonymsMap(
-      String word, POS possition, int numberOfMeanings) {
+  public Map<String, Set<IWord>> getSynonyms(String word, POS possition, int numberOfMeanings) {
     Map<String, Set<IWord>> result = new HashMap<>();
 
     IIndexWord idxWord = wn.getIndexWord(word, possition);

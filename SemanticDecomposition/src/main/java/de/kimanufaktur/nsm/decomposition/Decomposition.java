@@ -95,9 +95,9 @@ public class Decomposition {
     logger.info("Semantic decomposition of " + word2Decompose + ".");
     Decomposition decomposition = new Decomposition();
     init();
-    Definition con = new Definition("and");
-
-    concept = decomposition.decompose(con.getDefinition().get(0).lemma, null, 2);
+    Definition con = new Definition("mother");
+    Concept motherCon = con.getDefinition().get(0);
+    concept = decomposition.decompose(motherCon.lemma, motherCon.wordType, 2);
     System.out.println(concept.getSynonyms());
     System.out.println(concept.getDecomposition());
     System.out.println(concept.getAntonyms());
@@ -588,8 +588,7 @@ public class Decomposition {
    * @return a concept filled with its definition
    */
   public Concept decompose(String word, WordType wordType, int decompositionDepth) {
-    Concept concept = new Concept(word);
-    concept.setWordType(wordType);
+    Concept concept = new Concept(word, wordType);
     if (dictionaries.size() < 1) {
       init();
     }
