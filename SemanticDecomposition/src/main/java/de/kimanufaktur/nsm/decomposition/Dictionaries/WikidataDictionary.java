@@ -22,6 +22,7 @@ import edu.stanford.nlp.util.CoreMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 import java.util.function.Function;
 
@@ -92,29 +93,35 @@ public class WikidataDictionary extends BaseDictionary {
         return getRelations(word, "arbitraryRelations", WikidataItem::getArbitraryRelations);
     }
 
+    //TODO: fix return values of concept methods
     @Override
-    public HashSet<Concept> getSynonyms(Concept word) {
-        return getRelations(word, "synonyms", WikidataItem::getSynonyms);
+    public HashMap<String, Set<Concept>> getSynonyms(Concept word) {
+//        return getRelations(word, "synonyms", WikidataItem::getSynonyms);
+        return new HashMap<>();
     }
 
     @Override
-    public HashSet<Concept> getAntonyms(Concept word) {
-        return getRelations(word, "antonyms", WikidataItem::getAntonyms);
+    public HashMap<String, Set<Concept>> getAntonyms(Concept word) {
+//        return getRelations(word, "antonyms", WikidataItem::getAntonyms);
+        return new HashMap<>();
     }
 
     @Override
-    public HashSet<Concept> getHypernyms(Concept word) {
-        return getRelations(word, "hypernyms", WikidataItem::getHypernyms);
+    public HashMap<String, Set<Concept>> getHypernyms(Concept word) {
+//        return getRelations(word, "hypernyms", WikidataItem::getHypernyms);
+        return new HashMap<>();
     }
 
     @Override
-    public HashSet<Concept> getHyponyms(Concept word) {
-        return getRelations(word, "hyponyms", WikidataItem::getHyponyms);
+    public HashMap<String, Set<Concept>> getHyponyms(Concept word) {
+//        return getRelations(word, "hyponyms", WikidataItem::getHyponyms);
+        return new HashMap<>();
     }
 
     @Override
-    public HashSet<Concept> getMeronyms(Concept word) {
-        return getRelations(word, "meronyms", WikidataItem::getMeronyms);
+    public HashMap<String, Set<Concept>> getMeronyms(Concept word) {
+//        return getRelations(word, "meronyms", WikidataItem::getMeronyms);
+        return new HashMap<>();
     }
 
     @Override
@@ -147,11 +154,11 @@ public class WikidataDictionary extends BaseDictionary {
 
 //        System.out.println("Processing \"" + word.getLitheral() + "\"");
 
-        word.getSynonyms().addAll(getSynonyms(word));
-        word.getAntonyms().addAll(getAntonyms(word));
-        word.getHypernyms().addAll(getHypernyms(word));
-        word.getHyponyms().addAll(getHyponyms(word));
-        word.getMeronyms().addAll(getMeronyms(word));
+        word.getSenseKeyToSynonymsMap().putAll(getSynonyms(word));
+        word.getSenseKeyToAntonymsMap().putAll(getAntonyms(word));
+        word.getSenseKeyToHypernymsMap().putAll(getHypernyms(word));
+        word.getSenseKeyToHyponymsMap().putAll(getHyponyms(word));
+        word.getSenseKeyToMeronymsMap().putAll(getMeronyms(word));
         //word.getArbitraryRelations().addAll(getArbitraryRelations(word));
 
         if (entity == null) {

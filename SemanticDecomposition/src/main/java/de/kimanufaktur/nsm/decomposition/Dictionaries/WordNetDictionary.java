@@ -57,61 +57,24 @@ public class WordNetDictionary extends BaseDictionary {
   }
 
   @Override
-  public HashSet<Concept> getSynonyms(Concept word) {
-    HashSet<Concept> synonyms = new HashSet<>();
-    Set<IWord> syn = new HashSet<>();
-    try {
-      syn =
-          wordNetCrawler.getSynonyms(
-              word.getLitheral(), POS.valueOf(word.getWordType().type()), 10);
-    } catch (IllegalArgumentException e) {
-      // e.printStackTrace();
-      syn = wordNetCrawler.getSynonyms(word.getLitheral(), POS.NOUN, 10);
-      if (syn.size() == 0) {
-        syn = wordNetCrawler.getSynonyms(word.getLitheral(), POS.VERB, 10);
-      }
-      if (syn.size() == 0) {
-        syn = wordNetCrawler.getSynonyms(word.getLitheral(), POS.ADJECTIVE, 10);
-      }
-      if (syn.size() == 0) {
-        syn = wordNetCrawler.getSynonyms(word.getLitheral(), POS.ADVERB, 10);
-      }
-    }
-    for (IWord w : syn) {
-      Concept s = getConcept(w.getID());
-      if (Decomposition.checkIsPrime(s)) {
-        s = Decomposition.getPrimeofConcept(s);
-      } else {
-        Concept knownConcept = Decomposition.getKnownConcept(s);
-        if (knownConcept.getDecompositionlevel() >= 0) {
-          s = knownConcept;
-        }
-      }
-      synonyms.add(s);
-    }
-    // logger.debug("Synonyms for " + word.getLitheral() + " are " + synonyms.toString());
-    return synonyms;
-  }
-
-  public HashMap<String, Set<Concept>> getSensekeyToSynonymsMap(Concept word) {
+  public HashMap<String, Set<Concept>> getSynonyms(Concept word) {
     HashMap<String, Set<Concept>> sensekeyToSynonymsMap = new HashMap<>();
     Map<String, Set<IWord>> synonymsMap;
     try {
       synonymsMap =
-          wordNetCrawler.getSensekeyToSynonymsMap(
+          wordNetCrawler.getSynonyms(
               word.getLitheral(), POS.valueOf(word.getWordType().type()), 10);
     } catch (IllegalArgumentException e) {
       // e.printStackTrace();
-      synonymsMap = wordNetCrawler.getSensekeyToSynonymsMap(word.getLitheral(), POS.NOUN, 10);
+      synonymsMap = wordNetCrawler.getSynonyms(word.getLitheral(), POS.NOUN, 10);
       if (synonymsMap.size() == 0) {
-        synonymsMap = wordNetCrawler.getSensekeyToSynonymsMap(word.getLitheral(), POS.VERB, 10);
+        synonymsMap = wordNetCrawler.getSynonyms(word.getLitheral(), POS.VERB, 10);
       }
       if (synonymsMap.size() == 0) {
-        synonymsMap =
-            wordNetCrawler.getSensekeyToSynonymsMap(word.getLitheral(), POS.ADJECTIVE, 10);
+        synonymsMap = wordNetCrawler.getSynonyms(word.getLitheral(), POS.ADJECTIVE, 10);
       }
       if (synonymsMap.size() == 0) {
-        synonymsMap = wordNetCrawler.getSensekeyToSynonymsMap(word.getLitheral(), POS.ADVERB, 10);
+        synonymsMap = wordNetCrawler.getSynonyms(word.getLitheral(), POS.ADVERB, 10);
       }
     }
     for (String senseKey : synonymsMap.keySet()) {
@@ -126,42 +89,15 @@ public class WordNetDictionary extends BaseDictionary {
             s = knownConcept;
           }
         }
-        conceptSet.add(s);
+        if(!s.equals(word)) conceptSet.add(s);
       }
-      if(!conceptSet.isEmpty()) sensekeyToSynonymsMap.put(senseKey, conceptSet);
+      if (!conceptSet.isEmpty()) sensekeyToSynonymsMap.put(senseKey, conceptSet);
     }
     return sensekeyToSynonymsMap;
   }
 
   @Override
-  public HashSet<Concept> getAntonyms(Concept word) {
-    HashSet<Concept> antonyms = new HashSet<>();
-    Set<IWord> ant = new HashSet<>();
-    try {
-      ant =
-          wordNetCrawler.getAntonyms(
-              word.getLitheral(), POS.valueOf(word.getWordType().type()), 10);
-    } catch (IllegalArgumentException e) {
-      // e.printStackTrace();
-      ant = wordNetCrawler.getAntonyms(word.getLitheral(), POS.NOUN, 10);
-      if (ant.size() == 0) {
-        ant = wordNetCrawler.getAntonyms(word.getLitheral(), POS.VERB, 10);
-      }
-      if (ant.size() == 0) {
-        ant = wordNetCrawler.getAntonyms(word.getLitheral(), POS.ADJECTIVE, 10);
-      }
-      if (ant.size() == 0) {
-        ant = wordNetCrawler.getAntonyms(word.getLitheral(), POS.ADVERB, 10);
-      }
-    }
-    for (IWord w : ant) {
-      Concept s = getConcept(w.getID());
-      antonyms.add(s);
-    }
-    return antonyms;
-  }
-
-  public HashMap<String, Set<Concept>> getSensekeyToAntonymsMap(Concept word) {
+  public HashMap<String, Set<Concept>> getAntonyms(Concept word) {
     HashMap<String, Set<Concept>> sensekeyToAntonymsMap = new HashMap<>();
     Map<String, Set<IWord>> antonymsMap;
     try {
@@ -187,43 +123,13 @@ public class WordNetDictionary extends BaseDictionary {
         Concept s = getConcept(w.getID());
         conceptSet.add(s);
       }
-      if(!conceptSet.isEmpty()) sensekeyToAntonymsMap.put(senseKey, conceptSet);
+      if (!conceptSet.isEmpty()) sensekeyToAntonymsMap.put(senseKey, conceptSet);
     }
     return sensekeyToAntonymsMap;
   }
 
   @Override
-  public HashSet<Concept> getHypernyms(Concept word) {
-    HashSet<Concept> hypernyms = new HashSet<>();
-    Set<IWord> hyper = new HashSet<>();
-    try {
-      hyper =
-          wordNetCrawler.getHypernyms(
-              word.getLitheral(), POS.valueOf(word.getWordType().type()), 10);
-    } catch (IllegalArgumentException e) {
-      // e.printStackTrace();
-      hyper = wordNetCrawler.getHypernyms(word.getLitheral(), POS.NOUN, 10);
-      if (hyper.size() == 0) {
-        hyper = wordNetCrawler.getHypernyms(word.getLitheral(), POS.VERB, 10);
-      }
-      if (hyper.size() == 0) {
-        hyper = wordNetCrawler.getHypernyms(word.getLitheral(), POS.ADJECTIVE, 10);
-      }
-      if (hyper.size() == 0) {
-        hyper = wordNetCrawler.getHypernyms(word.getLitheral(), POS.ADVERB, 10);
-      }
-    }
-    for (IWord w : hyper) {
-      if (w.getID() != null) {
-        Concept s = getConcept(w.getID());
-        hypernyms.add(s);
-      }
-    }
-    // logger.debug("Hypernyms for " + word.getLitheral() + " are " + hypernyms.toString());
-    return hypernyms;
-  }
-
-  public HashMap<String, Set<Concept>> getSensekeyToHypernymsMap(Concept word) {
+  public HashMap<String, Set<Concept>> getHypernyms(Concept word) {
     HashMap<String, Set<Concept>> sensekeyToHypernymsMap = new HashMap<>();
     Map<String, Set<IWord>> hypernymsMap;
     try {
@@ -252,42 +158,14 @@ public class WordNetDictionary extends BaseDictionary {
           conceptSet.add(s);
         }
       }
-      if(!conceptSet.isEmpty()) sensekeyToHypernymsMap.put(senseKey, conceptSet);
+      if (!conceptSet.isEmpty()) sensekeyToHypernymsMap.put(senseKey, conceptSet);
     }
     // logger.debug("Hypernyms for " + word.getLitheral() + " are " + hypernyms.toString());
     return sensekeyToHypernymsMap;
   }
 
   @Override
-  public HashSet<Concept> getHyponyms(Concept word) {
-    HashSet<Concept> hyponyms = new HashSet<>();
-    Set<IWord> hypo = new HashSet<>();
-    try {
-      hypo =
-          wordNetCrawler.getHyponyms(
-              word.getLitheral(), POS.valueOf(word.getWordType().type()), 10);
-    } catch (IllegalArgumentException e) {
-      // e.printStackTrace();
-      hypo = wordNetCrawler.getHyponyms(word.getLitheral(), POS.NOUN, 10);
-      if (hypo.size() == 0) {
-        hypo = wordNetCrawler.getHyponyms(word.getLitheral(), POS.VERB, 10);
-      }
-      if (hypo.size() == 0) {
-        hypo = wordNetCrawler.getHyponyms(word.getLitheral(), POS.ADJECTIVE, 10);
-      }
-      if (hypo.size() == 0) {
-        hypo = wordNetCrawler.getHyponyms(word.getLitheral(), POS.ADVERB, 10);
-      }
-    }
-    for (IWord w : hypo) {
-      Concept s = getConcept(w.getID());
-      hyponyms.add(s);
-    }
-    // logger.debug("Hyponyms for " + word.getLitheral() + " are " + hyponyms.toString());
-    return hyponyms;
-  }
-
-  public HashMap<String, Set<Concept>> getSensekeyToHyponymsMap(Concept word) {
+  public HashMap<String, Set<Concept>> getHyponyms(Concept word) {
     HashMap<String, Set<Concept>> sensekeyToHyponymsMap = new HashMap<>();
     Map<String, Set<IWord>> hyponymsMap;
     try {
@@ -314,50 +192,13 @@ public class WordNetDictionary extends BaseDictionary {
         Concept s = getConcept(w.getID());
         conceptSet.add(s);
       }
-      if(!conceptSet.isEmpty()) sensekeyToHyponymsMap.put(senseKey, conceptSet);
+      if (!conceptSet.isEmpty()) sensekeyToHyponymsMap.put(senseKey, conceptSet);
     }
     return sensekeyToHyponymsMap;
   }
 
   @Override
-  public HashSet<Concept> getMeronyms(Concept word) {
-    HashSet<Concept> meronyms = new HashSet<>();
-    Set<IWord> mero = new HashSet<>();
-    try {
-      mero =
-          wordNetCrawler.getMeronyms(
-              word.getLitheral(), POS.valueOf(word.getWordType().type()), 10);
-    } catch (IllegalArgumentException e) {
-      // e.printStackTrace();
-      mero = wordNetCrawler.getMeronyms(word.getLitheral(), POS.NOUN, 10);
-      if (mero.size() == 0) {
-        mero = wordNetCrawler.getMeronyms(word.getLitheral(), POS.VERB, 10);
-      }
-      if (mero.size() == 0) {
-        mero = wordNetCrawler.getMeronyms(word.getLitheral(), POS.ADJECTIVE, 10);
-      }
-      if (mero.size() == 0) {
-        mero = wordNetCrawler.getMeronyms(word.getLitheral(), POS.ADVERB, 10);
-      }
-    }
-    for (IWord w : mero) {
-      Concept m = getConcept(w.getID());
-      m.setWordType(WordType.getType(w.getPOS().toString()));
-      if (Decomposition.checkIsPrime(m)) {
-        m = Decomposition.getPrimeofConcept(m);
-      } else {
-        Concept knownConcept = Decomposition.getKnownConcept(m);
-        if (knownConcept.getDecompositionlevel() >= 0) {
-          m = knownConcept;
-        }
-      }
-      meronyms.add(m);
-    }
-    // logger.debug("Meronyms for " + word.getLitheral() + " are " + meronyms.toString());
-    return meronyms;
-  }
-
-  public HashMap<String, Set<Concept>> getSensekeyToMeronymsMap(Concept word) {
+  public HashMap<String, Set<Concept>> getMeronyms(Concept word) {
     HashMap<String, Set<Concept>> sensekeyToMeronymsMap = new HashMap<>();
     Map<String, Set<IWord>> meronymsMap;
     try {
@@ -392,7 +233,7 @@ public class WordNetDictionary extends BaseDictionary {
         }
         conceptSet.add(m);
       }
-      if(!conceptSet.isEmpty()) sensekeyToMeronymsMap.put(senseKey, conceptSet);
+      if (!conceptSet.isEmpty()) sensekeyToMeronymsMap.put(senseKey, conceptSet);
     }
     return sensekeyToMeronymsMap;
   }
@@ -407,11 +248,14 @@ public class WordNetDictionary extends BaseDictionary {
   @Override
   public List<Definition> getDefinitions(Concept word) {
     List<Definition> result = new ArrayList<>();
-    List<IWord> wlist = getWord(word.getLitheral(), word.getWordType());
-    for (IWord w : wlist) {
+    Map<String, IWord> wMap = getSenseKeyToWordMap(word.getLitheral(), word.getWordType());
+    for (String senseKey : wMap.keySet()) {
+      IWord w = wMap.get(senseKey);
       String gloss = w.getSynset().getGloss();
       String deftxt = gloss.substring(gloss.indexOf(';') + 1);
-      result.add(new Definition(deftxt));
+      Definition definition = new Definition(deftxt);
+      definition.setSensekey(senseKey);
+      result.add(definition);
     }
     return result;
   }
@@ -426,27 +270,21 @@ public class WordNetDictionary extends BaseDictionary {
         setPOS(word);
       }
     }
-    if (word.getSynonyms() == null || word.getSynonyms().size() < 1) {
-      word.setSynonyms(this.getSynonyms(word));
+    if (word.getSenseKeyToSynonymsMap() == null || word.getSenseKeyToSynonymsMap().size() < 1) {
+      word.setSenseKeyToSynonymsMap(this.getSynonyms(word));
     } else {
-      word.getSynonyms().addAll(this.getSynonyms(word));
+      word.getSenseKeyToSynonymsMap().putAll(this.getSynonyms(word));
     }
-    word.getSenseKeyToSynonymsMap().putAll(this.getSensekeyToSynonymsMap(word));
 
-    word.getAntonyms().addAll(this.getAntonyms(word));
-    word.getSenseKeyToAntonymsMap().putAll(this.getSensekeyToAntonymsMap(word));
+    word.getSenseKeyToAntonymsMap().putAll(this.getAntonyms(word));
 
-    word.getHypernyms().addAll(this.getHypernyms(word));
-    word.getSenseKeyToHypernymsMap().putAll(this.getSensekeyToHypernymsMap(word));
+    word.getSenseKeyToHypernymsMap().putAll(this.getHypernyms(word));
 
-    word.getHyponyms().addAll(this.getHyponyms(word));
-    word.getSenseKeyToHyponymsMap().putAll(this.getSensekeyToHyponymsMap(word));
+    word.getSenseKeyToHyponymsMap().putAll(this.getHyponyms(word));
 
-    word.getMeronyms().addAll(this.getMeronyms(word));
-    word.getSenseKeyToMeronymsMap().putAll(this.getSensekeyToMeronymsMap(word));
+    word.getSenseKeyToMeronymsMap().putAll(this.getMeronyms(word));
     // fillRelated(word)
-//    fillDefinition(word);
-    fillSenseKeyToGlossMap(word);
+        fillDefinition(word);
     return word;
   }
 
@@ -502,43 +340,6 @@ public class WordNetDictionary extends BaseDictionary {
 
   @Override
   public Concept fillDefinition(Concept word) throws DictionaryDoesNotContainConceptException {
-    List<IWord> wlist = getWord(word.getLitheral(), word.getWordType());
-    if (wlist == null || wlist.size() < 1) {
-      throw new DictionaryDoesNotContainConceptException(word.getLitheral());
-    }
-
-    for (IWord w : wlist) {
-      // String deftxt = w.getSynset().getGloss().replace(';', '.');
-      if (w.getPOS().name().equals(word.getWordType().type())) {
-        String gloss = w.getSynset().getGloss();
-        String deftxt = null;
-        try {
-          deftxt =
-              gloss.substring(
-                  0,
-                  gloss.indexOf(
-                      ';')); // get the first definition. This is done to cut of the example
-          // sentences. For more fuzzyness remove this.
-        } catch (StringIndexOutOfBoundsException noSemicolonException) {
-          deftxt = gloss; // there was no semicolon in the definition so we take the howl sentence.
-        }
-        // Definition tmp = new Definition(deftxt);
-        // TODO: analyze definition, on where a e.g. a example sentence begins.
-        Definition definition = new Definition(deftxt);
-        definition.setTerm(word);
-        for (IWord synsetWord : w.getSynset().getWords()) {
-          ISenseKey senskey = synsetWord.getSenseKey();
-          definition.setSensekey(senskey.toString());
-        }
-        if (!word.getDefinitions().contains(definition)) {
-          word.getDefinitions().add(definition);
-        }
-      }
-    }
-    return word;
-  }
-
-  public void fillSenseKeyToGlossMap(Concept word) throws DictionaryDoesNotContainConceptException {
     Map<String, IWord> wMap = getSenseKeyToWordMap(word.getLitheral(), word.getWordType());
     if (wMap == null || wMap.size() < 1) {
       throw new DictionaryDoesNotContainConceptException(word.getLitheral());
@@ -559,14 +360,17 @@ public class WordNetDictionary extends BaseDictionary {
         } catch (StringIndexOutOfBoundsException noSemicolonException) {
           deftxt = gloss; // there was no semicolon in the definition so we take the howl sentence.
         }
-        // Definition tmp = new Definition(deftxt);
+//         Definition tmp = new Definition(deftxt);
         // TODO: analyze definition, on where a e.g. a example sentence begins.
-        if (!word.getSenseKeyToGlossMap().containsKey(senseKey) && deftxt.length() > 3) {
-          word.getSenseKeyToGlossMap().put(senseKey, deftxt);
-//          word.getAssignedSenseKeys().add(senseKey);
+        Definition definition = new Definition(deftxt);
+        definition.setTerm(word);
+        definition.setSensekey(senseKey);
+        if (!word.getDefinitions().contains(definition)) {
+          word.getDefinitions().add(definition);
         }
       }
     }
+    return word;
   }
 
   /**

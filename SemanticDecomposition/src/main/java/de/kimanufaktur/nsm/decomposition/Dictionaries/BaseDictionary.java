@@ -25,7 +25,8 @@ import edu.stanford.nlp.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.List;
 import java.util.Properties;
 
@@ -93,7 +94,7 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
      * @param word the concept to be filled. Here the Wordtype and the literal needs to be filled.
      * @return the set of synonyms of concepts. Here no recursion is done, so the synonyms need to be filled again.
      */
-    public abstract HashSet<Concept> getSynonyms(Concept word);
+    public abstract HashMap<String, Set<Concept>> getSynonyms(de.kimanufaktur.nsm.decomposition.Concept word);
 
     /**
      * fill the concept with the antonyms out of the dictionary.
@@ -101,7 +102,7 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
      * @param word the concept to be filled. Here the Wordtype and the literal needs to be filled.
      * @return the set of antonyms of concepts. Here no recursion is done, so the antonyms need to be filled again.
      */
-    public abstract HashSet<Concept> getAntonyms(Concept word);
+    public abstract HashMap<String, Set<Concept>> getAntonyms(Concept word);
 
     /**
      * fill the concept with the Hypernyms out of the dictionary.
@@ -109,7 +110,7 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
      * @param word the concept to be filled. Here the Wordtype and the literal needs to be filled.
      * @return the set of Hypernyms of concepts. Here no recursion is done, so the Hypernyms need to be filled again.
      */
-    public abstract HashSet<Concept> getHypernyms(Concept word);
+    public abstract HashMap<String, Set<Concept>> getHypernyms(Concept word);
 
     /**
      * fill the concept with the Hyponyms out of the dictionary.
@@ -117,7 +118,7 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
      * @param word the concept to be filled. Here the Wordtype and the literal needs to be filled.
      * @return the set of Hyponyms of concepts. Here no recursion is done, so the Hyponyms need to be filled again.
      */
-    public abstract HashSet<Concept> getHyponyms(Concept word);
+    public abstract HashMap<String, Set<Concept>> getHyponyms(Concept word);
 
     /**
      * fill the concept with the Meronyms out of the dictionary. The Meronym relation is ruffly speaking the part-of relation.
@@ -125,7 +126,7 @@ public abstract class BaseDictionary implements Serializable, Dictionary {
      * @param word the concept to be filled. Here the Wordtype and the literal needs to be filled.
      * @return the set of Meronyms of concepts. Here no recursion is done, so the Meronyms need to be filled again.
      */
-    public abstract HashSet<Concept> getMeronyms(Concept word);
+    public abstract HashMap<String, Set<Concept>> getMeronyms(Concept word);
 
 
     /**

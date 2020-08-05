@@ -16,6 +16,7 @@ import de.kimanufaktur.nsm.decomposition.exceptions.DictionaryDoesNotContainConc
 import de.kimanufaktur.nsm.decomposition.settings.Config;
 import ontology.index.indexer.core.Fields;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -97,13 +98,15 @@ public class RDFXMLDictionary extends BaseDictionary {
         return _crawler.getEntityNameForIRI(entityIRI);
     }
 
+    //TODO: fix return values of concept methods
     @Override
-    public HashSet<Concept> getSynonyms(Concept word) {
+    public HashMap<String, Set<Concept>> getSynonyms(Concept word) {
         //get equivalent classes (and try not to use a reasoner, because a reasoner would never classif the default ontology)
         HashSet<Concept> syns = new HashSet<>();
         if(word == null || word.getLitheral() == null){
             System.err.println("concept or concept's literal is null");
-            return syns;
+//            return syns;
+            return new HashMap<>();
         }
         List<String> iris = findIRIsForTerm(word.getLitheral());
         //assuming best match is iri for searched entity
@@ -115,18 +118,20 @@ public class RDFXMLDictionary extends BaseDictionary {
                 syns.add(getConcept(entityFromIRI(entIRI)));
             }
         }
-        return syns;
+//        return syns;
+        return new HashMap<>();
     }
 
     @Override
-    public HashSet<Concept> getAntonyms(Concept word) {
+    public HashMap<String, Set<Concept>> getAntonyms(Concept word) {
         //difficult for this dictionary. what would antonyms be in owl terms?
         // for some entities maybe DisjointClasses / DisjointProperty ?
-        return new HashSet<>();
+//        return new HashSet<>();
+        return new HashMap<>();
     }
 
     @Override
-    public HashSet<Concept> getHypernyms(Concept word) {
+    public HashMap<String, Set<Concept>> getHypernyms(Concept word) {
         //parent classes or super classes
         HashSet<Concept> hypers = new HashSet<>();
         List<String> iris = findIRIsForTerm(word.getLitheral());
@@ -138,11 +143,12 @@ public class RDFXMLDictionary extends BaseDictionary {
                 hypers.add(getConcept(entityFromIRI(entIRI)));
             }
         }
-        return hypers;
+//        return hypers;
+        return new HashMap<>();
     }
 
     @Override
-    public HashSet<Concept> getHyponyms(Concept word) {
+    public HashMap<String, Set<Concept>> getHyponyms(Concept word) {
         // child classes or sub classes
         HashSet<Concept> hypos = new HashSet<>();
         List<String> iris = findIRIsForTerm(word.getLitheral());
@@ -154,11 +160,12 @@ public class RDFXMLDictionary extends BaseDictionary {
                 hypos.add(getConcept(entityFromIRI(entIRI)));
             }
         }
-        return hypos;
+//        return hypos;
+        return new HashMap<>();
     }
 
     @Override
-    public HashSet<Concept> getMeronyms(Concept word) {
+    public HashMap<String, Set<Concept>> getMeronyms(Concept word) {
         //all properties in the domain of the concept
         //hm or all properties in which the concept occurs? Discuss
         HashSet<Concept> merons = new HashSet<>();
@@ -171,7 +178,8 @@ public class RDFXMLDictionary extends BaseDictionary {
                 merons.add(getConcept(entityFromIRI(entIRI)));
             }
         }
-        return merons;
+//        return merons;
+        return new HashMap<>();
     }
 
     @Override
@@ -192,11 +200,11 @@ public class RDFXMLDictionary extends BaseDictionary {
             word.setWordType(wordType);
         }
 
-        word.getSynonyms().addAll(this.getSynonyms(word));
-        word.getAntonyms().addAll(this.getAntonyms(word));
-        word.getHypernyms().addAll(this.getHypernyms(word));
-        word.getHyponyms().addAll(this.getHyponyms(word));
-        word.getMeronyms().addAll(this.getMeronyms(word));
+        word.getSenseKeyToSynonymsMap().putAll(this.getSynonyms(word));
+        word.getSenseKeyToAntonymsMap().putAll(this.getAntonyms(word));
+        word.getSenseKeyToHypernymsMap().putAll(this.getHypernyms(word));
+        word.getSenseKeyToHyponymsMap().putAll(this.getHyponyms(word));
+        word.getSenseKeyToMeronymsMap().putAll(this.getMeronyms(word));
 
         //i don't get the following part. what shall be accomplished here?
 //        List<String> entities = _crawler.findIRIs(word.getLitheral());

@@ -14,7 +14,6 @@ import de.kimanufaktur.nsm.decomposition.WordType;
 import de.kimanufaktur.nsm.decomposition.dictionaries.wiktionary.WiktionaryCrawler;
 import de.kimanufaktur.nsm.decomposition.exceptions.DictionaryDoesNotContainConceptException;
 import de.kimanufaktur.nsm.decomposition.settings.Config;
-import de.tudarmstadt.ukp.jwktl.api.IWikiString;
 import de.tudarmstadt.ukp.jwktl.api.IWiktionaryEntry;
 import de.tudarmstadt.ukp.jwktl.api.IWiktionaryPage;
 import de.tudarmstadt.ukp.jwktl.api.IWiktionaryRelation;
@@ -123,24 +122,7 @@ public class WiktionaryDictionary extends BaseDictionary {
   }
 
   @Override
-  public HashSet<Concept> getSynonyms(Concept word) {
-    HashSet<Concept> synonyms = new HashSet<>();
-    Set<IWiktionaryRelation> syn =
-        wiktionaryCrawler.getRelations(word.getLitheral(), RelationType.SYNONYM);
-    for (IWiktionaryRelation w : syn) {
-      IWiktionaryPage spage = wiktionaryCrawler.getPage(w.getTarget());
-      if (spage != null) {
-        for (IWiktionaryEntry synonym : spage.getEntries()) {
-          Concept s = getConcept(synonym.getPage().getId());
-          synonyms.add(s);
-        }
-      }
-    }
-    // logger.debug("Synonyms for " + word.getLitheral() + " are " + synonyms.toString());
-    return synonyms;
-  }
-
-  public HashMap<String, Set<Concept>> getSensekeyToSynonymsMap(Concept word) {
+  public HashMap<String, Set<Concept>> getSynonyms(de.kimanufaktur.nsm.decomposition.Concept word) {
     HashMap<String, Set<Concept>> sensekeyToSynonymsMap = new HashMap<>();
     Map<String, Set<IWiktionaryRelation>> synonymsMap =
         wiktionaryCrawler.getSenseKeyToRelationsMap(word.getLitheral(), RelationType.SYNONYM);
@@ -160,17 +142,9 @@ public class WiktionaryDictionary extends BaseDictionary {
     return sensekeyToSynonymsMap;
   }
 
-  public HashSet<Concept> getAntonyms(Concept word) {
-    HashSet<Concept> antonyms = new HashSet<>();
-    Set<IWiktionaryRelation> ant =
-        wiktionaryCrawler.getRelations(word.getLitheral(), RelationType.ANTONYM);
-    addSynset(ant, antonyms);
-    // logger.debug("Antonyms for " + word.getLitheral() + " are " + antonyms.toString());
-    return antonyms;
-  }
-
-  public Map<String, Set<Concept>> getSensekeyToAntonymsMap(Concept word) {
-    Map<String, Set<Concept>> antonyms = new HashMap<>();
+  @Override
+  public HashMap<String, Set<Concept>> getAntonyms(Concept word) {
+    HashMap<String, Set<Concept>> antonyms = new HashMap<>();
     Map<String, Set<IWiktionaryRelation>> antonymsMap =
         wiktionaryCrawler.getSenseKeyToRelationsMap(word.getLitheral(), RelationType.ANTONYM);
     addSensekeyToSynsetsMap(antonymsMap, antonyms);
@@ -179,18 +153,8 @@ public class WiktionaryDictionary extends BaseDictionary {
   }
 
   @Override
-  public HashSet<Concept> getHypernyms(Concept word) {
-    HashSet<Concept> hypernyms = new HashSet<>();
-    Set<IWiktionaryRelation> hyp =
-        wiktionaryCrawler.getRelations(word.getLitheral(), RelationType.HYPERNYM);
-    addSynset(hyp, hypernyms);
-    // logger.debug(RelationType.HYPERNYM.toString() + " for " + word.getLitheral() + " are " +
-    // hypernyms.toString());
-    return hypernyms;
-  }
-
-  public Map<String, Set<Concept>> getSensekeyToHypernymsMap(Concept word) {
-    Map<String, Set<Concept>> hypernyms = new HashMap<>();
+  public HashMap<String, Set<Concept>> getHypernyms(Concept word) {
+    HashMap<String, Set<Concept>> hypernyms = new HashMap<>();
     Map<String, Set<IWiktionaryRelation>> hyp =
         wiktionaryCrawler.getSenseKeyToRelationsMap(word.getLitheral(), RelationType.HYPERNYM);
     addSensekeyToSynsetsMap(hyp, hypernyms);
@@ -200,18 +164,8 @@ public class WiktionaryDictionary extends BaseDictionary {
   }
 
   @Override
-  public HashSet<Concept> getHyponyms(Concept word) {
-    HashSet<Concept> hyponyms = new HashSet<>();
-    Set<IWiktionaryRelation> hyp =
-        wiktionaryCrawler.getRelations(word.getLitheral(), RelationType.HYPONYM);
-    addSynset(hyp, hyponyms);
-    // logger.debug(RelationType.HYPONYM.toString() + " for " + word.getLitheral() + " are " +
-    // hyponyms.toString());
-    return hyponyms;
-  }
-
-  public Map<String, Set<Concept>> getSensekeyToHyponymsMap(Concept word) {
-    Map<String, Set<Concept>> hyponyms = new HashMap<>();
+  public HashMap<String, Set<Concept>> getHyponyms(Concept word) {
+    HashMap<String, Set<Concept>> hyponyms = new HashMap<>();
     Map<String, Set<IWiktionaryRelation>> hyp =
         wiktionaryCrawler.getSenseKeyToRelationsMap(word.getLitheral(), RelationType.HYPONYM);
     addSensekeyToSynsetsMap(hyp, hyponyms);
@@ -266,26 +220,8 @@ public class WiktionaryDictionary extends BaseDictionary {
   }
 
   @Override
-  public HashSet<Concept> getMeronyms(Concept word) {
-    HashSet<Concept> meronyms = new HashSet<>();
-    Set<IWiktionaryRelation> mer =
-        wiktionaryCrawler.getRelations(word.getLitheral(), RelationType.MERONYM);
-    for (IWiktionaryRelation w : mer) {
-      IWiktionaryPage spage = wiktionaryCrawler.getPage(w.getTarget());
-      if (spage != null) {
-        for (IWiktionaryEntry synonym : spage.getEntries()) {
-          Concept m = null;
-          m = getConcept(synonym.getPage().getId());
-          meronyms.add(m);
-        }
-      }
-    }
-    // logger.debug("Meronyms for " + word.getLitheral() + " are " + meronyms.toString());
-    return meronyms;
-  }
-
-  public Map<String, Set<Concept>> getSensekeyToMeronymsMap(Concept word) {
-    Map<String, Set<Concept>> meronyms = new HashMap<>();
+  public HashMap<String, Set<Concept>> getMeronyms(Concept word) {
+    HashMap<String, Set<Concept>> meronyms = new HashMap<>();
     Map<String, Set<IWiktionaryRelation>> mer =
         wiktionaryCrawler.getSenseKeyToRelationsMap(word.getLitheral(), RelationType.MERONYM);
     for (String senseKey : mer.keySet()) {
@@ -348,17 +284,11 @@ public class WiktionaryDictionary extends BaseDictionary {
         setPOS(word);
       }
     }
-    word.getSynonyms().addAll(this.getSynonyms(word));
-    word.getAntonyms().addAll(this.getAntonyms(word));
-    word.getHypernyms().addAll(this.getHypernyms(word));
-    word.getHyponyms().addAll(this.getHyponyms(word));
-    word.getMeronyms().addAll(this.getMeronyms(word));
-
-    word.getSenseKeyToSynonymsMap().putAll(this.getSensekeyToSynonymsMap(word));
-    word.getSenseKeyToAntonymsMap().putAll(this.getSensekeyToAntonymsMap(word));
-    word.getSenseKeyToHypernymsMap().putAll(this.getSensekeyToHypernymsMap(word));
-    word.getSenseKeyToHyponymsMap().putAll(this.getSensekeyToHyponymsMap(word));
-    word.getSenseKeyToMeronymsMap().putAll(this.getSensekeyToMeronymsMap(word));
+    word.getSenseKeyToSynonymsMap().putAll(this.getSynonyms(word));
+    word.getSenseKeyToAntonymsMap().putAll(this.getAntonyms(word));
+    word.getSenseKeyToHypernymsMap().putAll(this.getHypernyms(word));
+    word.getSenseKeyToHyponymsMap().putAll(this.getHyponyms(word));
+    word.getSenseKeyToMeronymsMap().putAll(this.getMeronyms(word));
 
     IWiktionaryPage w = getWord(word.getLitheral(), word.getWordType());
     if (w == null) {
@@ -456,11 +386,11 @@ public class WiktionaryDictionary extends BaseDictionary {
       String senseKey = "WiktionarySense:" + entry.getId() + ":" + sense.getIndex();
       String gloss = sense.getGloss().getPlainText().replace("\t"," ").replace("\n"," ");
       if (!gloss.isEmpty()) {
-//        Definition definition = new Definition(gloss); // TODO: choos definition
-//        definition.setTerm(word);
-        if (!word.getSenseKeyToGlossMap().containsKey(senseKey)) {
-//          word.getDefinitions().add(definition);
-          word.getSenseKeyToGlossMap().put(senseKey, gloss);
+        Definition definition = new Definition(gloss); // TODO: choos definition
+        definition.setTerm(word);
+        definition.setSensekey(senseKey);
+        if (!word.getDefinitions().contains(definition)) {
+          word.getDefinitions().add(definition);
         }
       }
     }
