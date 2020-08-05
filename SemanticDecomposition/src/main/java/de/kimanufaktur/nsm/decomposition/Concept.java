@@ -42,15 +42,15 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
   protected int decompositionlevel = 0;
   // @Relationship(type = "Synonyms")
   // @SecondaryKey(relate = Relationship.ONE_TO_MANY, relatedEntity = Concept.class)
-  protected HashSet<Concept> synonyms;
+  protected HashMap<String, Set<Concept>> senseKeyToSynonymsMap;
   // @Relationship(type = "Antonyms")
-  protected HashSet<Concept> antonyms;
+  protected HashMap<String, Set<Concept>> senseKeyToAntonymsMap;
   // @Relationship(type = "Hypernyms")
-  protected HashSet<Concept> hypernyms;
+  protected HashMap<String, Set<Concept>> senseKeyToHypernymsMap;
   // @Relationship(type = "Hyponyms")
-  protected HashSet<Concept> hyponyms;
+  protected HashMap<String, Set<Concept>> senseKeyToHyponymsMap;
   // @Relationship(type = "Meronyms")
-  protected HashSet<Concept> meronyms;
+  protected HashMap<String, Set<Concept>> senseKeyToMeronymsMap;
   // @Relationship(type = "Definitions")
   protected HashSet<Definition> definitions;
   // @Relationship(type = "Derivations")
@@ -60,36 +60,20 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
   protected String lemma = null;
   protected String originatedRelationName;
 
-  protected HashMap<String, Set<Concept>> senseKeyToSynonymsMap;
-  protected HashMap<String, Set<Concept>> senseKeyToAntonymsMap;
-  protected HashMap<String, Set<Concept>> senseKeyToHypernymsMap;
-  protected HashMap<String, Set<Concept>> senseKeyToHyponymsMap;
-  protected HashMap<String, Set<Concept>> senseKeyToMeronymsMap;
-  protected HashMap<String, String> senseKeyToGlossMap;
-
   protected Set<String> assignedSenseKeys;
   protected Boolean negated;
 
   public Concept() {
-    wordType = WordType.UNKNOWN;
     setDecompositionlevel(-1);
     ids = new Hashtable<>();
-    synonyms = new HashSet<>();
-    antonyms = new HashSet<>();
-    hypernyms = new HashSet<>();
-    hyponyms = new HashSet<>();
-    meronyms = new HashSet<>();
-    derivations = new HashSet<>();
-    definitions = new HashSet<>();
-    arbitraryRelations = new HashSet<>();
-
     senseKeyToSynonymsMap = new HashMap<>();
     senseKeyToAntonymsMap = new HashMap<>();
     senseKeyToHypernymsMap = new HashMap<>();
     senseKeyToHyponymsMap = new HashMap<>();
     senseKeyToMeronymsMap = new HashMap<>();
-    senseKeyToGlossMap = new HashMap<>();
-
+    derivations = new HashSet<>();
+    definitions = new HashSet<>();
+    arbitraryRelations = new HashSet<>();
     assignedSenseKeys = new HashSet<>();
     negated = false;
   }
@@ -113,12 +97,89 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     this.id = id;
   }
 
-  public HashSet<Concept> getMeronyms() {
-    return meronyms;
+  public HashSet<Concept> getSynonyms() {
+    HashSet<Concept> result = new HashSet<>();
+    for(Set<Concept> conceptSet: senseKeyToSynonymsMap.values()){
+      result.addAll(conceptSet);
+    }
+    return result;
   }
 
-  public void setMeronyms(HashSet<Concept> meronyms) {
-    this.meronyms = meronyms;
+  public HashMap<String, Set<Concept>> getSenseKeyToSynonymsMap() {
+    return senseKeyToSynonymsMap;
+  }
+
+  public void setSenseKeyToSynonymsMap(HashMap<String, Set<Concept>> senseKeyToSynonymsMap) {
+    this.senseKeyToSynonymsMap = senseKeyToSynonymsMap;
+  }
+
+  public HashSet<Concept> getAntonyms() {
+    HashSet<Concept> result = new HashSet<>();
+    for(Set<Concept> conceptSet: senseKeyToAntonymsMap.values()){
+      result.addAll(conceptSet);
+    }
+    return result;
+  }
+
+  public HashMap<String, Set<Concept>> getSenseKeyToAntonymsMap() {
+    return senseKeyToAntonymsMap;
+  }
+
+  public void setSenseKeyToAntonymsMap(HashMap<String, Set<Concept>> senseKeyToAntonymsMap) {
+    this.senseKeyToAntonymsMap = senseKeyToAntonymsMap;
+  }
+
+  public HashSet<Concept> getHypernyms() {
+    HashSet<Concept> result = new HashSet<>();
+    for(Set<Concept> conceptSet: senseKeyToHypernymsMap.values()){
+      result.addAll(conceptSet);
+    }
+    return result;
+  }
+
+  public HashMap<String, Set<Concept>> getSenseKeyToHypernymsMap() {
+    return senseKeyToHypernymsMap;
+  }
+
+  public void setSenseKeyToHypernymsMap(HashMap<String, Set<Concept>> senseKeyToHypernymsMap) {
+    this.senseKeyToHypernymsMap = senseKeyToHypernymsMap;
+  }
+
+  public HashSet<Concept> getHyponyms() {
+    HashSet<Concept> result = new HashSet<>();
+    for(Set<Concept> conceptSet: senseKeyToHyponymsMap.values()){
+      result.addAll(conceptSet);
+    }
+    return result;
+  }
+  public HashMap<String, Set<Concept>>
+  getSenseKeyToHyponymsMap() {
+    return senseKeyToHyponymsMap;
+  }
+
+  public void setSenseKeyToHyponymsMap(
+      HashMap<String, Set<Concept>>
+          senseKeyToHyponymsMap) {
+    this.senseKeyToHyponymsMap = senseKeyToHyponymsMap;
+  }
+
+  public HashSet<Concept> getMeronyms() {
+    HashSet<Concept> result = new HashSet<>();
+    for(Set<Concept> conceptSet: senseKeyToMeronymsMap.values()){
+      result.addAll(conceptSet);
+    }
+    return result;
+  }
+
+  public HashMap<String, Set<Concept>>
+  getSenseKeyToMeronymsMap() {
+    return senseKeyToMeronymsMap;
+  }
+
+  public void setSenseKeyToMeronymsMap(
+      HashMap<String, Set<Concept>>
+          senseKeyToMeronymsMap) {
+    this.senseKeyToMeronymsMap = senseKeyToMeronymsMap;
   }
 
   public HashSet<Concept> getDerivations() {
@@ -137,34 +198,6 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     this.definitions = definitions;
   }
 
-  public HashSet<Concept> getSynonyms() {
-    return synonyms;
-  }
-
-  public void setSynonyms(HashSet<Concept> synonyms) {
-    this.synonyms = synonyms;
-  }
-
-  public HashSet<Concept> getAntonyms() {
-    return antonyms;
-  }
-
-  public void setAntonyms(HashSet<Concept> antonyms) {
-    this.antonyms = antonyms;
-  }
-
-  public HashSet<Concept> getHypernyms() {
-    return hypernyms;
-  }
-
-  public void setHypernyms(HashSet<Concept> hypernyms) {
-    this.hypernyms = hypernyms;
-  }
-
-  public HashSet<Concept> getHyponyms() {
-    return hyponyms;
-  }
-
   public void setArbitraryRelations(HashSet<Concept> arbitraryRelations) {
     this.arbitraryRelations = arbitraryRelations;
   }
@@ -173,63 +206,11 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     return arbitraryRelations;
   }
 
-  public void setHyponyms(HashSet<Concept> hyponyms) {
-    this.hyponyms = hyponyms;
-  }
-
-  public HashMap<String, Set<Concept>> getSenseKeyToSynonymsMap() {
-    return senseKeyToSynonymsMap;
-  }
-
-  public void setSenseKeyToSynonymsMap(HashMap<String, Set<Concept>> senseKeyToSynonymsMap) {
-    this.senseKeyToSynonymsMap = senseKeyToSynonymsMap;
-  }
-
-  public HashMap<String, Set<Concept>> getSenseKeyToAntonymsMap() {
-    return senseKeyToAntonymsMap;
-  }
-
-  public void setSenseKeyToAntonymsMap(HashMap<String, Set<Concept>> senseKeyToAntonymsMap) {
-    this.senseKeyToAntonymsMap = senseKeyToAntonymsMap;
-  }
-
-  public HashMap<String, Set<Concept>> getSenseKeyToHypernymsMap() {
-    return senseKeyToHypernymsMap;
-  }
-
-  public void setSenseKeyToHypernymsMap(HashMap<String, Set<Concept>> senseKeyToHypernymsMap) {
-    this.senseKeyToHypernymsMap = senseKeyToHypernymsMap;
-  }
-
-  public HashMap<String, Set<Concept>> getSenseKeyToHyponymsMap() {
-    return senseKeyToHyponymsMap;
-  }
-
-  public void setSenseKeyToHyponymsMap(HashMap<String, Set<Concept>> senseKeyToHyponymsMap) {
-    this.senseKeyToHyponymsMap = senseKeyToHyponymsMap;
-  }
-
-  public HashMap<String, Set<Concept>> getSenseKeyToMeronymsMap() {
-    return senseKeyToMeronymsMap;
-  }
-
-  public void setSenseKeyToMeronymsMap(HashMap<String, Set<Concept>> senseKeyToMeronymsMap) {
-    this.senseKeyToMeronymsMap = senseKeyToMeronymsMap;
-  }
-
-  public HashMap<String, String> getSenseKeyToGlossMap() {
-    return senseKeyToGlossMap;
-  }
-
-  public void setSenseKeyToGlossMap(HashMap<String, String> senseKeyToGlossMap) {
-    this.senseKeyToGlossMap = senseKeyToGlossMap;
-  }
-
-  public java.util.Set<String> getAssignedSenseKeys() {
+  public Set<String> getAssignedSenseKeys() {
     return assignedSenseKeys;
   }
 
-  public void setAssignedSenseKeys(java.util.Set<String> assignedSenseKeys) {
+  public void setAssignedSenseKeys(Set<String> assignedSenseKeys) {
     this.assignedSenseKeys = assignedSenseKeys;
   }
 
@@ -246,11 +227,11 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     for (Definition def : getDefinitions()) {
       tmpdecompositionElementCount += def.getDefinition().size();
     }
-    tmpdecompositionElementCount += getSynonyms().size();
-    tmpdecompositionElementCount += getAntonyms().size();
-    tmpdecompositionElementCount += getHypernyms().size();
-    tmpdecompositionElementCount += getHyponyms().size();
-    tmpdecompositionElementCount += getMeronyms().size();
+    tmpdecompositionElementCount += getSenseKeyToSynonymsMap().size();
+    tmpdecompositionElementCount += getSenseKeyToAntonymsMap().size();
+    tmpdecompositionElementCount += getSenseKeyToHypernymsMap().size();
+    tmpdecompositionElementCount += getSenseKeyToHyponymsMap().size();
+    tmpdecompositionElementCount += getSenseKeyToMeronymsMap().size();
     tmpdecompositionElementCount += getArbitraryRelations().size();
     return decompositionElementCount;
   }
@@ -313,20 +294,25 @@ public class Concept implements Serializable, de.kimanufaktur.nsm.decomposition.
     for (Definition def : getDefinitions()) {
       decomposition.addAll(def.getDefinition());
     }
-    decomposition.addAll(getSynonyms());
-    decomposition.addAll(getHypernyms());
-    decomposition.addAll(getHyponyms());
-    decomposition.addAll(getAntonyms());
+    for (Definition def : definitions) {
+      String senseKey = def.getSensekey();
+      decomposition.addAll(getSenseKeyToSynonymsMap().get(senseKey));
+      decomposition.addAll(getSenseKeyToHypernymsMap().get(senseKey));
+      decomposition.addAll(getSenseKeyToHyponymsMap().get(senseKey));
+      decomposition.addAll(getSenseKeyToAntonymsMap().get(senseKey));
+    }
     decomposition.addAll(getArbitraryRelations());
     return decomposition;
   }
 
-  public Collection<Concept> getAllFeatures() {
+  public Collection<Concept> getAllFeatures() { // TODO: fix the commented lines
     Collection<Concept> features = new ArrayList<>();
-    if (this.getSynonyms() != null && this.getSynonyms().size() > 0)
-      features.addAll(this.getSynonyms());
-    if (this.getAntonyms() != null && this.getAntonyms().size() > 0)
-      features.addAll(this.getAntonyms());
+    if (this.getSenseKeyToSynonymsMap() != null && this.getSenseKeyToSynonymsMap().size() > 0) {
+      //      features.addAll(this.getSynonyms());
+    }
+    if (this.getSenseKeyToAntonymsMap() != null && this.getSenseKeyToAntonymsMap().size() > 0) {
+      //      features.addAll(this.getAntonyms());
+    }
     return features;
   }
 
