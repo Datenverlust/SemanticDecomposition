@@ -38,6 +38,7 @@ public class Definition implements Serializable {
     //@GraphId
     private Long id;
     private String sensekey = null;
+    private String gloss = null;
 
     public Definition() {
         if( Config.LANGUAGE.EN ==
@@ -66,6 +67,7 @@ public class Definition implements Serializable {
      * @param def the word as string for which a definitions should be created.
      */
     public Definition(String def) {
+        gloss = def;
 
         if( Config.LANGUAGE.EN ==
                 Config.LANGUAGE.valueOf( Config.getInstance().getUserProps().getProperty(Config.LANGUAGE_KEY) )){
@@ -134,6 +136,14 @@ public class Definition implements Serializable {
 
     public void setSensekey(String sensekey) {
         this.sensekey = sensekey;
+    }
+
+    public String getGloss() {
+        return gloss;
+    }
+
+    public void setGloss(String gloss) {
+        this.gloss = gloss;
     }
 
     public Concept getTerm() {
