@@ -27,7 +27,7 @@ public class MarkerPassingConfig implements Cloneable {
     static List<Map<Concept, List<Marker>>> startMarker = new ArrayList<Map<Concept, List<Marker>>>();
     static Map<Concept, Double> conceptualThreshold = new HashMap<>(2);
     static double startActivation = 1;
-    static double threshold = 0.064;
+    static double threshold = 0.32;
     static double negativeThreshold= -0.32;
 
 
@@ -49,7 +49,7 @@ public class MarkerPassingConfig implements Cloneable {
     static int pathlength = 0;
     //Termination condition
 
-    static int terminationPulsCount = 80;
+    static int terminationPulsCount = 99;
     static double doubleActivationLimit = 20;
 
 
