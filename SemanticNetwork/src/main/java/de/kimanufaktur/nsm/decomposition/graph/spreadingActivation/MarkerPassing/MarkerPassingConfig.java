@@ -50,7 +50,7 @@ public class MarkerPassingConfig implements Cloneable {
     //Termination condition
 
     static int terminationPulsCount = 99;
-    static double doubleActivationLimit = 20;
+    static double doubleActivationLimit = 0.53;
 
 
     //Decomposition parameters
