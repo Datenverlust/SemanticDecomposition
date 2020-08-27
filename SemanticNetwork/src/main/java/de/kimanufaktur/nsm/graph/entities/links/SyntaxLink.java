@@ -9,9 +9,4 @@ package de.kimanufaktur.nsm.graph.entities.links;
 
 import de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing.MarkerPassingConfig;
 
-public class SyntaxLink extends WeightedLink {
-  @Override
-  public double getWeight() {
-    return MarkerPassingConfig.getSyntaxLinkWeight();
-  }
-}
+public class SyntaxLink extends WeightedLink {}

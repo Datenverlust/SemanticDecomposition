@@ -12,10 +12,4 @@ import de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing
 /**
  * Created by faehndrich on 13.08.15.
  */
-public class AntonymLink extends WeightedLink   {
-    @Override
-    public double getWeight() {
-        return MarkerPassingConfig.getAntonymLinkWeight();
-    }
-
-}
+public class AntonymLink extends WeightedLink   {}

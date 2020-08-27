@@ -12,9 +12,4 @@ import de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing
 /**
  * Created by faehndrich on 29.07.15.
  */
-public class SynonymLink extends WeightedLink {
-    @Override
-    public double getWeight() {
-        return MarkerPassingConfig.getSynonymLinkWeight();
-    }
-}
+public class SynonymLink extends WeightedLink {}

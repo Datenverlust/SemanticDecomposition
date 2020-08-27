@@ -12,9 +12,4 @@ import de.kimanufaktur.nsm.decomposition.graph.spreadingActivation.MarkerPassing
 /**
  * Created by faehndrich on 30.07.15.
  */
-public class HyponymLink extends WeightedLink {
-    @Override
-    public double getWeight() {
-        return MarkerPassingConfig.getHyponymLinkWeight();
-    }
-}
+public class HyponymLink extends WeightedLink {}
