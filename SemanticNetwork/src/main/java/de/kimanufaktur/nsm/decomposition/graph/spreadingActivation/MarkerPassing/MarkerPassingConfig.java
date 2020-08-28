@@ -142,7 +142,7 @@ public class MarkerPassingConfig implements Cloneable {
         return threshold;
     }
 
-    public void setThreshold(double threshold) {
+    public static void setThreshold(double threshold) {
         MarkerPassingConfig.threshold = threshold;
     }
 
