@@ -235,7 +235,7 @@ public class DoubleNodeWithMultipleThresholds implements Node {
      */
     public Collection<SpreadingStep> out() {
         Collection<SpreadingStep> spreadingSteps = new ArrayList<>();
-        if (this.activation.keySet().size() > 1) { //if this node have been activated from multiple origins
+//        if (this.activation.keySet().size() > 1) { //if this node have been activated from multiple origins
             //TODO: do something if two activation meet. For now we do nothing... thus the node does not continue firing. We should end up with all activation being in such nodes.
 //            double doubleactivation = 0.0;
 //            double sumOfThresholds = 0.0;
@@ -259,7 +259,7 @@ public class DoubleNodeWithMultipleThresholds implements Node {
 //            }
 //            //}
         //We tryed sparking and this yiels worst results.
-        } else {//this node is activated by only one origin
+//        } else {//this node is activated by only one origin
             for (Concept origin : this.activation.keySet()) {
                 Map<Double, List<Concept>> nodeActivationMap = this.activation.get(origin);
                 Map.Entry<Double, List<Concept>> entry = nodeActivationMap.entrySet().iterator().next();
@@ -278,7 +278,7 @@ public class DoubleNodeWithMultipleThresholds implements Node {
                     }
                 }
             }
-        }
+//        }
         return spreadingSteps;
     }
 
