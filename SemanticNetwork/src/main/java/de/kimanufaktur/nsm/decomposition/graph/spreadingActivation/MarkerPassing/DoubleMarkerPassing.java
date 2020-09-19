@@ -267,8 +267,16 @@ public class DoubleMarkerPassing extends SpreadingAlgorithm {
                         SynonymLink link = new SynonymLink();
                         link.setSource(node);
                         link.setTarget(synNode);
+                        link.setWeight(MarkerPassingConfig.getSynonymLinkWeight());
                         if (!node.getLinks().contains(link)) {
                             node.addLink(link);
+                        }
+                        SynonymLink backLink = new SynonymLink();
+                        backLink.setSource(synNode);
+                        backLink.setSource(node);
+                        backLink.setWeight(MarkerPassingConfig.getSynonymLinkWeight());
+                        if(!synNode.getLinks().contains(backLink)){
+                            synNode.addLink(backLink);
                         }
                     }
                 }
@@ -284,6 +292,7 @@ public class DoubleMarkerPassing extends SpreadingAlgorithm {
                         HyponymLink link = new HyponymLink();
                         link.setSource(node);
                         link.setTarget(hypoNode);
+                        link.setWeight(MarkerPassingConfig.getHyponymLinkWeight());
                         if (!node.getLinks().contains(link)) {
                             node.addLink(link);
                         }
@@ -300,6 +309,7 @@ public class DoubleMarkerPassing extends SpreadingAlgorithm {
                         HypernymLink link = new HypernymLink();
                         link.setSource(node);
                         link.setTarget(hyperNode);
+                        link.setWeight(MarkerPassingConfig.getHypernymLinkWeight());
                         if (!node.getLinks().contains(link)) {
                             node.addLink(link);
                         }
@@ -317,6 +327,7 @@ public class DoubleMarkerPassing extends SpreadingAlgorithm {
                             DefinitionLink link = new DefinitionLink();
                             link.setSource(node);
                             link.setTarget(defnode);
+                            link.setWeight(MarkerPassingConfig.getDefinitionLinkWeight());
                             if (!defnode.getLinks().contains(link)) {
                                 node.addLink(link);
                             }
@@ -333,6 +344,7 @@ public class DoubleMarkerPassing extends SpreadingAlgorithm {
                     AntonymLink link = new AntonymLink();
                     link.setSource(node);
                     link.setTarget(antoNode);
+                    link.setWeight(MarkerPassingConfig.getAntonymLinkWeight());
                     if (!node.getLinks().contains(link)) {
                         node.addLink(link);
                     }
@@ -347,6 +359,7 @@ public class DoubleMarkerPassing extends SpreadingAlgorithm {
                     ArbitraryRelationLink link = new ArbitraryRelationLink();
                     link.setSource(node);
                     link.setTarget(relatedNode);
+                    link.setWeight(MarkerPassingConfig.getDefaultArbitraryRelationLinkWeight());
                     link.setRelationName(arbitraryRelation.getOriginatedRelationName());
                     if (!node.getLinks().contains(link)) {
                         node.addLink(link);
