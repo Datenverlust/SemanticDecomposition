@@ -26,18 +26,18 @@ public class MarkerPassingConfig implements Cloneable {
     //Startconfiguration
     static List<Map<Concept, List<Marker>>> startMarker = new ArrayList<Map<Concept, List<Marker>>>();
     static Map<Concept, Double> conceptualThreshold = new HashMap<>(2);
-    static double startActivation = 1;
-    static double threshold = 0.32;
+    static double startActivation = 1.0;
+    static double threshold = -2.0;
     static double negativeThreshold= -0.32;
 
 
     //Link Weights maximuls for the learning
-    static double DefinitionLinkWeight = -0.78;
-    static double synonymLinkWeight = 0.62;
-    static double antonymLinkWeight = -0.9;
-    static double hypernymLinkWeight = -0.02;
-    static double hyponymLinkWeight = 0.79;
-    static double meronymLinkWeight = 0.79;
+    static double DefinitionLinkWeight = 1;
+    static double synonymLinkWeight = 1;
+    static double antonymLinkWeight = 1;
+    static double hypernymLinkWeight = 1;
+    static double hyponymLinkWeight = 1;
+    static double meronymLinkWeight = 1;
     static double defaultArbitraryRelationLinkWeight = 1;
     static HashMap<String, Double> arbitraryRelationWeights;
     static double syntaxLinkWeight = 0.5;
@@ -49,12 +49,12 @@ public class MarkerPassingConfig implements Cloneable {
     static int pathlength = 0;
     //Termination condition
 
-    static int terminationPulsCount = 99;
-    static double doubleActivationLimit = 0.53;
+    static int terminationPulsCount = 10;
+    static double doubleActivationLimit = 1_000_000.0;
 
 
     //Decomposition parameters
-    static int decompositionDepth = 1;
+    static int decompositionDepth = 2;
     static WordType wordType = WordType.UNKNOWN;
     static boolean writeObjectGraphs = false;
     static boolean writeGraphMLGraphs = false;
