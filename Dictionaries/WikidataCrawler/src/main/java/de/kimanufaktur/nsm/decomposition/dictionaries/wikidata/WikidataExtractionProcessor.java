@@ -8,7 +8,12 @@
 package de.kimanufaktur.nsm.decomposition.dictionaries.wikidata;
 
 import com.opencsv.CSVReader;
-import org.neo4j.driver.v1.*;
+import org.neo4j.driver.v1.AuthTokens;
+import org.neo4j.driver.v1.Driver;
+import org.neo4j.driver.v1.GraphDatabase;
+import org.neo4j.driver.v1.Record;
+import org.neo4j.driver.v1.Session;
+import org.neo4j.driver.v1.StatementResult;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class WikidataExtractionProcessor {
     private static WikidataExtractionProcessor sharedInstance;
-    private Driver driver;
+    private        Driver                      driver;
 
     private HashMap<String, Long> propertyNodeIds;
     private HashMap<String, String> wdidMappings;
@@ -49,7 +54,7 @@ public class WikidataExtractionProcessor {
     public List<Record> query(Session session, String query, Object... parameters) {
         query = String.format(query, parameters);
 
-        StatementResult result =  session.run(query);
+        StatementResult result =  session.run( query);
 
         List<Record> retval = new ArrayList<>();
         while (result.hasNext()) {
