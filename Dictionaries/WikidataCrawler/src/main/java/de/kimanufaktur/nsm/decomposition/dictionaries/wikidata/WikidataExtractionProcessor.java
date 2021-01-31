@@ -9,6 +9,7 @@ package de.kimanufaktur.nsm.decomposition.dictionaries.wikidata;
 
 import com.opencsv.CSVReader;
 import org.neo4j.driver.v1.*;
+import org.neo4j.driver.v1.Record;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
