@@ -147,6 +147,7 @@
         <module>Dictionaries</module>
         <module>ToOWLConverterApi</module>
         <module>SemanticNetworkToOWLConverter</module>
+        <module>Persistency</module>
         <!--<module>OWLConflictSolver</module>-->
     </modules>
 
