@@ -37,7 +37,7 @@
           OPTIONAL, defaults to java.lang.Object
             The FQCN of the type of values V we'll use with the Cache<K, V>
         -->
-        <ehcache:value-type copier="org.ehcache.impl.copy.SerializingCopier">de.dailab.nsm.decomposition.Concept</ehcache:value-type>
+        <ehcache:value-type copier="org.ehcache.impl.copy.SerializingCopier">de.kimanufaktur.nsm.decomposition.Concept</ehcache:value-type>
 
         <!--
           OPTIONAL, defaults to no expiry
