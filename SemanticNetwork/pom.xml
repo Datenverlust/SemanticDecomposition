@@ -49,9 +49,9 @@
           <version>3.3</version>
       </dependency>
       <dependency>
-          <groupId>de.kimanufaktur</groupId>
-          <artifactId>markerpassing</artifactId>
-          <version>0.0.1-SNAPSHOT</version>
+          <groupId>de.kimanufaktur.markerpassing</groupId>
+          <artifactId>markerpassingalgorithm</artifactId>
+          <version>0.0.4-SNAPSHOT</version>
       </dependency>
       <dependency>
           <groupId>de.kimanufaktur.nsm.Decomposition</groupId>
