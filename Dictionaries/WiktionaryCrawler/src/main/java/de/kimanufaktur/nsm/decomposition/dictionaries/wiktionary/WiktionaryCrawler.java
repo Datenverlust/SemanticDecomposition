@@ -287,7 +287,7 @@ public class WiktionaryCrawler {
                 File dumpFile = new File(path2DBLocation + File.separator + dictDumpFileName);
                 if( !dumpFile.exists() ){
                     //if we never downloaded the archive do so now
-                    DictUtil.downloadFileParalell(source + dictFileName+".bz2", path2DBLocation + File.separator + dictFileName);
+                    DictUtil.downloadFileParalell(source + dictFileName, path2DBLocation + File.separator + dictFileName);
                 }
                 //parse the extracted archives dump file and create a databasae from it
                 initDictDBfromDumpFile();
