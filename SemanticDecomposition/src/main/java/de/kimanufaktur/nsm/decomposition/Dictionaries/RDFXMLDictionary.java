@@ -198,6 +198,25 @@ public class RDFXMLDictionary extends BaseDictionary {
         word.getHyponyms().addAll(this.getHyponyms(word));
         word.getMeronyms().addAll(this.getMeronyms(word));
 
+        //This word (or concept) may be a value of an owl annotation property
+        //in this case we add the property name as hypernym to refelct
+        //that this concept relates to a certain annotation property.
+        //For example "Ø" is_a "annotation:symbol"
+        //Furthermore iff this concept is a annotation value, we add the
+        //entity which is annotated by this concepts annotation as meronym thus
+        //we interprete this concept as a part of a detailed description of
+        // another thing.
+
+        String[] fields = new String[]{Fields.ANNOTATION_VALUE};
+        List<org.apache.lucene.document.Document> docs = _crawler.find(fields,word.getLitheral());
+        for(org.apache.lucene.document.Document d: docs){
+            String annotationName = d.get(Fields.ENTITY_NAME);
+            String annotatedEntity = _crawler.getEntityNameForIRI(d.get(Fields.ANNOTATED_ENTITY_IRI));
+            word.getHypernyms().add(getConcept(annotationName));
+            word.getMeronyms().add(getConcept(annotatedEntity));
+        }
+
+
         //i don't get the following part. what shall be accomplished here?
 //        List<String> entities = _crawler.findIRIs(word.getLitheral());
 //        if (entities == null) {
