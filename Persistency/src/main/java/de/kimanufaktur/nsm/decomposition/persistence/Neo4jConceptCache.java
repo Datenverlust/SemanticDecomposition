@@ -1,4 +1,4 @@
-///*
+package de.kimanufaktur.nsm.decomposition.persistence;///*
 // * Copyright (C) Johannes Fähndrich - All Rights Reserved.
 // * Unauthorized copying of this file, via any medium is strictly
 // * prohibited Proprietary and confidential.
@@ -10,17 +10,15 @@
 //import de.kimanufaktur.nsm.decomposition.Concept;
 //import org.neo4j.graphdb.GraphDatabaseService;
 //import org.neo4j.ogm.drivers.embedded.driver.EmbeddedDriver;
-////import org.neo4j.ogm.service.Components;
+//import org.neo4j.ogm.service.Components;
 //import org.neo4j.ogm.session.Session;
-//import org.neo4j.
+//
 //import java.io.File;
 //import java.util.ArrayList;
 //
 ///**
 // * Created by faehndrich on 21.03.16.
 // */
-//
-////borchert: TODO: Dependencies are broken beyond repair xD I ignore this class for the moment
 ////@SpringBootApplication
 //public class Neo4jConceptCache {
 //    static String dBPath = System.getProperty("user.home") + File.separator + ".decomposition" + File.separator + "ConceptCache";

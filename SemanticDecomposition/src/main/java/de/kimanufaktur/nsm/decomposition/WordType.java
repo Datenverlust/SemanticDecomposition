@@ -9,8 +9,6 @@ package de.kimanufaktur.nsm.decomposition;
 
 //import org.neo4j.ogm.annotation.NodeEntity;
 
-import org.neo4j.ogm.annotation.NodeEntity;
-
 import java.io.Serializable;
 
 /**
@@ -52,7 +50,7 @@ import java.io.Serializable;
  WP$ Possessive wh­pronoun
  WRB Wh­adverb
  */
-@NodeEntity
+//@NodeEntity
 public enum WordType implements Serializable{
     //NOUN, VERB, ADJECTIVE, ADVERB, PARTICLE, PROPOSITION, UNKNOWN;
     JJ {

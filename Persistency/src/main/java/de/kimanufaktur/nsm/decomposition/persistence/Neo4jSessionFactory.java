@@ -1,4 +1,4 @@
-///*
+package de.kimanufaktur.nsm.decomposition.persistence;///*
 // * Copyright (C) Johannes Fähndrich - All Rights Reserved.
 // * Unauthorized copying of this file, via any medium is strictly
 // * prohibited Proprietary and confidential.
@@ -17,8 +17,6 @@
 ///**
 // * Created by faehndrich on 21.03.16.
 // */
-//
-////borchert: TODO: dependencies for neo4j broken beyond repair. Ignoring this class for the moment
 //public class Neo4jSessionFactory {
 //
 //    private static Neo4jSessionFactory factory = new Neo4jSessionFactory();
