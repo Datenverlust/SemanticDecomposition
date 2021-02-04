@@ -38,7 +38,7 @@ public class MainFrame extends JFrame implements WindowListener{
 
     public MainFrame(Config cfg){
         super();
-        setTitle("SeMa² Config Editor");
+        setTitle("Semantic Decomposition Config Editor");
         //data view
         _tableControl = new TableControler(cfg);
         _tableView = new JTable(_tableControl);
