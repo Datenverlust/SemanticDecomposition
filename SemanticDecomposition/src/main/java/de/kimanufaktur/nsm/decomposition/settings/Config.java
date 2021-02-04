@@ -39,10 +39,10 @@ public class Config {
     public static final String WIKTIONARY_DB_BASE_PATH = DEFAULT_PROPERTY_DIRECTORY + File.separator + "wiktionary";
     public static final String WIKTIONARY_DB_PATH_EN = WIKTIONARY_DB_BASE_PATH;
     public static final String WIKTIONARY_DB_PATH_GER = WIKTIONARY_DB_BASE_PATH + File.separator + "de";
-    public static final String WIKTIONARY_DB_EN_ARCHIVE_FILE_NAME = "enwiktionary-latest-pages-meta-current.xml.bz2";
-    public static final String WIKTIONARY_DB_GER_ARCHIVE_FILE_NAME = "dewiktionary-latest-pages-meta-current.xml.bz2";
+    public static final String WIKTIONARY_DB_EN_ARCHIVE_FILE_NAME = "enwiktionary/latest/enwiktionary-latest-pages-meta-current.xml.bz2";
+    public static final String WIKTIONARY_DB_GER_ARCHIVE_FILE_NAME = "dewiktionary/latest/dewiktionary-latest-pages-meta-current.xml.bz2";
     //public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "http://kimanufaktur.de/Dictionaries/Wiktionary/";
-    public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "https://dumps.wikimedia.org/dewiktionary/latest/";
+    public static final String WIKTIONARY_DB_ARCHIVE_SOURCE_URI = "https://dumps.wikimedia.org/";
     /**
      * Property keys
      */

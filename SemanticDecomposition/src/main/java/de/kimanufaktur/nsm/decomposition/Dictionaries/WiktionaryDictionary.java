@@ -98,7 +98,12 @@ public class WiktionaryDictionary extends BaseDictionary {
 
                 //this.language = Language.ENGLISH;
                 //default constructor initilaizes english based crawler
-                this.wiktionaryCrawler = new WiktionaryCrawler();
+                //this.wiktionaryCrawler = new WiktionaryCrawler();
+                String path2DB = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_PATH_EN_KEY);
+                String archiveName = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_EN_ARCHIVE_KEY);
+                String sourceURI = Config.getInstance().getUserProps().getProperty(Config.WIKTIONARY_DB_ARCHIVE_SOURCE_URI_KEY);
+                //System.out.println("Init Wiktionary: DB Path:  " + path2DB +", "+ "Archive Path" + archiveName + " Source Path" + sourceURI);
+                this.wiktionaryCrawler = new WiktionaryCrawler(path2DB, archiveName, sourceURI);
             }
 
             this.wiktionaryCrawler.init();
