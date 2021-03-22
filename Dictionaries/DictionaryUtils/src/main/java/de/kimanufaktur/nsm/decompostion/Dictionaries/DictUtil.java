@@ -158,10 +158,10 @@ public class DictUtil {
      * @param source      an path (URL) to geht the file form
      * @param destination a path to where the file should be writen.
      */
-    public static void downloadFileParalell(String source, String destination) {
-        ProgressBar bar = new ProgressBar();
+    public static void downloadFileParalell(final String source, final String destination) {
+        final ProgressBar bar = new ProgressBar();
         System.out.println("Starting download of: " + source);
-        ExecutorService executor = Executors.newCachedThreadPool();
+        final ExecutorService executor = Executors.newCachedThreadPool();
         Runnable updatethread = new Runnable() {
             public void run() {
                 try {

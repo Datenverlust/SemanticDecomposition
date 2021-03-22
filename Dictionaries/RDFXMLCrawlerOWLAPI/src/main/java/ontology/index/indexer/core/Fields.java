@@ -21,6 +21,7 @@ public class Fields {
     public static final String PROPERTY_DOMAIN = "propertyDomain";
     public static final String PROPERTY_RANGE = "propertyRange";
     public static final String ANNOTATION_VALUE = "annotationValue";
+    public static final String ANNOTATED_ENTITY_IRI = "annotatedEntityIRI";
 
 
 }
