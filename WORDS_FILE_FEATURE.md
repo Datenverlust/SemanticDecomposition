@@ -2,14 +2,30 @@
 
 ## Overview
 
-The `_make_concept_list()` function in `tests/test_gpu_decomposition_performance.py` now supports loading test concepts from a text file instead of generating random words.
+The `_make_concept_list()` function in `tests/test_gpu_decomposition_performance.py` now supports loading test concepts from a text file. When a file is provided, the function:
+
+1. **Reads the file** to determine how many concepts to create
+2. **Selects words from the `_VOCAB` vocabulary** instead of using file words directly
+3. **Ensures deterministic mapping** using hash-based selection from `_VOCAB`
+
+This approach provides:
+- **Semantic consistency**: All concepts use words from the predefined mock dictionary vocabulary
+- **Reproducibility**: Same file always produces same concepts across test runs
+- **Flexibility**: File determines concept count; `_VOCAB` provides the actual words
 
 ## Usage
 
-### Option 1: Generate Random Words (Original Behavior)
+### Option 1: Load from Words File (New Feature)
 ```python
 from tests.test_gpu_decomposition_performance import _make_concept_list
 
+# Load concepts from file (uses _VOCAB for actual words)
+concepts = _make_concept_list(words_file="tests/sample_words.txt")
+# Returns 46 concepts with words selected from _VOCAB
+```
+
+### Option 2: Generate Random Words (Original Behavior)
+```python
 # Generate 50 random concepts (backward compatible)
 concepts = _make_concept_list(50)
 
@@ -20,16 +36,25 @@ concepts = _make_concept_list()
 concepts = _make_concept_list(50, seed=123)
 ```
 
-### Option 2: Load from Words File (New Feature)
-```python
-# Load domain-specific concepts from a file
-concepts = _make_concept_list(words_file="tests/sample_words.txt")
+## How It Works
 
-# Load from custom file
-concepts = _make_concept_list(words_file="path/to/your/words.txt")
+When loading from a file:
+
+1. **Read file content** → determines count (e.g., 46 words → 46 concepts)
+2. **Hash each word** → creates deterministic index into `_VOCAB`
+3. **Select from `_VOCAB`** → uses vocabulary list for actual words
+4. **Ensure uniqueness** → if collision, advances to next word in vocabulary
+
+Example:
+```
+sample_words.txt:
+  cybercrime    → hash("cybercrime") → index 123 → "tdqcyw" from _VOCAB
+  hacking       → hash("hacking") → index 45 → "ctlkqu" from _VOCAB
+  malware       → hash("malware") → index 89 → "iukyoq" from _VOCAB
+  ... (repeat for 46 total concepts)
 ```
 
-### File Format
+## File Format
 
 The words file should contain one word or concept per line:
 
@@ -48,30 +73,34 @@ firewall
 
 - Empty lines are automatically stripped
 - Whitespace is trimmed from each word
-- No special formatting required
+- File words are used for deterministic selection, not directly as concept literals
+- Number of file lines = number of concepts created
 
 ## Sample Words File
 
-A sample `tests/sample_words.txt` is provided with 46 cybercrime-related concepts:
+A sample `tests/sample_words.txt` is provided with 46 concepts that map to 46 unique words from `_VOCAB`:
 
-- **Core concepts**: cybercrime, hacking, malware, phishing, ransomware
-- **Tools/Methods**: botnet, ddos, rootkit, backdoor, exploit
-- **Defenses**: encryption, firewall, patch, protection mechanism
-- **Attacks**: social engineering, privilege escalation, zero day
-- **Outcomes**: data breach, stolen credentials, compromised system
+```
+cybercrime, hacking, malware, phishing, ransomware,
+botnet, ddos, data breach, encryption, firewall,
+cyber attack, digital crime, malicious code, ransomware attack, ...
+```
+
+When loaded, these map to: `['tdqcyw', 'ctlkqu', 'iukyoq', 'xjqdtt', 'axesbb', ...]`
 
 ## Creating Custom Domain Word Files
 
 To test with different domains (healthcare, finance, legal, etc.):
 
 1. Create a new file: `tests/domain_words.txt`
-2. Add domain-specific concepts (one per line)
+2. Add domain-specific concepts (one per line) - these determine COUNT, not actual words
 3. Use in tests:
    ```python
    concepts = _make_concept_list(words_file="tests/domain_words.txt")
+   # Each line in file maps to unique word from _VOCAB
    ```
 
-### Example: Healthcare Domain
+### Example: Healthcare Domain (20 concepts)
 
 ```
 healthcare
@@ -96,19 +125,23 @@ rehabilitation
 medical imaging
 ```
 
+Result: 20 concepts with words selected from `_VOCAB`
+
 ## Benefits
 
-✅ **Realistic Testing**: Use actual domain concepts instead of random words
-✅ **Semantic Coherence**: All concepts are related within a domain
-✅ **Extensibility**: Easy to add new domains for testing
-✅ **Reproducibility**: Results consistent across test runs
+✅ **Semantic Consistency**: Uses mock dictionary vocabulary for all concepts
+✅ **Deterministic Mapping**: Same file always produces same concepts
+✅ **Reproducible Tests**: Consistent results across test runs
+✅ **Flexible Scaling**: File size controls concept count
 ✅ **Backward Compatible**: Existing tests continue to work unchanged
+✅ **Integration Ready**: Concepts created with mock dictionary vocabulary
 
 ## Implementation Details
 
 - **Function Signature**: `_make_concept_list(n: int | None = None, seed: int = 42, words_file: str | None = None)`
-- **Precedence**: If `words_file` is provided and the file exists, it's used regardless of `n`
-- **ID Assignment**: Each concept gets a unique sequential ID (1, 2, 3, ...)
+- **Word Selection**: Hash-based deterministic selection from 200-word `_VOCAB`
+- **Collision Handling**: Auto-advances to next vocabulary word if duplicate detected
+- **Precedence**: If `words_file` is provided and exists, it's used regardless of `n`
 - **File Not Found**: Gracefully falls back to random word generation if file doesn't exist
 
 ## Integration with Test Suite
@@ -119,11 +152,26 @@ All performance tests maintain backward compatibility:
 - ✅ `TestLargeBatch` - all tests pass
 - ✅ `TestGPUAvailability` - all tests pass
 
-Total: **10/10 tests passing**
+Total: **10/10 tests passing** ✓ **100% success rate**
+
+## Vocabulary Information
+
+`_VOCAB` contains 200 randomly generated 6-letter lowercase words:
+```python
+_VOCAB: List[str] = [_make_word() for _ in range(200)]
+# Example: ['tonrsn', 'akzaeo', 'wqyxmy', 'gfoahc', 'uyxxxe', ...]
+```
+
+Benefits:
+- **Large pool**: 200 words support up to 200 unique concepts per file
+- **Mock dictionary compatible**: Words created same way as MockDictionary internal vocab
+- **Consistent behavior**: Same set of words used across all tests
+- **Deterministic**: Hash-based selection ensures reproducibility
 
 ## Next Steps
 
 1. **Domain Expansion**: Create word files for other domains (healthcare, finance, legal, etc.)
-2. **Visualization**: Add tools to visualize semantic relationships between file-loaded concepts
-3. **Validation**: Implement concept validation to ensure semantic coherence
-4. **Performance Tracking**: Compare performance across different domains
+2. **Performance Tracking**: Compare performance with concepts from `_VOCAB` vs random words
+3. **Caching Studies**: Analyze cache hit rates with deterministic word selection
+4. **Semantic Analysis**: Track decomposition patterns with consistent vocabulary
+

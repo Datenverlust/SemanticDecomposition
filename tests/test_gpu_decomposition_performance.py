@@ -62,42 +62,61 @@ def _make_concept(word: str, uid: int) -> Concept:
 
 
 def _make_concept_list(n: int | None = None, seed: int = 42, words_file: str | None = None) -> List[Concept]:
-    """Load or generate a list of Concept objects from a words file or random generation.
+    """Load or generate a list of Concept objects using vocabulary from _VOCAB.
     
-    If words_file is provided, reads words from that file (one word per line), ignoring n.
+    If words_file is provided, reads the file to determine count, then selects
+    that many words from the _VOCAB list to create concepts (ensuring semantic
+    consistency with the mock dictionary).
+    
     Otherwise, generates n random words.
     
     Args:
         n: Number of concepts to create (used when words_file is None). Defaults to 20.
         seed: Random seed for reproducibility (used when words_file is None).
-        words_file: Path to a text file with one word per line. If provided, loads from file.
+        words_file: Path to a text file with one word per line. The number of lines
+                   determines how many concepts to create from _VOCAB.
     
     Returns:
-        List of Concept objects with unique IDs and word literals from file or generated.
+        List of Concept objects with unique IDs and word literals from _VOCAB.
     
     Examples:
         # Generate 50 random concepts
         concepts = _make_concept_list(50)
         
-        # Load from file
+        # Load 46 concepts from _VOCAB (file determines count)
         concepts = _make_concept_list(words_file="tests/sample_words.txt")
         
-        # Load from file (preferred parameter order)
-        concepts = _make_concept_list(n=50, words_file="tests/sample_words.txt")
+        # Load from file with explicit seed for reproducibility
+        concepts = _make_concept_list(seed=123, words_file="tests/sample_words.txt")
     """
     # Default n to 20 if not provided
     if n is None:
         n = 20
     
     if words_file and os.path.isfile(words_file):
-        # Load words from file
+        # Read file to determine count of concepts to create
         with open(words_file, 'r', encoding='utf-8') as f:
-            words = [line.strip() for line in f if line.strip()]
+            file_words = [line.strip() for line in f if line.strip()]
         
-        # Create concepts with unique IDs
+        count = len(file_words)
+        
+        # Select words from _VOCAB using hash-based deterministic selection
+        # This ensures reproducibility while distributed across vocabulary
         concepts = []
-        for uid, word in enumerate(words, start=1):
-            concepts.append(_make_concept(word, uid))
+        seen: set = set()
+        for i, file_word in enumerate(file_words, start=1):
+            # Use file word content to deterministically select from _VOCAB
+            idx = hash(file_word) % len(_VOCAB)
+            vocab_word = _VOCAB[idx]
+            
+            # Ensure uniqueness by checking for duplicates
+            while vocab_word in seen:
+                idx = (idx + 1) % len(_VOCAB)
+                vocab_word = _VOCAB[idx]
+            
+            seen.add(vocab_word)
+            concepts.append(_make_concept(vocab_word, i))
+        
         return concepts
     else:
         # Generate random words as fallback
