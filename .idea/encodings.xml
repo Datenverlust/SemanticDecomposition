@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/CorpusLinguisticStatistics" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/CorpusLinguisticStatistics/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/CorpusLinguisticStatistics/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/DictionaryUtils" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/DictionaryUtils/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/DictionaryUtils/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/MonolingualDictionaries" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/MonolingualDictionaries/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/MonolingualDictionaries/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/RDFXMLCrawler" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/RDFXMLCrawler/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/RDFXMLCrawler/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/RDFXMLCrawlerOWLAPI" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/RDFXMLCrawlerOWLAPI-3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/RDFXMLCrawlerOWLAPI/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/RDFXMLCrawlerOWLAPI/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/WikidataCrawler" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/WikidataCrawler/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/WikidataCrawler/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/WiktionaryCrawler" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/WiktionaryCrawler/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/WiktionaryCrawler/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/WordNetCrawler" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/WordNetCrawler/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/WordNetCrawler/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dictionaries/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OWLConflictSolver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OWLConflictSolver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OWLConflictSolver/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Persistency/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Persistency/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticDecomposition" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticDecomposition/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticDecomposition/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticDistanceMeasureAPI" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticDistanceMeasureAPI/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticDistanceMeasureAPI/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticNetwork" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticNetwork/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticNetwork/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticNetworkToOWLConverter" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticNetworkToOWLConverter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemanticNetworkToOWLConverter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ToOWLConverterApi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ToOWLConverterApi/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ToOWLConverterApi/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

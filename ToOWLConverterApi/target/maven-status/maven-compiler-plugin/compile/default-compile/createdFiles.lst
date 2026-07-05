@@ -1,0 +1,8 @@
+de/kimanufaktur/nsm/decomposition/owlConverter/model/OWLRelationType.class
+de/kimanufaktur/nsm/decomposition/owlConverter/model/OWLProperty.class
+de/kimanufaktur/nsm/decomposition/owlConverter/model/OWLRelation.class
+de/kimanufaktur/nsm/decomposition/owlConverter/util/OWLNamespace.class
+de/kimanufaktur/nsm/decomposition/owlConverter/Parser.class
+de/kimanufaktur/nsm/decomposition/owlConverter/model/OWLConcept.class
+de/kimanufaktur/nsm/decomposition/owlConverter/model/OWLNamedEntity.class
+de/kimanufaktur/nsm/decomposition/owlConverter/AbstractOWLOntologyFactory.class
