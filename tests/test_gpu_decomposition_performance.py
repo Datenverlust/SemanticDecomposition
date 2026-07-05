@@ -10,6 +10,7 @@ reproducible without any external language resources.
 """
 from __future__ import annotations
 
+import pathlib
 import random
 import string
 import time
@@ -73,6 +74,19 @@ def _make_concept_list(n: int, seed: int = 42) -> List[Concept]:
             concepts.append(_make_concept(word, uid))
             uid += 1
     return concepts
+
+
+_CONCEPTS_FILE = pathlib.Path(__file__).parent / "cybersecurity_concepts.txt"
+
+
+def _load_cybersecurity_concepts() -> List[Concept]:
+    """Load the cybersecurity concept list from the companion text file."""
+    terms = [
+        line.strip()
+        for line in _CONCEPTS_FILE.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    return [_make_concept(term, uid) for uid, term in enumerate(terms, start=1)]
 
 
 def _reset_cache() -> None:
@@ -344,3 +358,61 @@ class TestGPUAvailability:
         id_tensor = torch.tensor([c.id for c in concepts], dtype=torch.int64)
         assert id_tensor.shape[0] == 10
         assert id_tensor.dtype == torch.int64
+
+
+# ---------------------------------------------------------------------------
+# Cybersecurity domain concepts
+# ---------------------------------------------------------------------------
+
+class TestCybersecurityConcepts:
+    """Decompose the real-world cybersecurity concept list from
+    ``tests/cybersecurity_concepts.txt`` and compare CPU vs GPU paths."""
+
+    @pytest.fixture(autouse=True)
+    def _concepts(self):
+        self.concepts = _load_cybersecurity_concepts()
+
+    def test_concepts_file_loaded(self):
+        """Sanity check: the companion file must contain at least one concept."""
+        assert len(self.concepts) > 0, "cybersecurity_concepts.txt is empty or missing"
+
+    def test_cpu_sequential_all_concepts(self):
+        _reset_cache()
+        results = [Decomposition.decompose(c) for c in self.concepts]
+        assert len(results) == len(self.concepts)
+        for r in results:
+            assert isinstance(r, Concept)
+
+    def test_cpu_multithreaded_all_concepts(self):
+        _reset_cache()
+        results = Decomposition.multi_threaded_decompose(self.concepts)
+        assert len(results) == len(self.concepts)
+
+    def test_gpu_batch_all_concepts(self):
+        _reset_cache()
+        results, _ = GPUDecomposition.batch_decompose(self.concepts)
+        assert len(results) == len(self.concepts)
+
+    def test_performance_report(self, capsys):
+        """Print a side-by-side timing report for the full cybersecurity list."""
+        n = len(self.concepts)
+
+        seq_time = _run_cpu_sequential(self.concepts)
+        mt_time = _run_cpu_multithreaded(self.concepts)
+        gpu_time = _run_gpu_batch(self.concepts)
+
+        with capsys.disabled():
+            print(
+                f"\n{'=' * 60}\n"
+                f"  Cybersecurity concepts ({n} terms)\n"
+                f"  CPU sequential      : {seq_time:>7.3f} s\n"
+                f"  CPU multi-threaded  : {mt_time:>7.3f} s\n"
+                f"  GPU ({_GPU_LABEL:<18}): {gpu_time:>7.3f} s\n"
+                f"  MT  speedup vs seq  : {seq_time / mt_time:>7.2f}x\n"
+                f"  GPU speedup vs seq  : {seq_time / gpu_time:>7.2f}x\n"
+                f"{'=' * 60}"
+            )
+
+        assert mt_time < seq_time, (
+            f"Multi-threaded ({mt_time:.3f}s) should be faster than sequential ({seq_time:.3f}s)"
+        )
