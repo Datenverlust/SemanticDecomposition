@@ -1,0 +1,3 @@
+from .dictionary_does_not_contain_concept_exception import DictionaryDoesNotContainConceptException
+
+__all__ = ["DictionaryDoesNotContainConceptException"]
