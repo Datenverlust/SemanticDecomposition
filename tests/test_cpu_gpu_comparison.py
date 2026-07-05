@@ -50,30 +50,66 @@ except ImportError:
 
 
 class MockDictionary(Dictionary):
-    """Simple in-memory dictionary for testing without external dependencies."""
+    """Simple in-memory dictionary for testing without external dependencies.
+    
+    Uses semantically related English concepts from the Cybercrime domain
+    to demonstrate realistic semantic decomposition.
+    """
 
     def __init__(self):
-        """Initialize mock dictionary with sample data."""
+        """Initialize mock dictionary with Cybercrime domain concepts."""
+        # Domain: Cybercrime and related security concepts
+        # These are real English concepts related to cybercriminal activities
         self.word_data = {
-            "computer": {
-                "synonyms": ["machine", "system"],
-                "definitions": [["electronic", "device"]],
+            "cybercrime": {
+                "synonyms": ["cyber attack", "hacking", "digital crime"],
+                "definitions": [["criminal", "activity", "using", "computers"]],
+                "hypernyms": ["crime", "illegal activity"],
             },
-            "algorithm": {
-                "synonyms": ["procedure", "method"],
-                "definitions": [["step", "by", "step", "process"]],
+            "hacking": {
+                "synonyms": ["unauthorized access", "intrusion"],
+                "definitions": [["unauthorized", "access", "to", "computer", "systems"]],
+                "hypernyms": ["cybercrime", "illegal activity"],
             },
-            "network": {
-                "synonyms": ["system", "web"],
-                "definitions": [["connected", "nodes"]],
+            "malware": {
+                "synonyms": ["virus", "trojan", "spyware"],
+                "definitions": [["malicious", "software", "designed", "to", "harm"]],
+                "hypernyms": ["malicious code", "cybercrime tool"],
             },
-            "data": {
-                "synonyms": ["information", "facts"],
-                "definitions": [["collection", "of", "facts"]],
+            "phishing": {
+                "synonyms": ["social engineering", "fraud"],
+                "definitions": [["deceptive", "attempt", "to", "obtain", "credentials"]],
+                "hypernyms": ["cybercrime", "fraud"],
             },
-            "processing": {
-                "synonyms": ["handling", "execution"],
-                "definitions": [["applying", "operations"]],
+            "ransomware": {
+                "synonyms": ["encryption malware", "extortion malware"],
+                "definitions": [["malware", "that", "encrypts", "files", "for", "ransom"]],
+                "hypernyms": ["malware", "extortion"],
+            },
+            "botnet": {
+                "synonyms": ["zombie network", "bot army"],
+                "definitions": [["network", "of", "compromised", "computers"]],
+                "hypernyms": ["malware infrastructure", "distributed attack"],
+            },
+            "ddos": {
+                "synonyms": ["denial of service", "network attack"],
+                "definitions": [["overwhelming", "server", "with", "traffic"]],
+                "hypernyms": ["cyber attack", "network attack"],
+            },
+            "data breach": {
+                "synonyms": ["unauthorized access", "data theft"],
+                "definitions": [["unauthorized", "exposure", "of", "sensitive", "data"]],
+                "hypernyms": ["cybercrime", "security incident"],
+            },
+            "encryption": {
+                "synonyms": ["cryptography", "encoding"],
+                "definitions": [["conversion", "of", "data", "using", "cipher"]],
+                "hypernyms": ["security mechanism", "cryptographic method"],
+            },
+            "firewall": {
+                "synonyms": ["security gateway", "packet filter"],
+                "definitions": [["system", "that", "monitors", "network", "traffic"]],
+                "hypernyms": ["security tool", "network defense"],
             },
         }
 
@@ -117,7 +153,15 @@ class MockDictionary(Dictionary):
         return []
 
     def get_hypernyms(self, word: str) -> List[Concept]:
-        """Get hypernyms."""
+        """Get hypernyms (more general concepts)."""
+        word_lower = word.lower()
+        if word_lower in self.word_data:
+            results = []
+            for hyp in self.word_data[word_lower].get("hypernyms", []):
+                h = Concept()
+                h.litheral = hyp
+                results.append(h)
+            return results
         return []
 
     def get_hyponyms(self, word: str) -> List[Concept]:
@@ -178,6 +222,9 @@ class MockDictionary(Dictionary):
 
 def create_test_concepts(count: int) -> List[Concept]:
     """Create test concepts for comparison.
+    
+    Uses semantically related English concepts from the Cybercrime domain
+    to demonstrate realistic semantic decomposition rather than arbitrary words.
 
     Parameters
     ----------
@@ -187,21 +234,29 @@ def create_test_concepts(count: int) -> List[Concept]:
     Returns
     -------
     list[Concept]
-        List of test concepts.
+        List of cybercrime-related test concepts.
     """
-    words = [
-        "computer",
-        "algorithm",
-        "network",
-        "data",
-        "processing",
+    # Domain-specific cybercrime and security concepts
+    # These are real English concepts related to cybercriminal activities
+    concepts_domain = [
+        "cybercrime",      # Primary domain concept
+        "hacking",         # Method
+        "malware",         # Tool/Threat
+        "phishing",        # Attack type
+        "ransomware",      # Malware type
+        "botnet",          # Infrastructure
+        "ddos",            # Attack method
+        "data breach",     # Consequence/Crime
+        "encryption",      # Defense mechanism
+        "firewall",        # Security tool
     ]
 
     concepts = []
     for i in range(count):
         concept = Concept()
         concept.id = i
-        concept.litheral = f"{words[i % len(words)]}_{i // len(words)}"
+        # Use domain concepts cyclically, supporting requests for more concepts than base set
+        concept.litheral = concepts_domain[i % len(concepts_domain)]
         concepts.append(concept)
 
     return concepts
