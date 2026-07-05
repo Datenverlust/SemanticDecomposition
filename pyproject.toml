@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "semantic-decomposition"
+version = "0.1.0"
+description = "Semantic concept graph construction via dictionary decomposition"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "GPL-3.0-or-later" }
+dependencies = [
+    "marker-passing",
+]
+
+[project.optional-dependencies]
+nlp = ["spacy"]
+gpu = ["torch>=2.0"]
+
+[tool.setuptools.packages.find]
+include = ["semantic_decomposition*"]

@@ -23,6 +23,12 @@ class Concept(IConcept):
         self.ner: str = ""
         self.originated_relation_name: str = ""
 
+        # Corpus linguistic statistics
+        self.frequency: int = 0
+        self.relative_frequency: float = 0.0
+        self.confidence: float = 0.0
+        self.pos: Optional[str] = None  # Part-of-speech tag
+
     def __repr__(self) -> str:
         return f"Concept({self.litheral!r})"
 
