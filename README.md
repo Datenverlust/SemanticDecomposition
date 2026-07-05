@@ -24,16 +24,19 @@ operate on these graphs directly.
 
 ## Requirements
 
-| Dependency | Version | Role |
+| Dependency | CPU (`python` branch) | GPU (`python_gpu` branch) |
 |---|---|---|
-| Python | 3.9+ | — |
-| `spacy` *(optional)* | any | Lemmatisation in `BaseDictionary` |
-| spaCy language model | matching your language | Required when using `BaseDictionary` |
+| Python 3.9+ | ✓ | ✓ |
+| `spacy` *(optional)* | lemmatisation | lemmatisation |
+| `torch` (PyTorch ≥ 2.0) | — | ✓ required |
+| CUDA toolkit | — | optional (falls back to CPU tensors) |
+| `MarkerPassingAlgorithm` `python_gpu` branch | — | ✓ required |
 
 ```bash
-pip install spacy
-python -m spacy download en_core_web_sm   # English
-python -m spacy download de_core_news_sm  # German
+# GPU branch only
+pip install torch
+# with CUDA (example for CUDA 12.1):
+pip install torch --index-url https://download.pytorch.org/whl/cu121
 ```
 
 ## Installation
@@ -41,7 +44,7 @@ python -m spacy download de_core_news_sm  # German
 ```bash
 git clone https://github.com/Datenverlust/SemanticDecomposition.git
 cd SemanticDecomposition
-git checkout python
+git checkout python_gpu
 pip install -e .
 
 # SemanticDecomposition depends on MarkerPassingAlgorithm:
@@ -368,6 +371,110 @@ cat = Decomposition.decompose(Decomposition.create_concept("cat", WordType.NN))
 # Second run: fetched from disk — no dictionary call needed
 cat_cached = cache.get(cat.id)
 print(cat_cached.litheral)   # "cat"
+```
+
+---
+
+## GPU acceleration (`python_gpu` branch)
+
+The `python_gpu` branch adds two GPU-native classes that replace the CPU
+spreading-activation loop with **sparse matrix multiplication on the GPU**
+via PyTorch / cuSPARSE.  Graph construction (dictionary lookup, decomposition,
+node/link wiring) still runs on the CPU — only the pulse loop moves to the GPU.
+
+### `GpuDoubleMarkerPassing`
+
+Drop-in replacement for `DoubleMarkerPassing`.  Builds the identical concept
+graph on the CPU, serialises it to a sparse weight matrix, then runs the
+spreading loop as repeated SpMM on the GPU.
+
+```python
+from semantic_decomposition import Decomposition, WordType
+from semantic_decomposition.graph.spreading_activation.marker_passing import (
+    GpuDoubleMarkerPassing,
+)
+
+Decomposition.init([MyDictionary()])
+
+cat = Decomposition.decompose(Decomposition.create_concept("cat", WordType.NN))
+dog = Decomposition.decompose(Decomposition.create_concept("dog", WordType.NN))
+
+algo = GpuDoubleMarkerPassing(device="cuda")   # or "cpu" for testing
+algo.fill_nodes([cat, dog])
+
+# single activation vector — both seeds in one run
+pulses = algo.execute([cat, dog], start_activation=1.0)
+print(f"Converged in {pulses} pulses on {algo.device}")
+
+activations = algo.get_all_activations()   # Dict[Concept, float]
+for concept, act in sorted(activations.items(), key=lambda x: -abs(x[1]))[:5]:
+    print(f"  {concept.litheral}: {act:.4f}")
+```
+
+### `GpuMarkerPassingSemanticDistanceMeasure`
+
+GPU-accelerated semantic similarity.  Each `compare_concepts()` call evaluates
+two seed vectors simultaneously in one `[N × 2]` SpMM per pulse.
+
+```python
+from semantic_decomposition.graph.spreading_activation.marker_passing import (
+    GpuMarkerPassingSemanticDistanceMeasure,
+)
+
+measure = GpuMarkerPassingSemanticDistanceMeasure(device="cuda")
+score = measure.compare_concepts(cat, dog)
+print(f"cat ↔ dog similarity: {score:.4f}")
+```
+
+### Batch evaluation — the primary GPU win
+
+`compare_many()` evaluates an entire dataset in **one GPU call**: all pairs
+are stacked into a single `[N × 2B]` activation matrix and spread simultaneously.
+
+```python
+from semantic_decomposition import Decomposition, WordType
+from semantic_decomposition.graph.spreading_activation.marker_passing import (
+    GpuMarkerPassingSemanticDistanceMeasure,
+)
+
+pairs_words = [("cat", "dog"), ("car", "ship"), ("run", "walk"), ("cold", "hot")]
+
+pairs = [
+    (
+        Decomposition.decompose(Decomposition.create_concept(w1, WordType.NN)),
+        Decomposition.decompose(Decomposition.create_concept(w2, WordType.NN)),
+    )
+    for w1, w2 in pairs_words
+]
+
+measure = GpuMarkerPassingSemanticDistanceMeasure(device="cuda")
+scores = measure.compare_many(pairs)   # single GPU pass for all 4 pairs
+
+for (w1, w2), score in zip(pairs_words, scores):
+    print(f"{w1:10} ↔ {w2:10}  {score:.4f}")
+```
+
+Throughput scales near-linearly with the number of pairs — evaluating all 353
+WordSim-353 pairs costs roughly the same GPU time as evaluating a single pair.
+
+### CPU fallback
+
+Both classes fall back to CPU tensors transparently when CUDA is not available.
+Use `device="cpu"` explicitly to force CPU mode (useful for testing without a GPU):
+
+```python
+algo   = GpuDoubleMarkerPassing(device="cpu")
+measure = GpuMarkerPassingSemanticDistanceMeasure(device="cpu")
+```
+
+### Package location
+
+```
+semantic_decomposition/graph/spreading_activation/marker_passing/
+├── double_marker_passing.py                     # CPU original
+├── marker_passing_semantic_distance_measure.py  # CPU original
+├── gpu_double_marker_passing.py                 # GPU — GpuDoubleMarkerPassing
+└── gpu_marker_passing_semantic_distance_measure.py  # GPU — GpuMarkerPassingSemanticDistanceMeasure
 ```
 
 ---
