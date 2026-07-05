@@ -14,7 +14,7 @@ import os
 import random
 import string
 import time
-from typing import List
+from typing import Dict, List, Set
 
 import pytest
 
@@ -420,34 +420,48 @@ def _decompose_with_depth(concept: Concept, depth: int) -> Concept:
     if depth < 1 or depth > 3:
         raise ValueError(f"Depth must be between 1 and 3, got {depth}")
     
-    # First level: basic decomposition
-    result = Decomposition.decompose(concept)
-    
-    if depth >= 2:
-        # Second level: extend with additional relations
-        if result.synonyms:
-            for synonym in result.synonyms[:1]:  # Decompose first synonym
-                Decomposition.decompose(synonym)
-        if result.hypernyms:
-            for hypernym in result.hypernyms[:1]:  # Decompose first hypernym
-                Decomposition.decompose(hypernym)
-    
-    if depth >= 3:
-        # Third level: full decomposition of all relations
-        if result.synonyms:
-            for synonym in result.synonyms[:2]:  # Decompose first 2 synonyms
-                decomposed = Decomposition.decompose(synonym)
-                if decomposed.synonyms:
-                    for s in decomposed.synonyms[:1]:
-                        Decomposition.decompose(s)
-        if result.hypernyms:
-            for hypernym in result.hypernyms[:2]:  # Decompose first 2 hypernyms
-                decomposed = Decomposition.decompose(hypernym)
-                if decomposed.hypernyms:
-                    for h in decomposed.hypernyms[:1]:
-                        Decomposition.decompose(h)
-    
-    return result
+    return Decomposition.decompose(concept, depth=depth)
+
+
+def _collect_recursive_relation_stats(concept: Concept, depth: int) -> Dict[str, int]:
+    """Collect relation statistics recursively up to ``depth`` levels."""
+    stats = {
+        "synonyms": 0,
+        "hypernyms": 0,
+        "hyponyms": 0,
+        "antonyms": 0,
+        "definitions": 0,
+    }
+
+    seen: Set[int] = set()
+
+    def walk(node: Concept, remaining_depth: int) -> None:
+        if node is None:
+            return
+        if node.id in seen:
+            return
+        seen.add(node.id)
+
+        stats["synonyms"] += len(node.synonyms or [])
+        stats["hypernyms"] += len(node.hypernyms or [])
+        stats["hyponyms"] += len(node.hyponyms or [])
+        stats["antonyms"] += len(node.antonyms or [])
+        stats["definitions"] += len(node.definitions or [])
+
+        if remaining_depth <= 1:
+            return
+
+        for rel in (node.synonyms or []):
+            walk(rel, remaining_depth - 1)
+        for rel in (node.hypernyms or []):
+            walk(rel, remaining_depth - 1)
+        for rel in (node.hyponyms or []):
+            walk(rel, remaining_depth - 1)
+        for rel in (node.antonyms or []):
+            walk(rel, remaining_depth - 1)
+
+    walk(concept, depth)
+    return stats
 
 
 class TestDecompositionDepth:
@@ -515,16 +529,21 @@ class TestDecompositionDepth:
         
         for concept in concepts:
             result = _decompose_with_depth(concept, depth)
-            depth_stats['synonyms'] += len(result.synonyms or [])
-            depth_stats['hypernyms'] += len(result.hypernyms or [])
-            depth_stats['hyponyms'] += len(result.hyponyms or [])
-            depth_stats['antonyms'] += len(result.antonyms or [])
-            depth_stats['definitions'] += len(result.definitions or [])
+            recursive_stats = _collect_recursive_relation_stats(result, depth)
+            for key in depth_stats:
+                depth_stats[key] += recursive_stats[key]
         
         with capsys.disabled():
             print(f"\n[depth {depth}] Relation statistics:")
             for relation, count in depth_stats.items():
                 print(f"   {relation}: {count}")
+
+        if depth > 1:
+            baseline = _collect_recursive_relation_stats(
+                _decompose_with_depth(concepts[0], 1),
+                1,
+            )
+            assert sum(depth_stats.values()) > sum(baseline.values())
 
     @pytest.mark.parametrize("depth,expected_min_relations", [
         (1, 1),   # Depth 1: at least 1 relation type

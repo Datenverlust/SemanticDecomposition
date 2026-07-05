@@ -19,3 +19,6 @@ gpu = ["torch>=2.0"]
 
 [tool.setuptools.packages.find]
 include = ["semantic_decomposition*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
