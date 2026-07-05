@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SemanticDecomposition/SemanticDecomposition.iml" filepath="$PROJECT_DIR$/SemanticDecomposition/SemanticDecomposition.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SemanticNetwork/SemanticNetwork.iml" filepath="$PROJECT_DIR$/SemanticNetwork/SemanticNetwork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SemanticNetworkToOWLConverter/SemanticNetworkToOWLConverter.iml" filepath="$PROJECT_DIR$/SemanticNetworkToOWLConverter/SemanticNetworkToOWLConverter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ToOWLConverterApi/ToOWLConverterApi.iml" filepath="$PROJECT_DIR$/ToOWLConverterApi/ToOWLConverterApi.iml" />
+    </modules>
+  </component>
+</project>

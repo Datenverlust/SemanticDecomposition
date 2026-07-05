@@ -1,0 +1,514 @@
+<?xml version="1.0"?><rdf:RDF xmlns="http://www.dailab.de/ontologies/ontology#2#"
+xml:base="http://www.dailab.de/ontologies/ontology#2"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:owl="http://www.w3.org/2002/07/owl#"
+xmlns:xml="http://www.w3.org/XML/1998/namespace"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+<owl:Ontology rdf:about="http://www.dailab.de/ontologies/ontology#2"/>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel0"></owl:Class> 
+
+<!-- generated cyclic classes -->
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel1">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel0"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel1"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel2">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel1"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel2"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel3">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel2"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel3"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel4">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel3"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel4"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel5">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel4"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel5"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel6">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel5"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel6"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel7">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel6"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel7"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel8">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel7"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel8"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel9">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel8"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel9"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel10">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel9"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel10"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel11">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel10"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel11"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel12">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel11"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel12"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel13">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel12"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel13"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel14">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel13"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel14"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel15">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel14"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel15"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel16">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel15"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel16"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel17">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel16"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel17"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel18">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel17"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel18"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel19">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel18"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel19"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel20">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel19"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel20"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel21">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel20"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel21"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel22">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel21"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel22"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel23">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel22"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel23"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel24">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel23"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel24"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel25">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel24"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel25"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel26">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel25"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel26"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel27">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel26"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel27"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel28">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel27"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel28"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel29">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel28"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel29"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel30">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel29"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel30"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel31">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel30"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel31"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel32">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel31"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel32"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel33">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel32"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel33"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel34">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel33"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel34"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel35">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel34"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel35"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel36">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel35"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel36"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel37">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel36"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel37"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel38">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel37"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel38"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel39">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel38"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel39"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel40">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel39"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel40"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel41">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel40"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel41"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel42">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel41"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel42"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel43">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel42"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel43"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel44">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel43"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel44"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel45">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel44"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel45"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel46">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel45"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel46"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel47">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel46"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel47"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel48">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel47"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel48"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel49">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel48"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel49"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel50">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel49"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel50"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel51">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel50"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel51"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel52">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel51"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel52"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel53">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel52"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel53"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel54">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel53"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel54"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel55">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel54"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel55"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel56">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel55"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel56"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel57">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel56"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel57"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel58">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel57"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel58"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel59">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel58"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel59"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel60">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel59"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel60"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel61">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel60"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel61"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel62">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel61"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel62"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel63">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel62"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel63"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel64">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel63"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel64"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel65">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel64"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel65"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel66">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel65"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel66"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel67">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel66"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel67"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel68">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel67"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel68"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel69">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel68"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel69"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel70">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel69"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel70"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel71">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel70"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel71"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel72">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel71"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel72"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel73">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel72"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel73"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel74">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel73"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel74"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel75">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel74"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel75"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel76">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel75"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel76"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel77">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel76"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel77"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel78">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel77"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel78"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel79">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel78"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel79"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel80">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel79"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel80"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel81">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel80"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel81"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel82">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel81"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel82"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel83">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel82"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel83"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel84">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel83"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel84"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel85">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel84"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel85"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel86">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel85"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel86"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel87">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel86"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel87"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel88">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel87"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel88"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel89">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel88"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel89"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel90">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel89"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel90"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel91">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel90"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel91"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel92">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel91"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel92"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel93">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel92"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel93"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel94">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel93"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel94"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel95">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel94"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel95"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel96">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel95"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel96"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel97">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel96"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel97"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel98">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel97"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel98"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel99">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel98"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel99"/>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel100">
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel99"/>
+<rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel100"/>
+</owl:Class>
+
+</rdf:RDF>

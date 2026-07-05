@@ -1,0 +1,6 @@
+ontology/index/indexer/core/Indexer.class
+de/dailab/nsm/decomposition/dictionaries/rdfxmlcrawler/RDFXMLCrawler.class
+ontology/index/indexer/basic/OntologyIndexer.class
+ontology/index/indexer/core/Fields.class
+ontology/index/indexer/core/Finder.class
+ontology/index/document/factory/owlapi/v5/DocumentFactory.class

@@ -1,0 +1,6 @@
+de/dailab/nsm/owlConflictSolver/impl/rule/ConflictRuleRegistry.class
+de/dailab/nsm/owlConflictSolver/impl/rule/ReflexiveISAConflictRule.class
+de/dailab/nsm/owlConflictSolver/impl/ConflictSolver.class
+de/dailab/nsm/owlConflictSolver/impl/rule/ConflictRule.class
+de/dailab/nsm/owlConflictSolver/util/Messages.class
+de/dailab/nsm/owlConflictSolver/local/OWLOntologyChangeListenerImpl.class

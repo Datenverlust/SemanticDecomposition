@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="SemanticDistanceMeasureAPI" />
+        <module name="SemanticNetwork" />
+        <module name="WordNetCrawler" />
+        <module name="MonolingualDictionaries" />
+        <module name="RDFXMLCrawler" />
+        <module name="RDFXMLCrawlerOWLAPI" />
+        <module name="SemanticNetworkToOWLConverter" />
+        <module name="ToOWLConverterApi" />
+        <module name="DictionaryUtils" />
+        <module name="CorpusLinguisticStatistics" />
+        <module name="WiktionaryCrawler" />
+        <module name="SemanticDecomposition" />
+        <module name="Persistency" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="OWLConflictSolver" target="1.8" />
+      <module name="RDFXMLCrawlerOWLAPI-3" target="1.8" />
+      <module name="WikidataCrawler" target="15" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

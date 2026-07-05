@@ -1,0 +1,6 @@
+de/kimanufaktur/nsm/decomposition/semanticNetworkToOWLConverter/model/SemanticNetworkProperty.class
+de/kimanufaktur/nsm/decomposition/semanticNetworkToOWLConverter/SemanticNetworkParser.class
+de/kimanufaktur/nsm/decomposition/semanticNetworkToOWLConverter/model/SemanticNetworkConcept.class
+de/kimanufaktur/nsm/decomposition/semanticNetworkToOWLConverter/OWLOntologyFactory.class
+de/kimanufaktur/nsm/decomposition/semanticNetworkToOWLConverter/model/SemanticNetworkRelation.class
+de/kimanufaktur/nsm/decomposition/semanticNetworkToOWLConverter/model/SemanticNetworkRelationType.class

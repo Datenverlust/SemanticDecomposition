@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.dailab.de/ontologies/Tierwelt#"
+     xml:base="http://www.dailab.de/ontologies/Tierwelt"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="http://www.dailab.de/ontologies/Tierwelt"/>
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <!-- http://www.w3.org/2001/XMLSchema#integer -->
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#integer"/>
+    
+    <!-- http://www.w3.org/2001/XMLSchema#string -->
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#string"/>
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <!-- http://www.dailab.de/ontologies/relation#ist_groesser -->
+    <owl:ObjectProperty rdf:about="http://www.dailab.de/ontologies/relation#ist_groesser">
+        <rdfs:domain rdf:resource="http://www.dailab.de/ontologies/class#Wirbeltier"/>
+        <rdfs:range rdf:resource="http://www.dailab.de/ontologies/class#Amoebe"/>
+        <owl:propertyDisjointWith rdf:resource="http://www.dailab.de/ontologies/relation#ist_kleiner"/>
+    </owl:ObjectProperty>
+    
+    <!-- http://www.dailab.de/ontologies/relation#ist_kleiner -->
+    <owl:ObjectProperty rdf:about="http://www.dailab.de/ontologies/relation#ist_kleiner">
+        <rdfs:domain rdf:resource="http://www.dailab.de/ontologies/class#Amoebe"/>
+        <rdfs:range rdf:resource="http://www.dailab.de/ontologies/class#Wirbeltier"/>
+    </owl:ObjectProperty>
+    
+    <!-- http://www.dailab.de/ontologies/relation#kann -->
+    <owl:ObjectProperty rdf:about="http://www.dailab.de/ontologies/relation#kann">
+        <rdfs:domain rdf:resource="http://www.dailab.de/ontologies/class#Vogel"/>
+        <rdfs:range rdf:resource="http://www.dailab.de/ontologies/class#fliegen"/>
+        <owl:propertyDisjointWith rdf:resource="http://www.dailab.de/ontologies/relation#kann_nicht"/>
+    </owl:ObjectProperty>
+    
+    <!-- http://www.dailab.de/ontologies/relation#kann_nicht -->
+    <owl:ObjectProperty rdf:about="http://www.dailab.de/ontologies/relation#kann_nicht">
+        <rdfs:domain rdf:resource="http://www.dailab.de/ontologies/class#Pinguin"/>
+        <rdfs:range rdf:resource="http://www.dailab.de/ontologies/class#fliegen"/>
+    </owl:ObjectProperty>
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <!-- http://www.dailab.de/ontologies/Bezeichnung -->
+    <owl:DatatypeProperty rdf:about="http://www.dailab.de/ontologies/Bezeichnung">
+        <rdfs:domain>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.dailab.de/ontologies/Bezeichnung"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+    <!-- http://www.dailab.de/ontologies/Fluegelspannweite -->
+    <owl:DatatypeProperty rdf:about="http://www.dailab.de/ontologies/Fluegelspannweite">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.dailab.de/ontologies/Fluegelspannweite"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </owl:Restriction>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+    <!-- http://www.dailab.de/ontologies/hat -->
+    <owl:DatatypeProperty rdf:about="http://www.dailab.de/ontologies/hat">
+        <rdfs:domain>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.dailab.de/ontologies/hat"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <!-- http://www.dailab.de/ontologies/Class#Saeugetier -->
+    <owl:Class rdf:about="http://www.dailab.de/ontologies/Class#Saeugetier">
+        <rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Wirbeltier"/>
+    </owl:Class>
+    
+    <!-- http://www.dailab.de/ontologies/class#Amoebe -->
+    <owl:Class rdf:about="http://www.dailab.de/ontologies/class#Amoebe">
+        <rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Einzeller"/>
+    </owl:Class>
+    
+    <!-- http://www.dailab.de/ontologies/class#Einzeller -->
+    <owl:Class rdf:about="http://www.dailab.de/ontologies/class#Einzeller">
+        <rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Lebewesen"/>
+    </owl:Class>
+    
+    <!-- http://www.dailab.de/ontologies/class#Lebewesen -->
+    <owl:Class rdf:about="http://www.dailab.de/ontologies/class#Lebewesen"/>
+    
+    <!-- http://www.dailab.de/ontologies/class#Pinguin -->
+    <owl:Class rdf:about="http://www.dailab.de/ontologies/class#Pinguin">
+        <rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Pinguin"/>
+        <rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Vogel"/>
+    </owl:Class>
+    
+    <!-- http://www.dailab.de/ontologies/class#Tier -->
+    <owl:Class rdf:about="http://www.dailab.de/ontologies/class#Tier">
+        <rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Lebewesen"/>
+    </owl:Class>
+    
+    <!-- http://www.dailab.de/ontologies/class#Vogel -->
+    <owl:Class rdf:about="http://www.dailab.de/ontologies/class#Vogel">
+        <rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Wirbeltier"/>
+    </owl:Class>
+    
+    <!-- http://www.dailab.de/ontologies/class#Wirbeltier -->
+    <owl:Class rdf:about="http://www.dailab.de/ontologies/class#Wirbeltier">
+        <rdfs:subClassOf rdf:resource="http://www.dailab.de/ontologies/class#Tier"/>
+    </owl:Class>
+    
+    <!-- http://www.dailab.de/ontologies/class#fliegen -->
+    <owl:Class rdf:about="http://www.dailab.de/ontologies/class#fliegen"/>
+</rdf:RDF>
+
+<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
+

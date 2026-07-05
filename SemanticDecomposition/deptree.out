@@ -1,0 +1,201 @@
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective settings
+[WARNING] 'profiles.profile[dai].repositories.repository.id' must be unique but found duplicate repository with id apache-repo-snapshots @ /Users/faehndrich/.m2/settings.xml
+[WARNING] 
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for de.dailab.NSM.Decomposition:SemanticDecomposition:jar:0.2-SNAPSHOT
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.neo4j:neo4j:jar -> version 2.3.2 vs 3.0.0-M05 @ de.dailab.NSM.Decomposition:SemanticDecomposition:[unknown-version], /Users/faehndrich/DAI-Labor/Sources/git/SemanticDecomposition/SemanticDecomposition/pom.xml, line 76, column 21
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: edu.stanford.nlp:stanford-corenlp:jar:models-german -> duplicate declaration of version 3.9.1 @ de.dailab.NSM.Decomposition:SemanticDecomposition:[unknown-version], /Users/faehndrich/DAI-Labor/Sources/git/SemanticDecomposition/SemanticDecomposition/pom.xml, line 173, column 21
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] ---------< de.dailab.NSM.Decomposition:SemanticDecomposition >----------
+[INFO] Building Semantic Decomposition into NSM 0.2-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+Downloading from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/wiktionary/WiktionaryCrawler/0.2-SNAPSHOT/maven-metadata.xml
+Downloading from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/wiktionary/WiktionaryCrawler/0.2-SNAPSHOT/maven-metadata.xml
+Progress (1): 785 BProgress (2): 785 B | 785 B                           Downloaded from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/wiktionary/WiktionaryCrawler/0.2-SNAPSHOT/maven-metadata.xml (785 B at 7.5 kB/s)
+Downloaded from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/wiktionary/WiktionaryCrawler/0.2-SNAPSHOT/maven-metadata.xml (785 B at 7.1 kB/s)
+Downloading from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/NaturalSemanticMetalanguage/Dictionaries/0.2-SNAPSHOT/maven-metadata.xml
+Downloading from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/NaturalSemanticMetalanguage/Dictionaries/0.2-SNAPSHOT/maven-metadata.xml
+Progress (1): 626 BProgress (2): 626 B | 626 B                           Downloaded from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/NaturalSemanticMetalanguage/Dictionaries/0.2-SNAPSHOT/maven-metadata.xml (626 B at 39 kB/s)
+Downloaded from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/NaturalSemanticMetalanguage/Dictionaries/0.2-SNAPSHOT/maven-metadata.xml (626 B at 31 kB/s)
+Downloading from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/NaturalSemanticMetalanguage/0.2-SNAPSHOT/maven-metadata.xml
+Downloading from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/NaturalSemanticMetalanguage/0.2-SNAPSHOT/maven-metadata.xml
+Progress (1): 613 BProgress (2): 613 B | 613 B                           Downloaded from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/NaturalSemanticMetalanguage/0.2-SNAPSHOT/maven-metadata.xml (613 B at 34 kB/s)
+Downloaded from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/NaturalSemanticMetalanguage/0.2-SNAPSHOT/maven-metadata.xml (613 B at 28 kB/s)
+Downloading from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/nsm/decomposition/dictionaries/utils/DictionaryUtils/0.2-SNAPSHOT/maven-metadata.xml
+Downloading from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/nsm/decomposition/dictionaries/utils/DictionaryUtils/0.2-SNAPSHOT/maven-metadata.xml
+Progress (1): 805 BProgress (2): 805 B | 805 B                           Downloaded from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/nsm/decomposition/dictionaries/utils/DictionaryUtils/0.2-SNAPSHOT/maven-metadata.xml (805 B at 50 kB/s)
+Downloaded from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/nsm/decomposition/dictionaries/utils/DictionaryUtils/0.2-SNAPSHOT/maven-metadata.xml (805 B at 40 kB/s)
+Downloading from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/Wikidata/WikidataCrawler/0.2-SNAPSHOT/maven-metadata.xml
+Downloading from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/Wikidata/WikidataCrawler/0.2-SNAPSHOT/maven-metadata.xml
+Progress (1): 781 BProgress (2): 781 B | 781 B                           Downloaded from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/Wikidata/WikidataCrawler/0.2-SNAPSHOT/maven-metadata.xml (781 B at 49 kB/s)
+Downloaded from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/Wikidata/WikidataCrawler/0.2-SNAPSHOT/maven-metadata.xml (781 B at 39 kB/s)
+Downloading from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/NaturalSemanticMetalanguage/RDFXMLCrawlerOWLAPI-3/0.2-SNAPSHOT/maven-metadata.xml
+Downloading from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/NaturalSemanticMetalanguage/RDFXMLCrawlerOWLAPI-3/0.2-SNAPSHOT/maven-metadata.xml
+Progress (1): 806 BProgress (2): 806 B | 806 B                           Downloaded from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/NaturalSemanticMetalanguage/RDFXMLCrawlerOWLAPI-3/0.2-SNAPSHOT/maven-metadata.xml (806 B at 45 kB/s)
+Downloaded from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/NaturalSemanticMetalanguage/RDFXMLCrawlerOWLAPI-3/0.2-SNAPSHOT/maven-metadata.xml (806 B at 38 kB/s)
+Downloading from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/com/google/guava/guava/maven-metadata.xml
+Downloading from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/com/google/guava/guava/maven-metadata.xml
+Downloading from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/WordNet/WordNetCrawler/0.2-SNAPSHOT/maven-metadata.xml
+Downloading from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/WordNet/WordNetCrawler/0.2-SNAPSHOT/maven-metadata.xml
+Progress (1): 779 BProgress (2): 779 B | 779 B                           Downloaded from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/WordNet/WordNetCrawler/0.2-SNAPSHOT/maven-metadata.xml (779 B at 35 kB/s)
+Downloaded from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/WordNet/WordNetCrawler/0.2-SNAPSHOT/maven-metadata.xml (779 B at 32 kB/s)
+Downloading from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/NaturalSemanticMetalanguage/SemanticDistanceMeasures/SemanticDistanceMeasureAPI/0.2-SNAPSHOT/maven-metadata.xml
+Downloading from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/NaturalSemanticMetalanguage/SemanticDistanceMeasures/SemanticDistanceMeasureAPI/0.2-SNAPSHOT/maven-metadata.xml
+Progress (1): 836 BProgress (2): 836 B | 836 B                           Downloaded from dai-snapshots: http://repositories.dai-labor.de/nexus/content/repositories/dai-snapshots/de/dailab/NSM/NaturalSemanticMetalanguage/SemanticDistanceMeasures/SemanticDistanceMeasureAPI/0.2-SNAPSHOT/maven-metadata.xml (836 B at 46 kB/s)
+Downloaded from dai-snapshot-repository: http://repositories.dai-lab.de/dai-snapshot-repository/de/dailab/NSM/NaturalSemanticMetalanguage/SemanticDistanceMeasures/SemanticDistanceMeasureAPI/0.2-SNAPSHOT/maven-metadata.xml (836 B at 40 kB/s)
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ SemanticDecomposition ---
+[INFO] de.dailab.NSM.Decomposition:SemanticDecomposition:jar:0.2-SNAPSHOT
+[INFO] +- de.dailab.NSM.wiktionary:WiktionaryCrawler:jar:0.2-SNAPSHOT:compile
+[INFO] |  \- de.dailab.nsm.decomposition.dictionaries.utils:DictionaryUtils:jar:0.2-SNAPSHOT:compile
+[INFO] |     \- com.google.http-client:google-http-client:jar:1.20.0:compile
+[INFO] |        +- com.google.code.findbugs:jsr305:jar:1.3.9:compile
+[INFO] |        \- org.apache.httpcomponents:httpclient:jar:4.0.1:compile
+[INFO] |           \- org.apache.httpcomponents:httpcore:jar:4.0.1:compile
+[INFO] +- de.dailab.NSM.Wikidata:WikidataCrawler:jar:0.2-SNAPSHOT:compile
+[INFO] |  +- org.wikidata.wdtk:wdtk-dumpfiles:jar:0.6.0:compile
+[INFO] |  |  +- org.wikidata.wdtk:wdtk-datamodel:jar:0.6.0:compile
+[INFO] |  |  +- org.wikidata.wdtk:wdtk-util:jar:0.6.0:compile
+[INFO] |  |  \- org.wikidata.wdtk:wdtk-storage:jar:0.6.0:compile
+[INFO] |  +- org.apache.commons:commons-compress:jar:1.9:compile
+[INFO] |  +- com.mscharhag.oleaster:oleaster-matcher:jar:0.1.2:compile
+[INFO] |  +- com.mscharhag.oleaster:oleaster-runner:jar:0.1.2:compile
+[INFO] |  +- org.neo4j.driver:neo4j-java-driver:jar:1.0.3:compile
+[INFO] |  \- com.opencsv:opencsv:jar:3.3:compile
+[INFO] +- com.google.guava:guava:jar:19.0-rc3:compile
+[INFO] +- org.jgrapht:jgrapht-core:jar:0.9.1:compile
+[INFO] +- org.jgrapht:jgrapht-ext:jar:0.9.0:compile
+[INFO] |  +- org.tinyjee.jgraphx:jgraphx:jar:2.0.0.1:compile
+[INFO] |  \- jgraph:jgraph:jar:5.13.0.0:compile
+[INFO] +- de.dailab.NSM.NaturalSemanticMetalanguage:RDFXMLCrawlerOWLAPI-3:jar:0.2-SNAPSHOT:compile
+[INFO] |  +- net.sourceforge.owlapi:owlapi-distribution:jar:3.5.6:compile
+[INFO] |  |  \- net.sf.trove4j:trove4j:jar:3.0.3:compile
+[INFO] |  +- org.apache.lucene:lucene-queryparser:jar:5.5.0:compile
+[INFO] |  |  \- org.apache.lucene:lucene-sandbox:jar:5.5.0:compile
+[INFO] |  +- org.apache.lucene:lucene-codecs:jar:5.5.0:compile
+[INFO] |  \- org.apache.lucene:lucene-analyzers-common:jar:5.5.0:compile
+[INFO] +- de.dailab.NSM.WordNet:WordNetCrawler:jar:0.2-SNAPSHOT:compile
+[INFO] +- org.neo4j:neo4j:jar:3.0.0-M05:compile
+[INFO] |  +- org.neo4j:neo4j-kernel:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.neo4j:neo4j-graphdb-api:jar:3.0.0-M05:compile
+[INFO] |  |  |  \- org.neo4j:neo4j-resource:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.neo4j:neo4j-common:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.neo4j:neo4j-collections:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.neo4j:neo4j-primitive-collections:jar:3.0.0-M05:compile
+[INFO] |  |  |  \- org.neo4j:neo4j-unsafe:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.neo4j:neo4j-io:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.neo4j:neo4j-csv:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.neo4j:neo4j-logging:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.neo4j:neo4j-security:jar:3.0.0-M05:compile
+[INFO] |  |  \- org.neo4j:neo4j-lucene-upgrade:jar:3.0.0-M05:compile
+[INFO] |  +- org.neo4j:neo4j-lucene-index:jar:3.0.0-M05:compile
+[INFO] |  +- org.neo4j:neo4j-graph-algo:jar:3.0.0-M05:compile
+[INFO] |  +- org.neo4j:neo4j-udc:jar:3.0.0-M05:compile
+[INFO] |  +- org.neo4j:neo4j-graph-matching:jar:3.0.0-M05:compile
+[INFO] |  +- org.neo4j:neo4j-cypher:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.scala-lang:scala-library:jar:2.11.7:compile
+[INFO] |  |  +- org.scala-lang:scala-reflect:jar:2.11.7:compile
+[INFO] |  |  +- org.neo4j:neo4j-codegen:jar:3.0.0-M05:compile
+[INFO] |  |  |  \- org.ow2.asm:asm:jar:5.0.2:compile
+[INFO] |  |  +- org.neo4j:neo4j-cypher-compiler-2.3:jar:2.3.2:compile
+[INFO] |  |  |  \- org.neo4j:neo4j-cypher-frontend-2.3:jar:2.3.2:compile
+[INFO] |  |  +- org.neo4j:neo4j-cypher-compiler-3.0:jar:3.0.0-M05:compile
+[INFO] |  |  |  \- org.neo4j:neo4j-cypher-frontend-3.0:jar:3.0.0-M05:compile
+[INFO] |  |  +- org.parboiled:parboiled-scala_2.11:jar:1.1.7:compile
+[INFO] |  |  |  \- org.parboiled:parboiled-core:jar:1.1.7:compile
+[INFO] |  |  +- net.sf.opencsv:opencsv:jar:2.3:compile
+[INFO] |  |  \- com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:jar:1.4.2:compile
+[INFO] |  +- org.neo4j:neo4j-jmx:jar:3.0.0-M05:compile
+[INFO] |  \- org.neo4j:neo4j-consistency-check:jar:3.0.0-M05:compile
+[INFO] +- org.springframework.data:spring-data-neo4j:jar:3.0.2.RELEASE:compile
+[INFO] |  +- org.springframework:spring-tx:jar:4.0.3.RELEASE:compile
+[INFO] |  +- org.springframework:spring-context:jar:4.0.3.RELEASE:compile
+[INFO] |  |  \- org.springframework:spring-aop:jar:4.0.3.RELEASE:compile
+[INFO] |  |     \- aopalliance:aopalliance:jar:1.0:compile
+[INFO] |  +- org.springframework:spring-beans:jar:4.0.3.RELEASE:compile
+[INFO] |  +- org.springframework:spring-aspects:jar:4.0.3.RELEASE:compile
+[INFO] |  |  \- org.aspectj:aspectjweaver:jar:1.7.4:compile
+[INFO] |  +- org.springframework:spring-core:jar:4.0.3.RELEASE:compile
+[INFO] |  +- org.springframework:spring-expression:jar:4.0.3.RELEASE:compile
+[INFO] |  +- org.aspectj:aspectjrt:jar:1.7.4:compile
+[INFO] |  +- org.springframework.data:spring-data-commons:jar:1.7.2.RELEASE:compile
+[INFO] |  +- org.neo4j:neo4j-cypher-dsl:jar:2.0.1:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.6:compile
+[INFO] |  \- org.slf4j:jcl-over-slf4j:jar:1.7.6:runtime
+[INFO] +- org.neo4j:neo4j-ogm-embedded-driver:jar:2.0.1:compile
+[INFO] |  +- org.neo4j:neo4j-ogm-api:jar:2.0.1:compile
+[INFO] |  |  \- commons-codec:commons-codec:jar:1.10:compile
+[INFO] |  \- commons-io:commons-io:jar:2.4:compile
+[INFO] +- org.neo4j:neo4j-ogm:pom:2.0.1:compile
+[INFO] +- org.neo4j:neo4j-ogm-core:jar:2.0.1:compile
+[INFO] |  \- org.neo4j:neo4j-ogm-compiler:jar:2.0.1:compile
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.7.3:compile
+[INFO] +- com.fasterxml.jackson.core:jackson-annotations:jar:2.7.3:compile
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.7.3:compile
+[INFO] +- org.springframework.boot:spring-boot-autoconfigure:jar:1.2.6.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:1.2.6.RELEASE:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:1.14:compile
+[INFO] +- org.ehcache:ehcache:jar:3.0.0.rc1:compile
+[INFO] +- javax.cache:cache-api:jar:1.0.0:compile
+[INFO] +- edu.stanford.nlp:stanford-corenlp:jar:3.9.1:compile
+[INFO] |  +- com.apple:AppleJavaExtensions:jar:1.4:compile
+[INFO] |  +- de.jollyday:jollyday:jar:0.4.9:compile
+[INFO] |  +- org.apache.lucene:lucene-queries:jar:4.10.3:compile
+[INFO] |  +- org.apache.lucene:lucene-core:jar:4.10.3:compile
+[INFO] |  +- javax.servlet:javax.servlet-api:jar:3.0.1:compile
+[INFO] |  +- com.io7m.xom:xom:jar:1.2.10:compile
+[INFO] |  |  +- xml-apis:xml-apis:jar:1.3.03:compile
+[INFO] |  |  +- xerces:xercesImpl:jar:2.8.0:compile
+[INFO] |  |  \- xalan:xalan:jar:2.7.0:compile
+[INFO] |  +- joda-time:joda-time:jar:2.9.4:compile
+[INFO] |  +- com.googlecode.efficient-java-matrix-library:ejml:jar:0.23:compile
+[INFO] |  +- org.glassfish:javax.json:jar:1.0.4:compile
+[INFO] |  \- com.google.protobuf:protobuf-java:jar:3.2.0:compile
+[INFO] +- edu.stanford.nlp:stanford-corenlp:jar:models-german:3.9.1:compile
+[INFO] +- edu.stanford.nlp:stanford-corenlp:jar:models:3.9.1:compile
+[INFO] +- org.languagetool:languagetool-core:jar:4.2:compile
+[INFO] |  +- net.java.dev.jna:jna:jar:4.4.0:compile
+[INFO] |  +- org.carrot2:morfologik-fsa:jar:2.1.5:compile
+[INFO] |  +- org.carrot2:morfologik-fsa-builders:jar:2.1.5:compile
+[INFO] |  +- org.carrot2:morfologik-speller:jar:2.1.5:compile
+[INFO] |  +- org.carrot2:morfologik-stemming:jar:2.1.5:compile
+[INFO] |  +- com.carrotsearch:hppc:jar:0.7.2:compile
+[INFO] |  +- net.loomchild:segment:jar:2.0.0:compile
+[INFO] |  |  \- commons-logging:commons-logging:jar:1.1.1:compile
+[INFO] |  +- com.optimaize.languagedetector:language-detector:jar:0.6:compile
+[INFO] |  |  \- net.arnx:jsonic:jar:1.2.11:compile
+[INFO] |  +- com.intellij:annotations:jar:12.0:compile
+[INFO] |  +- org.apache.lucene:lucene-backward-codecs:jar:5.5.4:compile
+[INFO] |  +- edu.berkeley.nlp:berkeleylm:jar:1.1.2:compile
+[INFO] |  \- javax.xml.bind:jaxb-api:jar:2.3.0:compile
+[INFO] +- org.languagetool:language-de:jar:4.2:compile
+[INFO] |  +- org.languagetool:hunspell-native-libs:jar:2.9:compile
+[INFO] |  +- de.danielnaber:german-pos-dict:jar:1.1:compile
+[INFO] |  +- edu.washington.cs.knowitall:openregex:jar:1.1.1:compile
+[INFO] |  \- de.danielnaber:jwordsplitter:jar:4.4:compile
+[INFO] +- org.apache.commons:commons-lang3:jar:3.7:compile
+[INFO] +- de.dailab.NSM.NaturalSemanticMetalanguage.SemanticDistanceMeasures:SemanticDistanceMeasureAPI:jar:0.2-SNAPSHOT:compile
+[INFO] +- org.slf4j:slf4j-jdk14:jar:1.7.25:test
+[INFO] +- log4j:log4j:jar:1.2.17:compile
+[INFO] +- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] +- edu.mit:jwi:jar:2.2.3:compile
+[INFO] +- org.dkpro.jwktl:dkpro-jwktl:jar:1.1.0:compile
+[INFO] |  +- com.sleepycat:je:jar:5.0.73:compile
+[INFO] |  \- org.apache.ant:ant:jar:1.7.1:compile
+[INFO] |     \- org.apache.ant:ant-launcher:jar:1.7.1:compile
+[INFO] +- berkeleydb:berkeleydb-native:jar:4.2:compile
+[INFO] \- junit:junit:jar:4.12:compile
+[INFO]    \- org.hamcrest:hamcrest-core:jar:1.3:compile
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.869 s
+[INFO] Finished at: 2018-11-19T16:36:52+01:00
+[INFO] ------------------------------------------------------------------------
