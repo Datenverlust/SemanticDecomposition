@@ -10,6 +10,7 @@ reproducible without any external language resources.
 """
 from __future__ import annotations
 
+import os
 import random
 import string
 import time
@@ -60,19 +61,57 @@ def _make_concept(word: str, uid: int) -> Concept:
     return c
 
 
-def _make_concept_list(n: int, seed: int = 42) -> List[Concept]:
-    """Return *n* distinct Concept objects with unique IDs and random literals."""
-    rng = random.Random(seed)
-    seen: set = set()
-    concepts = []
-    uid = 1
-    while len(concepts) < n:
-        word = "".join(rng.choices(string.ascii_lowercase, k=6))
-        if word not in seen:
-            seen.add(word)
+def _make_concept_list(n: int | None = None, seed: int = 42, words_file: str | None = None) -> List[Concept]:
+    """Load or generate a list of Concept objects from a words file or random generation.
+    
+    If words_file is provided, reads words from that file (one word per line), ignoring n.
+    Otherwise, generates n random words.
+    
+    Args:
+        n: Number of concepts to create (used when words_file is None). Defaults to 20.
+        seed: Random seed for reproducibility (used when words_file is None).
+        words_file: Path to a text file with one word per line. If provided, loads from file.
+    
+    Returns:
+        List of Concept objects with unique IDs and word literals from file or generated.
+    
+    Examples:
+        # Generate 50 random concepts
+        concepts = _make_concept_list(50)
+        
+        # Load from file
+        concepts = _make_concept_list(words_file="tests/sample_words.txt")
+        
+        # Load from file (preferred parameter order)
+        concepts = _make_concept_list(n=50, words_file="tests/sample_words.txt")
+    """
+    # Default n to 20 if not provided
+    if n is None:
+        n = 20
+    
+    if words_file and os.path.isfile(words_file):
+        # Load words from file
+        with open(words_file, 'r', encoding='utf-8') as f:
+            words = [line.strip() for line in f if line.strip()]
+        
+        # Create concepts with unique IDs
+        concepts = []
+        for uid, word in enumerate(words, start=1):
             concepts.append(_make_concept(word, uid))
-            uid += 1
-    return concepts
+        return concepts
+    else:
+        # Generate random words as fallback
+        rng = random.Random(seed)
+        seen: set = set()
+        concepts = []
+        uid = 1
+        while len(concepts) < n:
+            word = "".join(rng.choices(string.ascii_lowercase, k=6))
+            if word not in seen:
+                seen.add(word)
+                concepts.append(_make_concept(word, uid))
+                uid += 1
+        return concepts
 
 
 def _reset_cache() -> None:

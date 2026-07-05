@@ -1,0 +1,46 @@
+cybercrime
+hacking
+malware
+phishing
+ransomware
+botnet
+ddos
+data breach
+encryption
+firewall
+cyber attack
+digital crime
+malicious code
+cybercrime tool
+specific attacks
+network security
+threat detection
+vulnerability
+exploit
+intrusion
+compromised system
+stolen credentials
+password crack
+brute force
+social engineering
+denial of service
+distributed attack
+trojan horse
+worm
+virus
+spyware
+adware
+rootkit
+backdoor
+payload
+command control
+exfiltration
+lateral movement
+privilege escalation
+zero day
+patch
+security patch
+vulnerability fix
+protection mechanism
+defensive security
+offensive security
