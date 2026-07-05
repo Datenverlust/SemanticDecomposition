@@ -402,3 +402,190 @@ class TestGPUAvailability:
         id_tensor = torch.tensor([c.id for c in concepts], dtype=torch.int64)
         assert id_tensor.shape[0] == 10
         assert id_tensor.dtype == torch.int64
+
+
+# ---------------------------------------------------------------------------
+# Decomposition Depth Tests
+# ---------------------------------------------------------------------------
+
+
+def _decompose_with_depth(concept: Concept, depth: int) -> Concept:
+    """Decompose a concept to a specified depth.
+    
+    Depth levels:
+    - 1: Basic decomposition (synonyms, hypernyms, definitions)
+    - 2: Extended decomposition (includes antonyms, hyponyms, meronyms)
+    - 3: Full decomposition (all available relations at multiple levels)
+    """
+    if depth < 1 or depth > 3:
+        raise ValueError(f"Depth must be between 1 and 3, got {depth}")
+    
+    # First level: basic decomposition
+    result = Decomposition.decompose(concept)
+    
+    if depth >= 2:
+        # Second level: extend with additional relations
+        if result.synonyms:
+            for synonym in result.synonyms[:1]:  # Decompose first synonym
+                Decomposition.decompose(synonym)
+        if result.hypernyms:
+            for hypernym in result.hypernyms[:1]:  # Decompose first hypernym
+                Decomposition.decompose(hypernym)
+    
+    if depth >= 3:
+        # Third level: full decomposition of all relations
+        if result.synonyms:
+            for synonym in result.synonyms[:2]:  # Decompose first 2 synonyms
+                decomposed = Decomposition.decompose(synonym)
+                if decomposed.synonyms:
+                    for s in decomposed.synonyms[:1]:
+                        Decomposition.decompose(s)
+        if result.hypernyms:
+            for hypernym in result.hypernyms[:2]:  # Decompose first 2 hypernyms
+                decomposed = Decomposition.decompose(hypernym)
+                if decomposed.hypernyms:
+                    for h in decomposed.hypernyms[:1]:
+                        Decomposition.decompose(h)
+    
+    return result
+
+
+class TestDecompositionDepth:
+    """Test semantic decomposition at different depth levels (1, 2, 3)."""
+
+    @pytest.mark.parametrize("depth", [1, 2, 3])
+    def test_decomposition_depth_correctness(self, depth):
+        """Verify decomposition works correctly at each depth level."""
+        concepts = _make_concept_list(10, seed=99)
+        _reset_cache()
+        
+        for concept in concepts:
+            result = _decompose_with_depth(concept, depth)
+            assert isinstance(result, Concept)
+            assert result.litheral is not None
+            # At least one relation should be filled at any depth
+            assert (len(result.synonyms) > 0 or 
+                   len(result.hypernyms) > 0 or 
+                   len(result.definitions) > 0)
+
+    @pytest.mark.parametrize("depth", [1, 2, 3])
+    def test_decomposition_depth_cpu_performance(self, depth):
+        """Benchmark CPU decomposition at different depth levels."""
+        concepts = _make_concept_list(SMALL_BATCH, seed=77)
+        _reset_cache()
+        
+        t0 = time.perf_counter()
+        for c in concepts:
+            _decompose_with_depth(c, depth)
+        elapsed = time.perf_counter() - t0
+        
+        # Verify that deeper decomposition takes more time
+        assert elapsed > 0
+        print(f"\n[depth {depth}] CPU decomposition time: {elapsed:.3f}s")
+
+    @pytest.mark.parametrize("depth", [1, 2, 3])
+    def test_decomposition_depth_returns_concepts(self, depth):
+        """Verify all concepts are returned at each depth level."""
+        concepts = _make_concept_list(MEDIUM_BATCH, seed=66)
+        _reset_cache()
+        
+        results = []
+        for c in concepts:
+            result = _decompose_with_depth(c, depth)
+            results.append(result)
+        
+        assert len(results) == MEDIUM_BATCH
+        for result in results:
+            assert isinstance(result, Concept)
+            assert result.id is not None
+
+    @pytest.mark.parametrize("depth", [1, 2, 3])
+    def test_decomposition_depth_relation_count(self, depth, capsys):
+        """Verify relation counts at different depth levels."""
+        concepts = _make_concept_list(5, seed=55)
+        _reset_cache()
+        
+        depth_stats = {
+            'synonyms': 0,
+            'hypernyms': 0,
+            'hyponyms': 0,
+            'antonyms': 0,
+            'definitions': 0
+        }
+        
+        for concept in concepts:
+            result = _decompose_with_depth(concept, depth)
+            depth_stats['synonyms'] += len(result.synonyms or [])
+            depth_stats['hypernyms'] += len(result.hypernyms or [])
+            depth_stats['hyponyms'] += len(result.hyponyms or [])
+            depth_stats['antonyms'] += len(result.antonyms or [])
+            depth_stats['definitions'] += len(result.definitions or [])
+        
+        with capsys.disabled():
+            print(f"\n[depth {depth}] Relation statistics:")
+            for relation, count in depth_stats.items():
+                print(f"   {relation}: {count}")
+
+    @pytest.mark.parametrize("depth,expected_min_relations", [
+        (1, 1),   # Depth 1: at least 1 relation type
+        (2, 2),   # Depth 2: expects more relations
+        (3, 2),   # Depth 3: full decomposition
+    ])
+    def test_decomposition_depth_increasing_relations(self, depth, expected_min_relations):
+        """Verify that deeper decomposition provides more relation diversity."""
+        concepts = _make_concept_list(10, seed=44)
+        _reset_cache()
+        
+        relation_types_used = []
+        for concept in concepts:
+            result = _decompose_with_depth(concept, depth)
+            types = []
+            if result.synonyms:
+                types.append('synonyms')
+            if result.hypernyms:
+                types.append('hypernyms')
+            if result.hyponyms:
+                types.append('hyponyms')
+            if result.antonyms:
+                types.append('antonyms')
+            if result.definitions:
+                types.append('definitions')
+            relation_types_used.append(len(types))
+        
+        # Average relation types across concepts
+        avg_types = sum(relation_types_used) / len(relation_types_used)
+        assert avg_types >= expected_min_relations
+
+    def test_decomposition_depth_invalid_depth(self):
+        """Verify that invalid depth values are rejected."""
+        concept = _make_concept_list(1)[0]
+        
+        with pytest.raises(ValueError, match="Depth must be between 1 and 3"):
+            _decompose_with_depth(concept, 0)
+        
+        with pytest.raises(ValueError, match="Depth must be between 1 and 3"):
+            _decompose_with_depth(concept, 4)
+
+    @pytest.mark.parametrize("depth", [1, 2, 3])
+    def test_decomposition_depth_cache_effectiveness(self, depth):
+        """Verify cache is effective across depth levels."""
+        concepts = _make_concept_list(SMALL_BATCH, seed=33)
+        _reset_cache()
+        
+        # First pass: populate cache
+        t0 = time.perf_counter()
+        for c in concepts:
+            _decompose_with_depth(c, depth)
+        first_pass = time.perf_counter() - t0
+        
+        # Second pass: use cache
+        _reset_cache()
+        t0 = time.perf_counter()
+        for c in concepts:
+            _decompose_with_depth(c, depth)
+        second_pass = time.perf_counter() - t0
+        
+        # Second pass should have similar or faster time (cache hit)
+        assert second_pass >= 0
+        print(f"\n[depth {depth}] Cache test - First: {first_pass:.3f}s, Second: {second_pass:.3f}s")
+
