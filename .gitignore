@@ -33,3 +33,12 @@ WiktionaryCrawler-0.1-SNAPSHOT-sources.jar
 *target/
 
 *.out
+
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
