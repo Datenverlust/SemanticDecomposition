@@ -289,6 +289,119 @@ class DecompositionGraphVisualizer:
             for q in self._subscribers:
                 q.put({"type": "node_expanded", "id": node_id})
 
+    # ------------------------------------------------------------------
+    # node detail (sidebar)
+    # ------------------------------------------------------------------
+
+    def node_details(self, node_id: str) -> Optional[dict]:
+        """Return per-dictionary definitions and relation summary for a node."""
+        with self._lock:
+            node = self._nodes.get(node_id)
+            concept = self._concept_by_node.get(node_id)
+        if node is None or concept is None:
+            return None
+
+        word = concept.litheral or ""
+
+        dict_sections = self._query_dictionaries(word)
+
+        edges_out = []
+        edges_in = []
+        with self._lock:
+            for edge in self._edges.values():
+                if edge["source"] == node_id:
+                    target = self._nodes.get(edge["target"])
+                    edges_out.append({
+                        "relation": edge["relation"],
+                        "target": target["label"] if target else edge["target"],
+                    })
+                elif edge["target"] == node_id:
+                    source = self._nodes.get(edge["source"])
+                    edges_in.append({
+                        "relation": edge["relation"],
+                        "source": source["label"] if source else edge["source"],
+                    })
+
+        return {
+            "id": node_id,
+            "label": node["label"],
+            "word_type": node.get("word_type", "?"),
+            "expanded": node.get("expanded", False),
+            "root": node.get("root", False),
+            "dictionaries": dict_sections,
+            "edges_out": edges_out,
+            "edges_in": edges_in,
+        }
+
+    def _query_dictionaries(self, word: str) -> List[dict]:
+        """Query each registered dictionary for definitions of *word*."""
+        try:
+            from ..decomposition import Decomposition
+            dictionaries = Decomposition.dictionaries
+        except Exception:
+            dictionaries = []
+
+        sections: List[dict] = []
+        for d in dictionaries:
+            name = type(d).__name__.replace("Dictionary", "").replace("dictionary", "")
+            if not name:
+                name = type(d).__name__
+
+            defs: List[str] = []
+            syns: List[str] = []
+            ants: List[str] = []
+            hypers: List[str] = []
+            hypos: List[str] = []
+            meros: List[str] = []
+
+            try:
+                for defn in (d.get_definitions(word) or []):
+                    concepts = getattr(defn, "concepts", None) or []
+                    text = " ".join(getattr(c, "litheral", str(c)) for c in concepts)
+                    if text.strip():
+                        defs.append(text.strip())
+            except Exception:
+                pass
+            try:
+                syns = [c.litheral for c in (d.get_synonyms(word) or []) if c.litheral]
+            except Exception:
+                pass
+            try:
+                ants = [c.litheral for c in (d.get_antonyms(word) or []) if c.litheral]
+            except Exception:
+                pass
+            try:
+                hypers = [c.litheral for c in (d.get_hypernyms(word) or []) if c.litheral]
+            except Exception:
+                pass
+            try:
+                hypos = [c.litheral for c in (d.get_hyponyms(word) or []) if c.litheral]
+            except Exception:
+                pass
+            try:
+                meros = [c.litheral for c in (d.get_meronyms(word) or []) if c.litheral]
+            except Exception:
+                pass
+
+            section: dict = {"name": name}
+            if defs:
+                section["definitions"] = defs
+            if syns:
+                section["synonyms"] = syns
+            if ants:
+                section["antonyms"] = ants
+            if hypers:
+                section["hypernyms"] = hypers
+            if hypos:
+                section["hyponyms"] = hypos
+            if meros:
+                section["meronyms"] = meros
+
+            if len(section) > 1:
+                sections.append(section)
+
+        return sections
+
     # --- helpers ---
 
     @staticmethod

@@ -13,6 +13,7 @@
     --text: #e6e9ef;
     --muted: #8b93a3;
     --accent: #4f8cff;
+    --sidebar-w: 340px;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
@@ -46,7 +47,77 @@
   .swatch { width: 22px; height: 3px; border-radius: 2px; display: inline-block; }
   .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; border: 2px solid; }
 
+  .main-area { display: flex; flex: 1; min-height: 0; position: relative; }
   #graph { flex: 1; min-height: 0; }
+
+  /* ---- sidebar ---- */
+  #sidebar {
+    width: 0; overflow: hidden;
+    background: var(--panel); border-left: 1px solid var(--border);
+    transition: width 0.2s ease;
+    display: flex; flex-direction: column;
+  }
+  #sidebar.open { width: var(--sidebar-w); }
+  .sb-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px; border-bottom: 1px solid var(--border);
+    min-height: 48px;
+  }
+  .sb-header h2 { margin: 0; font-size: 16px; font-weight: 600; }
+  .sb-header .word-type { font-size: 11px; color: var(--muted); margin-left: 8px; font-weight: 400; }
+  .sb-close {
+    background: none; border: none; color: var(--muted); cursor: pointer;
+    font-size: 18px; padding: 0 4px; line-height: 1;
+  }
+  .sb-close:hover { color: var(--text); }
+  .sb-body {
+    flex: 1; overflow-y: auto; padding: 0 0 16px 0;
+  }
+  .sb-body::-webkit-scrollbar { width: 5px; }
+  .sb-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .sb-section {
+    padding: 10px 14px 0;
+  }
+  .sb-section h3 {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+    color: var(--accent); margin: 0 0 8px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sb-relation-label {
+    font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase;
+    letter-spacing: .4px; margin: 8px 0 3px;
+  }
+  .sb-def {
+    font-size: 13px; color: var(--text); line-height: 1.5;
+    padding: 4px 0; border-bottom: 1px solid rgba(42,47,58,.5);
+  }
+  .sb-def:last-child { border-bottom: none; }
+  .sb-tags {
+    display: flex; flex-wrap: wrap; gap: 5px; margin: 2px 0 6px;
+  }
+  .sb-tag {
+    font-size: 11.5px; padding: 2px 8px; border-radius: 4px;
+    background: rgba(79,140,255,.12); color: var(--accent);
+    cursor: default; white-space: nowrap;
+  }
+  .sb-tag.syn { background: rgba(76,175,80,.12); color: #4caf50; }
+  .sb-tag.ant { background: rgba(183,28,28,.12); color: #ef5350; }
+  .sb-tag.hyper { background: rgba(239,83,80,.12); color: #ef5350; }
+  .sb-tag.hypo { background: rgba(46,125,50,.12); color: #4caf50; }
+  .sb-tag.mero { background: rgba(41,182,246,.12); color: #29b6f6; }
+  .sb-edges { padding: 10px 14px; }
+  .sb-edges h3 {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+    color: var(--muted); margin: 0 0 6px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sb-edge-item {
+    font-size: 12.5px; color: var(--text); padding: 2px 0;
+  }
+  .sb-edge-rel { color: var(--muted); font-size: 11px; }
+  .sb-loading { color: var(--muted); font-size: 13px; padding: 20px 14px; }
+  .sb-empty { color: var(--muted); font-size: 13px; padding: 20px 14px; font-style: italic; }
+
   .hint { position: absolute; bottom: 14px; left: 16px; z-index: 5;
     color: var(--muted); font-size: 12px; background: rgba(23,26,33,.85);
     padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; }
@@ -68,9 +139,19 @@
 
   <div class="legend" id="legend"></div>
 
-  <div id="graph"></div>
+  <div class="main-area">
+    <div id="graph"></div>
+    <div id="sidebar">
+      <div class="sb-header">
+        <h2 id="sb-title">—</h2>
+        <button class="sb-close" id="sb-close" title="Close">&times;</button>
+      </div>
+      <div class="sb-body" id="sb-body"></div>
+    </div>
+    <div class="hint">Double-click a node to decompose it further · click to inspect · scroll to zoom</div>
+  </div>
+
   <div id="err"></div>
-  <div class="hint">Double-click a node to decompose it further · drag to rearrange · scroll to zoom</div>
 </div>
 
 <script>
@@ -137,18 +218,12 @@
     interaction: { hover: true, tooltipDelay: 120, multiselect: false }
   });
 
-  // ---- physics: auto-freeze once settled, so nodes are stable click targets ----
-  // A force-directed graph that never stops moving makes a small node almost
-  // impossible to double-click reliably. We let it settle, then freeze it; new
-  // nodes briefly re-enable physics and it settles + freezes again.
+  // ---- physics: auto-freeze once settled ----
   var userPausedPhysics = false;
   var lastClickedNode = null;
   function setPhysics(on) { network.setOptions({ physics: { enabled: on } }); }
   function relayout() { if (!userPausedPhysics) setPhysics(true); }
   network.on("stabilized", function () { if (!userPausedPhysics) setPhysics(false); });
-  network.on("click", function (params) {
-    if (params.nodes && params.nodes.length) lastClickedNode = params.nodes[0];
-  });
 
   function nodeStyle(n) {
     if (n.root) {
@@ -163,7 +238,11 @@
              shapeProperties: { borderDashes: [6, 4] } };
   }
 
+  // keep server-shaped node data for sidebar reconstruction
+  var serverNodes = {};
+
   function toVisNode(n) {
+    serverNodes[n.id] = n;
     var base = {
       id: n.id,
       label: n.label,
@@ -195,13 +274,18 @@
       edges.update(toVisEdge(ev.edge));
     } else if (ev.type === "node_expanded") {
       var existing = nodes.get(ev.id);
-      if (existing) { existing.expanded = true; nodes.update(toVisNode(fromVis(existing))); }
+      if (existing) {
+        var sn = serverNodes[ev.id];
+        if (sn) sn.expanded = true;
+        existing.expanded = true;
+        nodes.update(toVisNode(sn || fromVis(existing)));
+      }
+      if (selectedNodeId === ev.id) showSidebar(ev.id);
     } else if (ev.type === "status") {
       setStatus(ev.message);
     }
   }
 
-  // reconstruct the server-shaped node from a vis node (for restyle)
   function fromVis(v) {
     return {
       id: v.id, label: v.label,
@@ -226,6 +310,142 @@
   }
   connect();
 
+  // ---- sidebar ----
+  var sidebar = document.getElementById("sidebar");
+  var sbTitle = document.getElementById("sb-title");
+  var sbBody = document.getElementById("sb-body");
+  var selectedNodeId = null;
+  var detailsCache = {};
+
+  document.getElementById("sb-close").addEventListener("click", closeSidebar);
+
+  function closeSidebar() {
+    sidebar.classList.remove("open");
+    selectedNodeId = null;
+    network.unselectAll();
+  }
+
+  function showSidebar(nodeId) {
+    selectedNodeId = nodeId;
+    var sn = serverNodes[nodeId];
+    sbTitle.innerHTML = (sn ? sn.label : nodeId) +
+      (sn ? '<span class="word-type">' + sn.word_type + '</span>' : '');
+    sbBody.innerHTML = '<div class="sb-loading">Loading definitions…</div>';
+    sidebar.classList.add("open");
+
+    if (detailsCache[nodeId]) {
+      renderDetails(detailsCache[nodeId]);
+      return;
+    }
+
+    fetch("/node-details/" + encodeURIComponent(nodeId))
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        detailsCache[nodeId] = data;
+        if (selectedNodeId === nodeId) renderDetails(data);
+      })
+      .catch(function () {
+        if (selectedNodeId === nodeId)
+          sbBody.innerHTML = '<div class="sb-empty">Could not load details.</div>';
+      });
+  }
+
+  function renderDetails(data) {
+    var html = "";
+
+    if (data.dictionaries && data.dictionaries.length) {
+      data.dictionaries.forEach(function (dict) {
+        html += '<div class="sb-section"><h3>' + esc(dict.name) + '</h3>';
+
+        if (dict.definitions && dict.definitions.length) {
+          html += '<div class="sb-relation-label">Definitions</div>';
+          dict.definitions.forEach(function (d, i) {
+            if (i < 8) html += '<div class="sb-def">' + esc(d) + '</div>';
+          });
+          if (dict.definitions.length > 8)
+            html += '<div class="sb-def" style="color:var(--muted)">… +' +
+              (dict.definitions.length - 8) + ' more</div>';
+        }
+
+        if (dict.synonyms && dict.synonyms.length) {
+          html += '<div class="sb-relation-label">Synonyms</div><div class="sb-tags">';
+          dict.synonyms.slice(0, 20).forEach(function (s) {
+            html += '<span class="sb-tag syn">' + esc(s) + '</span>';
+          });
+          if (dict.synonyms.length > 20) html += '<span class="sb-tag syn">+' + (dict.synonyms.length - 20) + '</span>';
+          html += '</div>';
+        }
+
+        if (dict.antonyms && dict.antonyms.length) {
+          html += '<div class="sb-relation-label">Antonyms</div><div class="sb-tags">';
+          dict.antonyms.slice(0, 10).forEach(function (s) {
+            html += '<span class="sb-tag ant">' + esc(s) + '</span>';
+          });
+          html += '</div>';
+        }
+
+        if (dict.hypernyms && dict.hypernyms.length) {
+          html += '<div class="sb-relation-label">Hypernyms</div><div class="sb-tags">';
+          dict.hypernyms.slice(0, 15).forEach(function (s) {
+            html += '<span class="sb-tag hyper">' + esc(s) + '</span>';
+          });
+          if (dict.hypernyms.length > 15) html += '<span class="sb-tag hyper">+' + (dict.hypernyms.length - 15) + '</span>';
+          html += '</div>';
+        }
+
+        if (dict.hyponyms && dict.hyponyms.length) {
+          html += '<div class="sb-relation-label">Hyponyms</div><div class="sb-tags">';
+          dict.hyponyms.slice(0, 15).forEach(function (s) {
+            html += '<span class="sb-tag hypo">' + esc(s) + '</span>';
+          });
+          if (dict.hyponyms.length > 15) html += '<span class="sb-tag hypo">+' + (dict.hyponyms.length - 15) + '</span>';
+          html += '</div>';
+        }
+
+        if (dict.meronyms && dict.meronyms.length) {
+          html += '<div class="sb-relation-label">Meronyms</div><div class="sb-tags">';
+          dict.meronyms.slice(0, 10).forEach(function (s) {
+            html += '<span class="sb-tag mero">' + esc(s) + '</span>';
+          });
+          html += '</div>';
+        }
+
+        html += '</div>';
+      });
+    } else {
+      html += '<div class="sb-empty">No dictionary data available for this concept.</div>';
+    }
+
+    // edges
+    if ((data.edges_out && data.edges_out.length) || (data.edges_in && data.edges_in.length)) {
+      html += '<div class="sb-edges"><h3>Graph connections</h3>';
+      if (data.edges_out && data.edges_out.length) {
+        data.edges_out.forEach(function (e) {
+          var c = REL_COLORS[e.relation] || REL_COLORS.other;
+          html += '<div class="sb-edge-item">' +
+            '<span class="sb-edge-rel" style="color:' + c + '">' + esc(e.relation) + '</span> → ' +
+            esc(e.target) + '</div>';
+        });
+      }
+      if (data.edges_in && data.edges_in.length) {
+        data.edges_in.forEach(function (e) {
+          var c = REL_COLORS[e.relation] || REL_COLORS.other;
+          html += '<div class="sb-edge-item">' +
+            esc(e.source) + ' <span class="sb-edge-rel" style="color:' + c + '">' + esc(e.relation) + '</span> →</div>';
+        });
+      }
+      html += '</div>';
+    }
+
+    sbBody.innerHTML = html;
+  }
+
+  function esc(s) {
+    var d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
   // ---- interactions ----
   function expandNode(id) {
     var n = nodes.get(id);
@@ -237,10 +457,15 @@
     });
   }
 
+  network.on("click", function (params) {
+    var id = (params.nodes && params.nodes[0]) || network.getNodeAt(params.pointer.DOM);
+    if (id) {
+      lastClickedNode = id;
+      showSidebar(id);
+    }
+  });
+
   network.on("doubleClick", function (params) {
-    // The pointer may have drifted off a moving node between the two clicks,
-    // so resolve the target robustly: node under the pointer, then the node at
-    // the click position, then the last node that was clicked.
     var id = (params.nodes && params.nodes[0])
           || network.getNodeAt(params.pointer.DOM)
           || lastClickedNode;

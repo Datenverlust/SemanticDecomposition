@@ -118,6 +118,15 @@ class VisualizationServer:
                     self._send_json(visualizer.snapshot())
                 elif path == "/events":
                     self._serve_events()
+                elif path.startswith("/node-details/"):
+                    node_id = path[len("/node-details/"):]
+                    from urllib.parse import unquote
+                    node_id = unquote(node_id)
+                    details = visualizer.node_details(node_id)
+                    if details is not None:
+                        self._send_json(details)
+                    else:
+                        self._send_json({"error": "not found"}, 404)
                 else:
                     self._send_bytes(b"Not found", "text/plain", 404)
 
