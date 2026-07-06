@@ -15,6 +15,9 @@ _CONFIG_DIR = Path.home() / ".decomposition"
 _CONFIG_FILE = _CONFIG_DIR / "decomposition.cfg"
 
 
+_ALL_DICTIONARIES = ["wordnet", "wiktionary", "wikidata"]
+
+
 class Config:
     """Singleton reading from ~/.decomposition/decomposition.cfg."""
 
@@ -25,6 +28,7 @@ class Config:
         self.wiktionary_path: str = ""
         self.primes_dir: str = str(_CONFIG_DIR / "primes")
         self._stop_words: List[str] = []
+        self.dictionaries: List[str] = list(_ALL_DICTIONARIES)
         self._load()
 
     @classmethod
@@ -48,6 +52,9 @@ class Config:
             )
             raw_stop = parser.get(section, "stop_words", fallback="")
             self._stop_words = [w.strip() for w in raw_stop.split(",") if w.strip()]
+            raw_dicts = parser.get(section, "dictionaries", fallback="")
+            if raw_dicts.strip():
+                self.dictionaries = [d.strip().lower() for d in raw_dicts.split(",") if d.strip()]
 
     def primes_words(self) -> List[str]:
         path = Path(self.primes_dir) / "primes.txt"

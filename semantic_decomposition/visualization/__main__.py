@@ -4,30 +4,30 @@ import argparse
 import logging
 
 
-def _available_dictionaries() -> list:
-    """Build list of available dictionary backends, best-coverage first."""
-    dicts = []
+_BACKEND_REGISTRY = {
+    "wordnet": "semantic_decomposition.dictionaries.wordnet_dictionary.WordnetDictionary",
+    "wiktionary": "semantic_decomposition.dictionaries.wiktionary_dictionary.WiktionaryDictionary",
+    "wikidata": "semantic_decomposition.dictionaries.wikidata_dictionary.WikidataDictionary",
+}
+
+
+def _load_backend(name: str):
+    """Import and return a dictionary class by registry name, or None."""
+    qualname = _BACKEND_REGISTRY.get(name)
+    if qualname is None:
+        return None
+    module_path, cls_name = qualname.rsplit(".", 1)
     try:
-        from ..dictionaries.wordnet_dictionary import WordnetDictionary
-        dicts.append(("wordnet", WordnetDictionary))
-    except ImportError:
-        pass
-    try:
-        from ..dictionaries.wiktionary_dictionary import WiktionaryDictionary
-        dicts.append(("wiktionary", WiktionaryDictionary))
-    except ImportError:
-        pass
-    try:
-        from ..dictionaries.wikidata_dictionary import WikidataDictionary
-        dicts.append(("wikidata", WikidataDictionary))
-    except ImportError:
-        pass
-    return dicts
+        import importlib
+        mod = importlib.import_module(module_path)
+        return getattr(mod, cls_name)
+    except (ImportError, AttributeError):
+        return None
 
 
 def main() -> None:
-    available = _available_dictionaries()
-    dict_names = [name for name, _ in available]
+    from ..settings.config import Config
+    config = Config.get_instance()
 
     parser = argparse.ArgumentParser(
         prog="python -m semantic_decomposition.visualization",
@@ -46,8 +46,8 @@ def main() -> None:
         nargs="*",
         metavar="NAME",
         default=None,
-        help=f"dictionary backends to use (available: {', '.join(dict_names) or 'none — install nltk for wordnet'}). "
-             "Omit for all available; use 'demo' for the offline demo dictionary.",
+        help=f"dictionary backends to use (available: {', '.join(_BACKEND_REGISTRY)}). "
+             "Default: from config file, or all available. Use 'demo' for the offline demo.",
     )
     parser.add_argument("--verbose", "-v", action="store_true",
                         help="enable debug logging")
@@ -56,9 +56,7 @@ def main() -> None:
     if args.verbose:
         logging.basicConfig(level=logging.DEBUG, format="%(name)s %(levelname)s: %(message)s")
 
-    requested = args.dictionaries
-
-    if requested is not None and "demo" in requested:
+    if args.dictionaries is not None and "demo" in args.dictionaries:
         from . import launch_demo
         launch_demo(
             word=args.word,
@@ -69,33 +67,14 @@ def main() -> None:
         )
         return
 
-    backend_map = dict(available)
-
-    if requested is None:
-        selected = available
-    else:
-        selected = []
-        for name in requested:
-            if name in backend_map:
-                selected.append((name, backend_map[name]))
-            else:
-                parser.error(f"unknown dictionary '{name}' (available: {', '.join(dict_names)})")
-
-    if not selected:
-        print("No dictionary backends available. Falling back to offline demo.")
-        print("Install nltk for WordNet:  pip install nltk")
-        from . import launch_demo
-        launch_demo(
-            word=args.word,
-            host=args.host,
-            port=args.port,
-            open_browser=not args.no_browser,
-            emit_delay=args.emit_delay,
-        )
-        return
+    wanted = args.dictionaries if args.dictionaries is not None else config.dictionaries
 
     instances = []
-    for name, cls in selected:
+    for name in wanted:
+        cls = _load_backend(name)
+        if cls is None:
+            print(f"  - {name} (not installed)")
+            continue
         try:
             inst = cls()
             inst.init()
@@ -105,7 +84,8 @@ def main() -> None:
             print(f"  - {name} (init failed: {e})")
 
     if not instances:
-        print("All dictionary backends failed to init. Falling back to demo.")
+        print("No dictionary backends available. Falling back to offline demo.")
+        print("Install nltk for WordNet:  pip install nltk")
         from . import launch_demo
         launch_demo(
             word=args.word,

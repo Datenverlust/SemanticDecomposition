@@ -99,40 +99,43 @@ def launch_with_all(
     **kwargs,
 ) -> VisualizationServer:
     """
-    Launch the visualiser with all available dictionary backends
-    (WordNet, Wiktionary, Wikidata).  Falls back to DemoDictionary if none
-    are available.
+    Launch the visualiser with dictionary backends from the config file
+    (``~/.decomposition/decomposition.cfg``).  Falls back to DemoDictionary
+    if none are available.
     """
     from ..decomposition import Decomposition
+    from ..settings.config import Config
 
-    dicts: List[object] = []
-
-    try:
-        from ..dictionaries.wordnet_dictionary import WordnetDictionary
-        d = WordnetDictionary()
-        d.init()
-        dicts.append(d)
-    except Exception:
-        pass
-
-    try:
-        from ..dictionaries.wiktionary_dictionary import WiktionaryDictionary
-        d = WiktionaryDictionary()
-        d.init()
-        dicts.append(d)
-    except Exception:
-        pass
-
-    try:
-        from ..dictionaries.wikidata_dictionary import WikidataDictionary
-        d = WikidataDictionary()
-        d.init()
-        dicts.append(d)
-    except Exception:
-        pass
+    config = Config.get_instance()
+    dicts = _instantiate_backends(config.dictionaries)
 
     if not dicts:
         return launch_demo(word, **kwargs)
 
     Decomposition.init(dicts)
     return launch(word, **kwargs)
+
+
+def _instantiate_backends(names: List[str]) -> List[object]:
+    """Try to instantiate and init each named backend, skip failures."""
+    _registry = {
+        "wordnet": ("..dictionaries.wordnet_dictionary", "WordnetDictionary"),
+        "wiktionary": ("..dictionaries.wiktionary_dictionary", "WiktionaryDictionary"),
+        "wikidata": ("..dictionaries.wikidata_dictionary", "WikidataDictionary"),
+    }
+    result: List[object] = []
+    for name in names:
+        entry = _registry.get(name)
+        if entry is None:
+            continue
+        mod_path, cls_name = entry
+        try:
+            import importlib
+            mod = importlib.import_module(mod_path, package=__package__)
+            cls = getattr(mod, cls_name)
+            inst = cls()
+            inst.init()
+            result.append(inst)
+        except Exception:
+            pass
+    return result
