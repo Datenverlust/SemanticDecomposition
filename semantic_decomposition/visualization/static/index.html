@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Semantic Decomposition — Live Graph</title>
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<style>
+  :root {
+    --bg: #0f1116;
+    --panel: #171a21;
+    --border: #2a2f3a;
+    --text: #e6e9ef;
+    --muted: #8b93a3;
+    --accent: #4f8cff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  #app { display: flex; flex-direction: column; height: 100%; }
+
+  header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 16px; background: var(--panel);
+    border-bottom: 1px solid var(--border); flex-wrap: wrap;
+  }
+  header h1 { font-size: 15px; font-weight: 600; margin: 0; letter-spacing: .2px; }
+  header h1 span { color: var(--accent); }
+  .controls { display: flex; align-items: center; gap: 8px; }
+  input[type=text] {
+    background: #0c0e13; border: 1px solid var(--border); color: var(--text);
+    border-radius: 6px; padding: 7px 10px; font-size: 13px; width: 180px; outline: none;
+  }
+  input[type=text]:focus { border-color: var(--accent); }
+  button {
+    background: var(--accent); color: #fff; border: none; border-radius: 6px;
+    padding: 7px 13px; font-size: 13px; cursor: pointer; font-weight: 500;
+  }
+  button.ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+  button:hover { filter: brightness(1.08); }
+  .status { color: var(--muted); font-size: 12.5px; margin-left: auto; min-height: 16px; }
+
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 8px 16px;
+    background: var(--panel); border-bottom: 1px solid var(--border); font-size: 12px; }
+  .legend .item { display: flex; align-items: center; gap: 6px; color: var(--muted); }
+  .swatch { width: 22px; height: 3px; border-radius: 2px; display: inline-block; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; border: 2px solid; }
+
+  #graph { flex: 1; min-height: 0; }
+  .hint { position: absolute; bottom: 14px; left: 16px; z-index: 5;
+    color: var(--muted); font-size: 12px; background: rgba(23,26,33,.85);
+    padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; }
+  #err { display:none; padding: 30px; color: #ff8a80; font-size: 14px; text-align:center; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Semantic Decomposition <span>· live graph</span></h1>
+    <div class="controls">
+      <input id="word" type="text" placeholder="word to decompose…" />
+      <button id="go">Decompose</button>
+      <button id="fit" class="ghost">Fit</button>
+      <button id="physics" class="ghost">Pause physics</button>
+    </div>
+    <div id="status" class="status"></div>
+  </header>
+
+  <div class="legend" id="legend"></div>
+
+  <div id="graph"></div>
+  <div id="err"></div>
+  <div class="hint">Double-click a node to decompose it further · drag to rearrange · scroll to zoom</div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  if (typeof vis === "undefined") {
+    document.getElementById("graph").style.display = "none";
+    var e = document.getElementById("err");
+    e.style.display = "block";
+    e.textContent = "Could not load vis-network from the CDN. Check your internet connection and reload.";
+    return;
+  }
+
+  // relation -> edge colour
+  var REL_COLORS = {
+    synonym:    "#4caf50",
+    hyponym:    "#2e7d32",
+    hypernym:   "#ef5350",
+    antonym:    "#b71c1c",
+    definition: "#ff9800",
+    meronym:    "#29b6f6",
+    derivation: "#ab47bc",
+    other:      "#90a4ae"
+  };
+
+  // ---- build legend ----
+  var legend = document.getElementById("legend");
+  Object.keys(REL_COLORS).forEach(function (rel) {
+    if (rel === "other") return;
+    var item = document.createElement("div");
+    item.className = "item";
+    item.innerHTML = '<span class="swatch" style="background:' + REL_COLORS[rel] + '"></span>' + rel;
+    legend.appendChild(item);
+  });
+  ["root", "expanded", "unexpanded"].forEach(function (kind) {
+    var map = { root: ["#ffd54f", "#f9a825"], expanded: ["#e3f2fd", "#1e88e5"], unexpanded: ["#ffffff", "#b0bec5"] };
+    var item = document.createElement("div");
+    item.className = "item";
+    item.innerHTML = '<span class="dot" style="background:' + map[kind][0] + ';border-color:' + map[kind][1] + '"></span>' + kind;
+    legend.appendChild(item);
+  });
+
+  // ---- datasets + network ----
+  var nodes = new vis.DataSet();
+  var edges = new vis.DataSet();
+
+  var container = document.getElementById("graph");
+  var network = new vis.Network(container, { nodes: nodes, edges: edges }, {
+    nodes: {
+      shape: "dot", size: 16,
+      font: { color: "#e6e9ef", size: 14, face: "-apple-system, Segoe UI, sans-serif" }
+    },
+    edges: {
+      arrows: { to: { enabled: true, scaleFactor: 0.6 } },
+      smooth: { type: "dynamic" },
+      font: { color: "#8b93a3", size: 10, strokeWidth: 0, align: "middle" },
+      width: 1.5
+    },
+    physics: {
+      barnesHut: { gravitationalConstant: -6000, springLength: 130, springConstant: 0.03, damping: 0.4 },
+      stabilization: { iterations: 120 }
+    },
+    interaction: { hover: true, tooltipDelay: 120, multiselect: false }
+  });
+
+  function nodeStyle(n) {
+    if (n.root) {
+      return { color: { background: "#ffd54f", border: "#f9a825" }, borderWidth: 3,
+               shapeProperties: { borderDashes: false } };
+    }
+    if (n.expanded) {
+      return { color: { background: "#e3f2fd", border: "#1e88e5" }, borderWidth: 2,
+               shapeProperties: { borderDashes: false } };
+    }
+    return { color: { background: "#ffffff", border: "#b0bec5" }, borderWidth: 2,
+             shapeProperties: { borderDashes: [6, 4] } };
+  }
+
+  function toVisNode(n) {
+    var base = {
+      id: n.id,
+      label: n.label,
+      title: n.word_type + (n.expanded ? "" : " · double-click to expand")
+    };
+    return Object.assign(base, nodeStyle(n));
+  }
+
+  function toVisEdge(e) {
+    var c = REL_COLORS[e.relation] || REL_COLORS.other;
+    return {
+      id: e.id, from: e.source, to: e.target,
+      label: e.relation,
+      color: { color: c, highlight: c, hover: c },
+      title: e.relation + " (weight " + e.weight + ")"
+    };
+  }
+
+  // ---- status ----
+  var statusEl = document.getElementById("status");
+  function setStatus(msg) { statusEl.textContent = msg || ""; }
+
+  // ---- apply incoming events ----
+  function applyEvent(ev) {
+    if (ev.type === "add_node") {
+      nodes.update(toVisNode(ev.node));
+    } else if (ev.type === "add_edge") {
+      edges.update(toVisEdge(ev.edge));
+    } else if (ev.type === "node_expanded") {
+      var existing = nodes.get(ev.id);
+      if (existing) { existing.expanded = true; nodes.update(toVisNode(fromVis(existing))); }
+    } else if (ev.type === "status") {
+      setStatus(ev.message);
+    }
+  }
+
+  // reconstruct the server-shaped node from a vis node (for restyle)
+  function fromVis(v) {
+    return {
+      id: v.id, label: v.label,
+      word_type: (v.title || "").split(" ")[0],
+      root: v.color && v.color.background === "#ffd54f",
+      expanded: true
+    };
+  }
+
+  // ---- SSE stream ----
+  var es;
+  function connect() {
+    es = new EventSource("/events");
+    es.onmessage = function (msg) {
+      try { applyEvent(JSON.parse(msg.data)); } catch (e) { /* ignore */ }
+    };
+    es.onerror = function () {
+      setStatus("Reconnecting…");
+      es.close();
+      setTimeout(connect, 1500);
+    };
+  }
+  connect();
+
+  // ---- interactions ----
+  network.on("doubleClick", function (params) {
+    if (params.nodes.length) {
+      var id = params.nodes[0];
+      var n = nodes.get(id);
+      setStatus("Expanding '" + (n ? n.label : id) + "' …");
+      fetch("/expand", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: id })
+      });
+    }
+  });
+
+  document.getElementById("go").addEventListener("click", decompose);
+  document.getElementById("word").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") decompose();
+  });
+  function decompose() {
+    var input = document.getElementById("word");
+    var word = input.value.trim();
+    if (!word) return;
+    setStatus("Decomposing '" + word + "' …");
+    fetch("/decompose", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word: word, word_type: "NN" })
+    });
+    input.value = "";
+  }
+
+  document.getElementById("fit").addEventListener("click", function () {
+    network.fit({ animation: { duration: 400 } });
+  });
+
+  var physicsOn = true;
+  document.getElementById("physics").addEventListener("click", function () {
+    physicsOn = !physicsOn;
+    network.setOptions({ physics: { enabled: physicsOn } });
+    this.textContent = physicsOn ? "Pause physics" : "Resume physics";
+  });
+})();
+</script>
+</body>
+</html>

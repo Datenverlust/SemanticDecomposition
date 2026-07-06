@@ -479,6 +479,83 @@ semantic_decomposition/graph/spreading_activation/marker_passing/
 
 ---
 
+## Interactive graph visualisation
+
+The `semantic_decomposition.visualization` package renders a decomposition graph
+**live in the browser** and lets you explore it interactively.  As a word is
+decomposed, new nodes and edges stream in over Server-Sent Events and animate
+into a force-directed layout.  **Double-clicking any node decomposes that concept
+one hop further**, so you can grow the semantic neighbourhood on demand.
+
+The server is pure Python standard library — no Flask, no websockets, no build
+step.  The frontend loads `vis-network` from a CDN.
+
+### Zero-setup demo
+
+An offline `DemoDictionary` ships with a small connected vocabulary, so you can
+try the UI without WordNet / Wiktionary / Wikidata:
+
+```bash
+python -m semantic_decomposition.visualization cat
+# then double-click nodes in the browser to expand them
+```
+
+Options:
+
+```bash
+python -m semantic_decomposition.visualization dog --port 9000 --no-browser
+python -m semantic_decomposition.visualization animal --emit-delay 0.15   # slower animation
+```
+
+### With your own dictionary backends
+
+```python
+from semantic_decomposition import Decomposition
+from semantic_decomposition.visualization import launch
+
+Decomposition.init([MyDictionary()])   # real WordNet / Wiktionary / … backends
+launch("cat")                          # opens a browser, blocks until Ctrl-C
+```
+
+### How it works
+
+```
+                    GET  /            → single-page frontend (vis-network)
+Browser  ◀── SSE ── GET  /events      → stream of add_node / add_edge / node_expanded
+         ── POST ─▶ POST /expand      → decompose one node further  (double-click)
+         ── POST ─▶ POST /decompose   → start a new root word       (search box)
+```
+
+`DecompositionGraphVisualizer` holds the authoritative graph and fans mutation
+events out to every connected browser.  Slow dictionary calls run off the request
+thread, so nodes appear incrementally as each relation is resolved.
+
+| Class | Role |
+|---|---|
+| `DecompositionGraphVisualizer` | Live graph model + incremental event stream; `start()` / `expand()` |
+| `VisualizationServer` | Stdlib HTTP server: static page, SSE, `/expand`, `/decompose` |
+| `DemoDictionary` | Offline sample vocabulary for a zero-setup demo |
+| `launch()` / `launch_demo()` | One-call entry points |
+
+Edges are colour-coded by relation (synonym, antonym, hypernym, hyponym,
+meronym, definition, derivation); root, expanded, and not-yet-expanded nodes are
+styled distinctly.  Drag to rearrange, scroll to zoom, **Fit** to recentre.
+
+### Package location
+
+```
+semantic_decomposition/visualization/
+├── __init__.py            # launch() / launch_demo()
+├── __main__.py            # python -m semantic_decomposition.visualization <word>
+├── graph_visualizer.py    # DecompositionGraphVisualizer
+├── server.py              # VisualizationServer (stdlib http.server + SSE)
+├── demo_dictionary.py     # DemoDictionary (offline vocabulary)
+└── static/
+    └── index.html         # force-directed frontend (vis-network)
+```
+
+---
+
 ## Configuration file
 
 Create `~/.decomposition/decomposition.cfg` to configure language and primes:
