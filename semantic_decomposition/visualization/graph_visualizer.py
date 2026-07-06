@@ -167,14 +167,17 @@ class DecompositionGraphVisualizer:
 
         self._emit({"type": "status", "message": f"Expanding '{label}' …"})
         concept = self._decompose(concept)
-        added = self._emit_relations(node_id, concept)
+        new_nodes, new_edges = self._emit_relations(node_id, concept)
         self._mark_expanded(node_id)
 
         with self._lock:
             self._expanding.discard(node_id)
 
-        if added:
-            self._emit({"type": "status", "message": f"Added {added} node(s) from '{label}'."})
+        if new_nodes or new_edges:
+            # links count concepts already on the graph — they are linked, not duplicated
+            links_note = f", {new_edges} link(s)" if new_edges > new_nodes else ""
+            self._emit({"type": "status", "message":
+                        f"'{label}' → {new_nodes} new concept(s){links_note} (depth 1)"})
         else:
             self._emit({"type": "status", "message": f"'{label}' has no further relations."})
 
@@ -182,17 +185,30 @@ class DecompositionGraphVisualizer:
     # internals
     # ------------------------------------------------------------------
 
-    def _emit_relations(self, source_id: str, concept: "Concept") -> int:
-        """Add one edge (and target node) per related concept.  Returns count added."""
-        added = 0
+    def _emit_relations(self, source_id: str, concept: "Concept") -> Tuple[int, int]:
+        """
+        Add one edge (and target node) per related concept — i.e. the full
+        depth-1 decomposition of ``concept``.  A concept that is already on the
+        graph is linked with a new edge rather than duplicated as a new node.
+
+        Each relation is processed independently so a single malformed relation
+        cannot abort the rest of the expansion.  Returns (new_nodes, new_edges).
+        """
+        new_nodes = 0
+        new_edges = 0
         for relation, related_concept in self._relations_of(concept):
-            target_id, is_new = self._add_node(related_concept)
-            edge_added = self._add_edge(source_id, target_id, relation)
-            if is_new or edge_added:
-                added += 1
-                if self._emit_delay:
-                    time.sleep(self._emit_delay)
-        return added
+            try:
+                target_id, is_new = self._add_node(related_concept)
+                edge_added = self._add_edge(source_id, target_id, relation)
+            except Exception:
+                continue
+            if is_new:
+                new_nodes += 1
+            if edge_added:
+                new_edges += 1
+            if (is_new or edge_added) and self._emit_delay:
+                time.sleep(self._emit_delay)
+        return new_nodes, new_edges
 
     def _relations_of(self, concept: "Concept") -> List[Tuple[str, "Concept"]]:
         """Flatten every relation list on a concept into (relation, concept) pairs."""
@@ -216,9 +232,10 @@ class DecompositionGraphVisualizer:
 
         # arbitrary_relations: {relation_name: [concepts]}
         arbitrary = getattr(concept, "arbitrary_relations", None) or {}
-        for name, concepts in arbitrary.items():
-            for c in concepts or []:
-                pairs.append((name or "arbitrary", c))
+        if isinstance(arbitrary, dict):
+            for name, concepts in arbitrary.items():
+                for c in concepts or []:
+                    pairs.append((name or "arbitrary", c))
 
         return pairs
 
