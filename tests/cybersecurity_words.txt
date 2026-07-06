@@ -1,0 +1,121 @@
+Cybercrime
+Cybersecurity
+Cyberattack
+Malware
+Ransomware
+Phishing
+Spear Phishing
+Smishing
+Vishing
+Social Engineering
+DeepFake
+Synthetic Media
+Generative AI
+Artificial Intelligence
+Machine Learning
+Deep Learning
+Large Language Model
+LLM
+Chatbot
+Automation
+Botnet
+Trojan
+Virus
+Worm
+Spyware
+Adware
+Rootkit
+Keylogger
+Backdoor
+Exploit
+Zero-Day
+Vulnerability
+Patch
+Firewall
+VPN
+Encryption
+Decryption
+Hashing
+Cryptography
+Authentication
+Authorization
+Multi-Factor Authentication
+MFA
+Password
+Passkey
+Biometrics
+Identity Theft
+Credential Stuffing
+Account Takeover
+Data Breach
+Data Leak
+Data Exfiltration
+Privacy
+GDPR
+Digital Evidence
+Digital Forensics
+Computer Forensics
+Mobile Forensics
+Network Forensics
+Memory Forensics
+Incident Response
+Threat Intelligence
+Threat Hunting
+Threat Actor
+Insider Threat
+Penetration Testing
+Red Team
+Blue Team
+Purple Team
+SIEM
+SOAR
+IDS
+IPS
+Zero Trust
+Cloud Security
+Cloud Computing
+API Security
+Web Security
+SQL Injection
+Cross-Site Scripting
+XSS
+CSRF
+Remote Code Execution
+RCE
+Session Hijacking
+DDoS
+Denial of Service
+Bot
+Dark Web
+Deep Web
+OSINT
+SOCMINT
+Metadata
+Attribution
+Blockchain
+Cryptocurrency
+Bitcoin
+Ethereum
+Crypto Wallet
+Smart Contract
+NFT
+Cryptojacking
+Fraud
+Scam
+Online Fraud
+Financial Fraud
+Business Email Compromise
+BEC
+Cyber Espionage
+Cyberterrorism
+Cyber Warfare
+Supply Chain Attack
+IoT
+Edge Computing
+Quantum Computing
+Digital Twin
+Metaverse
+Virtual Reality
+VR
+Augmented Reality
+AR

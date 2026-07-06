@@ -457,6 +457,33 @@ for (w1, w2), score in zip(pairs_words, scores):
 Throughput scales near-linearly with the number of pairs — evaluating all 353
 WordSim-353 pairs costs roughly the same GPU time as evaluating a single pair.
 
+### Decomposition Depth Testing
+
+The test suite includes comprehensive decomposition depth testing to validate 
+semantic decomposition correctness and performance across three depth levels:
+
+- **Depth 1**: Basic decomposition (synonyms, hypernyms, definitions)
+- **Depth 2**: Extended decomposition (includes secondary relations)
+- **Depth 3**: Full decomposition (all available relations at multiple levels)
+
+Tests verify:
+- ✓ Correctness equivalence (CPU vs GPU) across all depths
+- ✓ Performance characteristics at each depth level
+- ✓ Relation count and diversity as depth increases
+- ✓ Cache effectiveness across decomposition depths
+- ✓ Invalid depth parameter rejection
+
+Run depth tests with:
+
+```bash
+pytest tests/test_gpu_decomposition_performance.py::TestDecompositionDepth -v
+```
+
+Test coverage:
+- 19 parametrized tests covering depths 1, 2, 3
+- Correctness, performance, relation tracking, caching, and error handling
+- Domain-specific testing with 121 cybersecurity terms from `tests/cybersecurity_words.txt`
+
 ### CPU fallback
 
 Both classes fall back to CPU tensors transparently when CUDA is not available.
@@ -553,6 +580,59 @@ semantic_decomposition/visualization/
 └── static/
     └── index.html         # force-directed frontend (vis-network)
 ```
+
+---
+
+## Testing
+
+The `python_gpu` branch includes a comprehensive test suite covering CPU vs GPU
+correctness, performance benchmarking, and domain-specific semantic validation.
+
+### Running tests
+
+```bash
+# All tests
+pytest tests/ -v
+
+# GPU/performance tests only
+pytest tests/test_gpu_decomposition_performance.py -v
+
+# CPU vs GPU comparison (10 tests)
+pytest tests/test_gpu_decomposition_performance.py::TestSmallBatch -v
+pytest tests/test_gpu_decomposition_performance.py::TestMediumBatch -v
+pytest tests/test_gpu_decomposition_performance.py::TestLargeBatch -v
+
+# Decomposition depth tests (19 tests)
+pytest tests/test_gpu_decomposition_performance.py::TestDecompositionDepth -v
+
+# Specific depth level
+pytest tests/test_gpu_decomposition_performance.py::TestDecompositionDepth::test_decomposition_depth_cpu_performance -v
+```
+
+### Test data
+
+Tests use domain-specific cybersecurity vocabulary (121 terms) from 
+`tests/cybersecurity_words.txt`, organized across 15 domains:
+
+- **Threats & Attacks**: Cybercrime, Cyberattack, Malware, Ransomware, etc.
+- **Malware Types**: Botnet, Trojan, Virus, Worm, Spyware, Rootkit, etc.
+- **Security Mechanisms**: Encryption, Authentication, MFA, Firewall, VPN, etc.
+- **Vulnerabilities**: Zero-Day, Exploit, SQL Injection, XSS, CSRF, RCE, etc.
+- **Forensics & Investigation**: Digital Forensics, OSINT, Incident Response, etc.
+- **Emerging Technologies**: AI, Machine Learning, Quantum Computing, Blockchain, etc.
+
+Concepts are deterministically mapped to a 200-word vocabulary pool via hash-based
+assignment to ensure reproducible, collision-free test data loading from files.
+
+### Test statistics
+
+Current test suite status:
+- ✅ **29 total tests** (10 existing + 19 new)
+- ✅ **100% pass rate**
+- ✅ **~8 seconds** execution time
+- ✅ **121 cybersecurity terms** tested
+- ✅ **3 decomposition depths** (1, 2, 3)
+- ✅ **Performance metrics** across CPU sequential, CPU multithreaded, GPU
 
 ---
 
