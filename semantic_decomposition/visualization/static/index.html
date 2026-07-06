@@ -137,6 +137,19 @@
     interaction: { hover: true, tooltipDelay: 120, multiselect: false }
   });
 
+  // ---- physics: auto-freeze once settled, so nodes are stable click targets ----
+  // A force-directed graph that never stops moving makes a small node almost
+  // impossible to double-click reliably. We let it settle, then freeze it; new
+  // nodes briefly re-enable physics and it settles + freezes again.
+  var userPausedPhysics = false;
+  var lastClickedNode = null;
+  function setPhysics(on) { network.setOptions({ physics: { enabled: on } }); }
+  function relayout() { if (!userPausedPhysics) setPhysics(true); }
+  network.on("stabilized", function () { if (!userPausedPhysics) setPhysics(false); });
+  network.on("click", function (params) {
+    if (params.nodes && params.nodes.length) lastClickedNode = params.nodes[0];
+  });
+
   function nodeStyle(n) {
     if (n.root) {
       return { color: { background: "#ffd54f", border: "#f9a825" }, borderWidth: 3,
@@ -177,6 +190,7 @@
   function applyEvent(ev) {
     if (ev.type === "add_node") {
       nodes.update(toVisNode(ev.node));
+      relayout();
     } else if (ev.type === "add_edge") {
       edges.update(toVisEdge(ev.edge));
     } else if (ev.type === "node_expanded") {
@@ -213,17 +227,25 @@
   connect();
 
   // ---- interactions ----
+  function expandNode(id) {
+    var n = nodes.get(id);
+    setStatus("Expanding '" + (n ? n.label : id) + "' …");
+    fetch("/expand", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: id })
+    });
+  }
+
   network.on("doubleClick", function (params) {
-    if (params.nodes.length) {
-      var id = params.nodes[0];
-      var n = nodes.get(id);
-      setStatus("Expanding '" + (n ? n.label : id) + "' …");
-      fetch("/expand", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: id })
-      });
-    }
+    // The pointer may have drifted off a moving node between the two clicks,
+    // so resolve the target robustly: node under the pointer, then the node at
+    // the click position, then the last node that was clicked.
+    var id = (params.nodes && params.nodes[0])
+          || network.getNodeAt(params.pointer.DOM)
+          || lastClickedNode;
+    if (!id) { setStatus("Double-click directly on a node to expand it."); return; }
+    expandNode(id);
   });
 
   document.getElementById("go").addEventListener("click", decompose);
@@ -247,11 +269,10 @@
     network.fit({ animation: { duration: 400 } });
   });
 
-  var physicsOn = true;
   document.getElementById("physics").addEventListener("click", function () {
-    physicsOn = !physicsOn;
-    network.setOptions({ physics: { enabled: physicsOn } });
-    this.textContent = physicsOn ? "Pause physics" : "Resume physics";
+    userPausedPhysics = !userPausedPhysics;
+    setPhysics(!userPausedPhysics);
+    this.textContent = userPausedPhysics ? "Resume physics" : "Pause physics";
   });
 })();
 </script>
