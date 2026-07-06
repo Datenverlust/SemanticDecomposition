@@ -11,6 +11,14 @@ Quick start (offline demo, no dictionaries required)::
 
     python -m semantic_decomposition.visualization cat
 
+With real dictionary backends (WordNet, Wiktionary, Wikidata)::
+
+    python -m semantic_decomposition.visualization cat -d wordnet wiktionary wikidata
+
+All available backends auto-detected::
+
+    python -m semantic_decomposition.visualization cat -d
+
 Programmatic use with your own dictionary backends::
 
     from semantic_decomposition import Decomposition
@@ -34,6 +42,7 @@ __all__ = [
     "VisualizationServer",
     "launch",
     "launch_demo",
+    "launch_with_all",
 ]
 
 
@@ -58,8 +67,6 @@ def launch(
     visualizer = DecompositionGraphVisualizer(emit_delay=emit_delay)
     server = VisualizationServer(visualizer, host=host, port=port)
 
-    # Start the root decomposition slightly after the browser connects so the
-    # first hop animates in rather than appearing all at once.
     def _kickoff() -> None:
         time.sleep(1.2)
         visualizer.start(word, word_type)
@@ -84,4 +91,48 @@ def launch_demo(
     from .demo_dictionary import DemoDictionary
 
     Decomposition.init(dictionaries if dictionaries is not None else [DemoDictionary()])
+    return launch(word, **kwargs)
+
+
+def launch_with_all(
+    word: str = "cat",
+    **kwargs,
+) -> VisualizationServer:
+    """
+    Launch the visualiser with all available dictionary backends
+    (WordNet, Wiktionary, Wikidata).  Falls back to DemoDictionary if none
+    are available.
+    """
+    from ..decomposition import Decomposition
+
+    dicts: List[object] = []
+
+    try:
+        from ..dictionaries.wordnet_dictionary import WordnetDictionary
+        d = WordnetDictionary()
+        d.init()
+        dicts.append(d)
+    except Exception:
+        pass
+
+    try:
+        from ..dictionaries.wiktionary_dictionary import WiktionaryDictionary
+        d = WiktionaryDictionary()
+        d.init()
+        dicts.append(d)
+    except Exception:
+        pass
+
+    try:
+        from ..dictionaries.wikidata_dictionary import WikidataDictionary
+        d = WikidataDictionary()
+        d.init()
+        dicts.append(d)
+    except Exception:
+        pass
+
+    if not dicts:
+        return launch_demo(word, **kwargs)
+
+    Decomposition.init(dicts)
     return launch(word, **kwargs)

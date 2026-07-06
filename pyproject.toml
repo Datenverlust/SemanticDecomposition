@@ -16,6 +16,8 @@ dependencies = [
 [project.optional-dependencies]
 nlp = ["spacy"]
 gpu = ["torch>=2.0"]
+wordnet = ["nltk>=3.8"]
+all = ["nltk>=3.8", "spacy"]
 
 [tool.setuptools.packages.find]
 include = ["semantic_decomposition*"]
